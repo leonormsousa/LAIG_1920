@@ -47,12 +47,21 @@
         <primitive id="demoRectangle">
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
         </primitive>
+         <primitive id="demoCylinder">
+            <cylinder base="5" top="2" height="10" slices="20" stacks="3" />
+        </primitive>
+        <primitive id="demoTriangle">
+            <triangle x1="0" y1="0" z1="0" x2="1" y2="1" z2="0" x3="1" y3="0" z3="0"   />
+        </primitive>
+         <primitive id="demoSphere">
+            <sphere radius="5" slices="10" stacks="2"   />
+        </primitive>
     </primitives>
 
     <components>
         <component id="demoRoot">
             <transformation>
-                <translate x="0" y="0" z="1" />
+                <translate x="0" y="0" z="0" />
                 <scale x="2" y="1" z="1" />
             </transformation>
             <materials>
@@ -61,6 +70,7 @@
             <texture id="demoTexture"/>
             <children>
                 <primitiveref id="demoRectangle" />
+                <primitiveref id="demoCylinder" />
             </children>
         </component>
     </components>

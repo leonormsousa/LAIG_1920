@@ -54,7 +54,7 @@
             <triangle x1="0" y1="0" z1="0" x2="1" y2="1" z2="0" x3="1" y3="0" z3="0"   />
         </primitive>
          <primitive id="demoSphere">
-            <sphere radius="5" slices="10" stacks="2"   />
+            <sphere radius="5" slices="10" stacks="5"   />
         </primitive>
     </primitives>
 
@@ -71,6 +71,7 @@
             <children>
                 <primitiveref id="demoRectangle" />
                 <primitiveref id="demoCylinder" />
+                <primitiveref id="demoSphere" />
             </children>
         </component>
     </components>

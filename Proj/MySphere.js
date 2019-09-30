@@ -25,23 +25,23 @@ class MySphere extends CGFobject
         //stack numero 1
         for(let i = 0; i < this.slices; i++)
         {
-            var x=Math.cos(i * angle)*Math.cos(delta-Math.Pi/2);
-            var y=Math.sin(i * angle)*Math.cos(delta-Math.Pi/2);
+            var x=Math.cos(i * angle)*Math.cos(delta-Math.PI/2);
+            var y=Math.sin(i * angle)*Math.cos(delta-Math.PI/2);
             var z=Math.sin(delta-Math.PI/2);
-            this.vertices.push(x*this.radius, y*this.radius, this.radius);
+            this.vertices.push(x*this.radius, y*this.radius, z*this.radius);
             this.normals.push(x,y,z);             
             this.texCoords.push( (Math.cos(i * angle)), Math.sin(delta-Math.PI/2));					
 
             this.indices.push(0, (i%this.slices)+1, ((i+1)%this.slices)+1);
         }
 
-		for(let j = 1; j < 2*this.stacks-1; j++)
+		for(let j = 1; j < (2*this.stacks)-1; j++)
 		{		
             for(let i = 0; i < this.slices; i++)
             {
-                var x=Math.cos(i * angle)*Math.cos(j*delta - Math.Pi/2);
-                var y=Math.sin(i * angle)*Math.cos(j*delta - Math.Pi/2);
-                var z=Math.sin(j*delta - Math.Pi/2);
+                var x=Math.cos(i * angle)*Math.cos(j*delta - Math.PI/2);
+                var y=Math.sin(i * angle)*Math.cos(j*delta - Math.PI/2);
+                var z=Math.sin(j*delta - Math.PI/2);
                 this.vertices.push(x*this.radius, y*this.radius, this.radius*z);
                 this.normals.push(x,y,z);            
                 this.texCoords.push( (Math.cos(i * angle)), -(Math.sin(i * angle)));					
@@ -55,7 +55,7 @@ class MySphere extends CGFobject
         this.vertices.push(0,0, this.radius);
         this.normals.push(0,0, 1);
         for(let i = 0; i < this.slices; i++)
-            this.indices.push(1+this.slices*(2*this.stacks-3), 1+this.slices*(2*this.stacks-2)+(i%this.slices), 1+this.slices*(2*this.stacks-2)+((i+1)%this.slices));
+            this.indices.push(1+this.slices*(2*this.stacks-3), 1+this.slices*(2*this.stacks-2)+((i+1)%this.slices),  1+this.slices*(2*this.stacks-2)+(i%this.slices));
         
 		this.primitiveType=this.scene.gl.TRIANGLES;
 

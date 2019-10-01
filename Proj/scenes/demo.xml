@@ -48,7 +48,7 @@
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
         </primitive>
          <primitive id="demoCylinder">
-            <cylinder base="5" top="2" height="10" slices="20" stacks="3" />
+            <cylinder base="1.5" top="1" height="5" slices="20" stacks="3" />
         </primitive>
         <primitive id="demoTriangle">
             <triangle x1="0" y1="0" z1="0" x2="1" y2="1" z2="0" x3="1" y3="0" z3="0"   />

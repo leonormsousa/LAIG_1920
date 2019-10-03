@@ -36,10 +36,11 @@
     </materials>
 
     <transformations>
-        <transformation id="demoTransform">
-            <scale x="5" y="1" z="5" />
-            <rotate axis="x" angle="-45" />
-            <rotate axis="z" angle="-45" />
+        <transformation id="cylinder_vertical">
+            <rotate axis="x" angle="-90" />
+        </transformation>
+        <transformation id="cylinder_horizontal">
+            <rotate axis="y" angle="-90" />
         </transformation>
     </transformations>
 
@@ -71,10 +72,474 @@
     </primitives>
 
     <components>
+        <component id="hull_rectangle">
+            <transformation>
+                <translation x="2" y="1" z="0" />
+                <scale x="1" y="0.5" z="1">
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+        <component id="hull_triangle_left">
+            <transformation>
+                <translation x="2" y="2" z="0" />
+                <scale x="0.5" y="0.5" z="1">
+                <rotate axis="z" angle="0.5"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+        <component id="hull_triangle_right">
+            <transformation>
+                <translation x="6" y="2" z="0" />
+                <scale x="-0.5" y="0.5" z="1">
+                <rotate axis="z" angle="0.5"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+        <component id="mast">
+            <transformation>
+                <translation x="4" y="2" z="0" />
+                <scale x="0.025" y="1.5" z="1">
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+        <component id="sail_right">
+            <transformation>
+                <translation x="4" y="3" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+        <component id="sail_left">
+            <transformation>
+                <translation x="4" y="3" z="0" />
+                <scale x="-1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+        <component id="frame">
+            <transformation>
+                <scale x="2" y="3" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+        <component id="hull">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="hull_triangle_right"/>
+                <componentref id="hull_triangle_left"/>
+                <componentref id="hull_rectangle"/>
+            </children>
+        </component>
+        <component id="sail">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="sail_right"/>
+                <componentref id="sail_left"/>
+            </children>
+        </component>
+        <component id="boat">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="hull"/>
+                <componentref id="mast"/>
+                <componentref id="sail"/>
+            </children>
+        </component>
+        <component id="painting">
+            <transformation>
+                <translate x="8" y="26" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="frame"/>
+                <componentref id="boat"/>
+            </children>
+        </component>
+        <component id="outer_eye">
+            <transformation>
+                <scale x="1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+        <component id="inner_eye">
+            <transformation>
+                <translation x="0" y="0" z="0.9" />
+                <scale x="0.2" y="0.2" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+        <component id="eye">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="outer_eye"/>
+                <componentref id="inner_eye"/>
+            </children>
+        </component>
+        <component id="eye_right">
+            <transformation>
+                <translate x="1" y="6" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="eye"/>
+            </children>
+        </component>
+        <component id="eye_left">
+            <transformation>
+                <translate x="-1" y="6" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="eye"/>
+            </children>
+        </component>
+        <component id="neck">
+            <transformation>
+                <translate x="0" y="-3" z="0" />
+                <transformationref id="cylinder_vertical" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="cylinder_3to2"/>
+            </children>
+        </component>
+        <component id="mouth">
+            <transformation>
+                <translate x="0" y="-3" z="0" />
+                <scale x="2.5" y="1.5" z="2.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+        <component id="head_sphere">
+            <transformation>
+                <translate x="0" y="8" z="0" />
+                <scale x="3" y="2" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+        <component id="head_cylinder">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+                <scale x="1" y="7.5" z="0" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="cylinder_5to15"/>
+            </children>
+        </component>
+        <component id="head_components">
+            <transformation>
+                <translate x="0" y="24" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="eye_right"/>
+                <componentref id="eye_left"/>
+                <componentref id="neck"/>
+                <componentref id="mouth"/>
+                <componentref id="head_sphere"/>
+                <componentref id="head_cylinder"/>
+            </children>
+        </component>
+        <component id="right_forearm">
+            <transformation>
+                <translate x="-4" y="21" z="0" />
+                <scale x="3" y="1" z="1" />
+                <transformationref id="horizontal_cylinder" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="straightCylinder"/>
+            </children>
+        </component>
+        <component id="right_lowarm">
+            <transformation>
+                <translate x="-7" y="21" z="0" />
+                <scale x="1" y="5.5" z="1" />
+                <transformationref id="vertical_cylinder" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="straightCylinder"/>
+            </children>
+        </component>
+        <component id="right_elbow">
+            <transformation>
+                <translate x="-7" y="21" z="0" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+        <component id="donut">
+            <transformation>
+                <translate x="-7" y="29" z="0" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="torus"/>
+            </children>
+        </component>
+        <component id="right_arm">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="right_forearm"/>
+                <componentref id="right_elbow"/>
+                <componentref id="right_lowarm"/>
+                <componentref id="donut"/>
+            </children>
+        </component>
+        <component id="arm_cylinder"/>
+            <transformation>
+                <translate x="2.5" y="12" z="0" />
+                <scale x="1" y="8" z="1" />
+                <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="straightCylinder"/>
+            </children>
+        </component>
+        <component id="finger"/>
+            <transformation>
+                <scale x="0.2" y="2" z="1" />
+                <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="straightCylinder"/>
+            </children>
+        </component>
+        <component id="finger1">
+            <transformation>
+                <translate x="3.3" y="10" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="finger"/>
+            </children>
+        </component>
+        <component id="finger2">
+            <transformation>
+                <translate x="2.8" y="10" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="finger"/>
+            </children>
+        </component>
+        <component id="finger3">
+            <transformation>
+                <translate x="2.3" y="10" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="finger"/>
+            </children>
+        </component>
+        <component id="thumb">
+            <transformation>
+                <translate x="1.5" y="10" z="0" />
+                <scale x="0.2" y="1" z="1" />
+                <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="straigthCylinder"/>
+            </children>
+        </component>
+        <component id="left_arm">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="arm_cylinder"/>
+                <componentref id="finger1"/>
+                <componentref id="finger2"/>
+                <componentref id="finger3"/>
+                <componentref id="thumb"/>
+            </children>
+        </component>
+        <component id="body">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="head_components"/>
+                <componentref id="right_arm"/>
+                <componentref id="left_arm"/>
+            </children>
+        </component>
+        <component id="homer">
+            <transformation>
+                <translate x="0" y="0" z="2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="body"/>
+                <componentref id="tshirt"/>
+                <componentref id="pants"/>
+                <componentref id="shoes"/>
+            </children>
+        </component>
         <component id="demoRoot">
             <transformation>
                 <translate x="0" y="0" z="0" />
-                <scale x="2" y="1" z="1" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />

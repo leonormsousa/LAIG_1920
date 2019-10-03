@@ -44,20 +44,29 @@
     </transformations>
 
     <primitives>
-        <primitive id="demoRectangle">
-            <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1"/>
+        <primitive id="rectangle">
+            <rectangle x1="-1" y1="-0.5" x2="1" y2="0.5"/>
         </primitive>
-        <primitive id="demoCylinder">
-            <cylinder base="1.5" top="2" height="5" slices="20" stacks="3"/>
+        <primitive id="triangle">
+            <triangle x1="0" y1="0" z1="0" x2="0" y2="1" z2="0" x3="1" y3="0" z3="0"/>
         </primitive>
-        <primitive id="demoTriangle">
-            <triangle x1="0" y1="0" z1="0" x2="1" y2="1" z2="0" x3="1" y3="0" z3="0"/>
+        <primitive id="torus">
+            <torus inner="2" outer="0.5" slices="40" loops="40"/>
         </primitive>
-        <primitive id="demoSphere">
-            <sphere radius="2" slices="20" stacks="10"/>
+        <primitive id="sphere">
+            <sphere radius="1" slices="40" stacks="20"/>
         </primitive>
-        <primitive id="demoTorus">
-            <torus inner="2" outer="0.2" slices="20" loops="10"/>
+        <primitive id="straightCylinder">
+            <cylinder base="1" top="1" height="1" slices="50" stacks="30"/>
+        </primitive>
+        <primitive id="cylinder_3to2">
+            <cylinder base="2" top="3" height="1" slices="50" stacks="30"/>
+        </primitive>
+        <primitive id="cylinder_5to15">
+            <cylinder base="1.5" top="0.5" height="2" slices="50" stacks="30"/>
+        </primitive>
+        <primitive id="cylinder_3to8">
+            <cylinder base="8" top="3" height="9" slices="100" stacks="50"/>
         </primitive>
     </primitives>
 

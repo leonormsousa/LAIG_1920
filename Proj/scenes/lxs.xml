@@ -23,15 +23,33 @@
     </lights>
 
     <textures>
-        <texture id="demoTexture" file="scenes/images/vidral.jpg" />
+        <texture id="donutTexture" file="scenes/images/donut.jpg" />
     </textures>
 
     <materials>
-        <material id="demoMaterial" shininess="10">
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+        <material id="yellow" shininess="10">
+            <emission r="0.99" g="0.85" b="0.06" a="1.0" />
+            <ambient r="0.99" g="0.85" b="0.06" a="1.0" />
+            <diffuse r="0.99" g="0.85" b="0.06" a="1.0" />
+            <specular r="0.99" g="0.85" b="0.06" a="1.0" />
+        </material>
+        <material id="pantsMaterial" shininess="10">
+            <emission r="0.44" g="0.82" b="0.99" a="1.0" />
+            <ambient r="0.44" g="0.82" b="0.99" a="1.0" />
+            <diffuse r="0.44" g="0.82" b="0.99" a="1.0" />
+            <specular r="0.44" g="0.82" b="0.99" a="1.0" />
+        </material>
+        <material id="shirtMaterial" shininess="10">
+            <emission r="1.0" g="1.0" b="1.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </material>
+        <material id="shoesMaterial" shininess="10">
+            <emission r="0.26" g="0.31" b="0.27" a="1.0" />
+            <ambient r="0.26" g="1.0" b="0.27" a="1.0" />
+            <diffuse r="0.26" g="1.0" b="0.27" a="1.0" />
+            <specular r="0.26" g="1.0" b="0.27" a="1.0" />
         </material>
     </materials>
 
@@ -395,7 +413,7 @@
             <materials>
                 <material id="none" />
             </materials>
-            <texture id="none"/>
+            <texture id="donutMaterial"/>
             <children>
                 <primitiveref id="torus"/>
             </children>
@@ -528,7 +546,7 @@
             <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -541,7 +559,7 @@
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -554,7 +572,7 @@
             <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -566,7 +584,7 @@
                 <translate x="0" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="shirtMaterial" />
             </materials>
             <texture id="none"/>
             <children>
@@ -581,7 +599,7 @@
                 <scale x="6" y="3" z="6"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -595,7 +613,7 @@
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -609,19 +627,19 @@
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
                 <primitiveref id="straightCylinder"/>            
             </children>
         </component>
-        <component id="panths">
+        <component id="pants">
             <transformation>
                 <translate x="0" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="pantsMaterial" />
             </materials>
             <texture id="none"/>
             <children>
@@ -636,7 +654,7 @@
                 <scale x="2.5" y="1" z="1"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -650,7 +668,7 @@
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -663,7 +681,7 @@
                 <scale x="2.5" y="1" z="1"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -676,7 +694,7 @@
                 <scale x="-1" y="1" z="1"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -688,7 +706,7 @@
                 <translate x="0" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="shoesMaterial" />
             </materials>
             <texture id="none"/>
             <children>
@@ -701,7 +719,7 @@
                 <translate x="0" y="0" z="2" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="yellow" />
             </materials>
             <texture id="none"/>
             <children>

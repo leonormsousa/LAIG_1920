@@ -1,5 +1,5 @@
 <lxs>
-    <scene root="demoRoot" axis_length="5"/>
+    <scene root="homer" axis_length="5"/>
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
@@ -522,6 +522,180 @@
                 <componentref id="left_arm"/>
             </children>
         </component>
+        <component id="torso">
+            <transformation>
+            <translate x="0" y="13" z="0"/>
+            <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="cylinder_3to8"/>
+            </children>
+        </component>
+        <component id="left-shoulder">
+            <transformation>   
+                <translate x="3" y="21" z="4"/>
+                <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="cylinder_5to15"/>
+            </children>
+        </component>
+        <component id="right-shoulder">
+            <transformation>
+            <translate x="-2" y="21" z="4"/>
+            <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="cylinder_5to15"/>
+            </children>
+        </component>
+        <component id="tshirt">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="torso"/>
+                <componentref id="left-shoulder"/>
+                <componentref id="right-shoulder"/>
+            </children>
+        </component>
+        <component id="pelvis">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <scale x="6" y="3" z="6"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="sphere"/>            
+            </children>
+        </component>
+        <component id="leftleg">
+            <transformation>
+                <translate x="-1.75" y="0" z="0" />
+                <scale x="1.75" y="9" z="1.75"/>
+                <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="straightCylinder"/>            
+            </children>
+        </component>
+        <component id="rightleg">
+            <transformation>
+                <translate x="1.75" y="0" z="0" />
+                <scale x="1.75" y="9" z="1.75"/>
+                <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="straightCylinder"/>            
+            </children>
+        </component>
+        <component id="panths">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="pelvis"/>
+                <componentref id="leftleg"/>
+                <componentref id="rightleg"/>
+            </children>
+        </component>
+        <component id="leftfoot">
+            <transformation>
+                <translate x="-1.5" y="1" z="0" />
+                <scale x="2.5" y="1" z="1"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="sphere"/>            
+            </children>
+        </component>
+        <component id="leftheel">
+            <transformation>
+                <translate x="-1.5" y="1" z="0" />
+                <scale x="0.5" y="1" z="0.5"/>
+                <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="straightCylinder"/>            
+            </children>
+        </component>
+        <component id="leftshoe">
+            <transformation>
+                <translate x="-1.5" y="1" z="0" />
+                <scale x="2.5" y="1" z="1"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="leftfoot"/>      
+                <componentref id="leftheel"/>                  
+            </children>
+        </component>
+        <component id="rightshoe">
+            <transformation>
+                <scale x="-1" y="1" z="1"/>
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="leftshoe"/>            
+            </children>
+        </component>
+        <component id="shoes">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="none" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="leftshoe"/>  
+                <componentref id="leftshoe"/>                      
+            </children>
+        </component>
         <component id="homer">
             <transformation>
                 <translate x="0" y="0" z="2" />
@@ -535,20 +709,6 @@
                 <componentref id="tshirt"/>
                 <componentref id="pants"/>
                 <componentref id="shoes"/>
-            </children>
-        </component>
-        <component id="demoRoot">
-            <transformation>
-                <translate x="0" y="0" z="0" />
-            </transformation>
-            <materials>
-                <material id="demoMaterial" />
-            </materials>
-            <texture id="demoTexture"/>
-            <children>
-                <primitiveref id="demoRectangle" />
-                <primitiveref id="demoCylinder" />
-                <primitiveref id="demoSphere" />
             </children>
         </component>
     </components>

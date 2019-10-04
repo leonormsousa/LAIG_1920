@@ -57,7 +57,7 @@
             <sphere radius="2" slices="20" stacks="10"/>
         </primitive>
         <primitive id="demoTorus">
-            <torus inner="2" outer="0.2" slices="20" loops="10"/>
+            <torus inner="0.5" outer="2" slices="20" loops="10"/>
         </primitive>
     </primitives>
 

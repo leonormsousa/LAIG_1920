@@ -113,7 +113,7 @@ class MySceneGraph {
         }
 
         // <ambient>
-        if ((index = nodeNames.indexOf("ambient")) == -1)
+        if ((index = nodeNames.indexOf("globals")) == -1)
             return "tag <ambient> missing";
         else {
             if (index != AMBIENT_INDEX)
@@ -733,13 +733,23 @@ class MySceneGraph {
             var childrenIndex = nodeNames.indexOf("children");
 
             this.onXMLMinorError("To do: Parse components.");
+
             // Transformations
+            var transformation_matrix = mat4.create();
+            var transChildren=transChildren=nodeNames[transformationIndex].children;
+            for (let j=0; j<transChildren.length; j++)
+                math.multiply(transformation_matrix, transChildren[j]);
 
             // Materials
+            var materials=nodeNames[materialsIndex].children;
 
             // Texture
+            var texture=nodeNames[textureIndex];
 
             // Children
+            var children=nodeNames[childrenIndex];
+
+            this.components.push(new MyComponent(this.scene, componentID, transformation_matrix, materials, texture, children));
         }
     }
 
@@ -855,12 +865,41 @@ class MySceneGraph {
         console.log("   " + message);
     }
 
+    processNode(id, transformation_matrix, material, texture){
+        if (this.primitives[id] != null)
+        {
+            this.materials[material].apply();
+            this.textures[texture].apply();
+            this.scene.pushMatrix();
+            this.scene.multMatrix(transformation_matrix);
+            this.primitives[id].display();
+            this.scene.popMatrix();
+        }
+        else
+        {
+            var component=this.components[id];
+            for (let i=0; i<component.children.length; i++)
+            {
+                var child=component.children[i];
+                var material_c=child.getCurrentMaterial();
+                if (child.material=="inherit")
+                    material_c=material;
+                var texture_c = child.texture;
+                if (child.texture=="inherit")
+                    texture_c=texture;
+                processNode(child.id, math.multiply(transformation_matrix, child.transformation_matrix), material_c, texture_c);
+            }
+        }
+    }
+
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
         //To do: Create display loop for transversing the scene graph
-
+        var transMatrix = mat4.create();
+        this.processNode(this.idRoot, transMatrix, null, 'none')
+        
         //To test the parsing/creation of the primitives, call the display function directly
         //this.primitives['demoRectangle'].display();
         //this.primitives['demoCylinder'].display();

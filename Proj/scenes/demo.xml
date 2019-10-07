@@ -8,10 +8,10 @@
         </perspective>
     </views>
 
-    <ambient>
+    <globals>
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
         <background r="0.0" g="0.0" b="0.0" a="1.0" />
-    </ambient>
+    </globals>
 
     <lights>
         <omni id="demoLight" enabled="1">
@@ -57,7 +57,7 @@
             <sphere radius="2" slices="20" stacks="10"/>
         </primitive>
         <primitive id="demoTorus">
-            <torus inner="0.5" outer="2" slices="100" loops="100"/>
+            <torus inner="0.5" outer="2" slices="10" loops="10"/>
         </primitive>
     </primitives>
 

@@ -62,10 +62,10 @@
     </materials>
 
     <transformations>
-        <transformation id="cylinder_vertical">
+        <transformation id="vertical_cylinder">
             <rotate axis="x" angle="-90" />
         </transformation>
-        <transformation id="cylinder_horizontal">
+        <transformation id="horizontal_cylinder">
             <rotate axis="y" angle="-90" />
         </transformation>
     </transformations>
@@ -101,7 +101,7 @@
         <component id="hull_rectangle">
             <transformation>
                 <translation x="2" y="1" z="0" />
-                <scale x="1" y="0.5" z="1">
+                <scale x="1" y="0.5" z="1"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -114,7 +114,7 @@
         <component id="hull_triangle_left">
             <transformation>
                 <translation x="2" y="2" z="0" />
-                <scale x="0.5" y="0.5" z="1">
+                <scale x="0.5" y="0.5" z="1"/>
                 <rotate axis="z" angle="0.5"/>
             </transformation>
             <materials>
@@ -128,7 +128,7 @@
         <component id="hull_triangle_right">
             <transformation>
                 <translation x="6" y="2" z="0" />
-                <scale x="-0.5" y="0.5" z="1">
+                <scale x="-0.5" y="0.5" z="1"/>
                 <rotate axis="z" angle="0.5"/>
             </transformation>
             <materials>
@@ -142,7 +142,7 @@
         <component id="mast">
             <transformation>
                 <translation x="4" y="2" z="0" />
-                <scale x="0.025" y="1.5" z="1">
+                <scale x="0.025" y="1.5" z="1"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -308,7 +308,7 @@
         <component id="neck">
             <transformation>
                 <translate x="0" y="-3" z="0" />
-                <transformationref id="cylinder_vertical" />
+                <transformationref id="vertical_cylinder" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -421,7 +421,7 @@
             <materials>
                 <material id="none" />
             </materials>
-            <texture id="donutMaterial"/>
+            <texture id="donutTexture"/>
             <children>
                 <primitiveref id="torus"/>
             </children>
@@ -441,7 +441,7 @@
                 <componentref id="donut"/>
             </children>
         </component>
-        <component id="arm_cylinder"/>
+        <component id="arm_cylinder">
             <transformation>
                 <translate x="2.5" y="12" z="0" />
                 <scale x="1" y="8" z="1" />
@@ -455,7 +455,7 @@
                 <primitiveref id="straightCylinder"/>
             </children>
         </component>
-        <component id="finger"/>
+        <component id="finger">
             <transformation>
                 <scale x="0.2" y="2" z="1" />
                 <transformationref id="vertical_cylinder"/>

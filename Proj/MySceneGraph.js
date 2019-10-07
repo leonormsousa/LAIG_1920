@@ -112,15 +112,15 @@ class MySceneGraph {
                 return error;
         }
 
-        // <ambient>
-        if ((index = nodeNames.indexOf("ambient")) == -1)
-            return "tag <ambient> missing";
+        // <globals>
+        if ((index = nodeNames.indexOf("globals")) == -1)
+            return "tag <globals> missing";
         else {
             if (index != AMBIENT_INDEX)
-                this.onXMLMinorError("tag <ambient> out of order");
+                this.onXMLMinorError("tag <globals> out of order");
 
-            //Parse ambient block
-            if ((error = this.parseAmbient(nodes[index])) != null)
+            //Parse globals block
+            if ((error = this.parseGlobals(nodes[index])) != null)
                 return error;
         }
 
@@ -227,18 +227,42 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseView(viewsNode) {
-        this.onXMLMinorError("To do: Parse views and create cameras.");
+
+        // var children = viewsNode.children;
+
+        // this.views = [];
+        // var nodeNames = [];
+
+        // for (var i = 0; i < children.length; i++)
+        //     nodeNames.push(children[i].nodeName);
+
+        // var ambientIndex = nodeNames.indexOf("ambient");
+        // var backgroundIndex = nodeNames.indexOf("background");
+
+        // var color = this.parseColor(children[ambientIndex], "ambient");
+        // if (!Array.isArray(color))
+        //     return color;
+        // else
+        //     this.ambient = color;
+
+        // color = this.parseColor(children[backgroundIndex], "background");
+        // if (!Array.isArray(color))
+        //     return color;
+        // else
+        //     this.background = color;
+
+        // this.log("Parsed ambient");
 
         return null;
     }
 
     /**
-     * Parses the <ambient> node.
-     * @param {ambient block element} ambientsNode
+     * Parses the <globals> node.
+     * @param {globals block element} globalsNode
      */
-    parseAmbient(ambientsNode) {
+    parseGlobals(globalsNode) {
 
-        var children = ambientsNode.children;
+        var children = globalsNode.children;
 
         this.ambient = [];
         this.background = [];
@@ -263,7 +287,7 @@ class MySceneGraph {
         else
             this.background = color;
 
-        this.log("Parsed ambient");
+        this.log("Parsed globals");
 
         return null;
     }
@@ -391,10 +415,39 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
+        var children = texturesNode.children;
+        this.textures = [];
+        
+        // Any number of textures.
+        for (var i = 0; i < children.length; i++) {
 
-        //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
-        return null;
+            if (children[i].nodeName != "texture") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            // Get id and URL of the current texture.
+            var textureID = this.reader.getString(children[i], 'id');
+            var textureURL = this.reader.getString(children[i], 'file');
+            if (textureURL == null)
+                return "no url defined for texture";
+            if (textureID == null)
+                return "no ID defined for texture";
+
+            // Checks for repeated IDs and URLs.
+            if (this.textures[textureURL] != null)
+                return "url must be unique for each texture (conflict: url = " + textureURL + ")";
+            if (this.textures[textureID] != null)
+                return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
+            
+                        
+                var texture = new CGFappearance(this.scene);
+                texture.loadTexture(textureURL);
+                texture.setTextureWrap('REPEAT', 'REPEAT');
+
+            this.textures[textureID] = texture;
+            // this.onXMLMinorError("To do: Parse materials.");
+        }
     }
 
     /**
@@ -425,9 +478,24 @@ class MySceneGraph {
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
                 return "ID must be unique for each light (conflict: ID = " + materialID + ")";
+            
+            grandChildren=children[i].children;
+            for(let j=0; j<grandChildren.length;j++){
+                nodeNames.push(grandChildren[j]);
+            }
+            var materialEmissionIndex = nodeNames.indexOf("emission");
+            var materialAmbientIndex = nodeNames.indexOf("ambient");
+            var materialDiffuseIndex = nodeNames.indexOf("diffuse");
+            var materialSpecularIndex = nodeNames.indexOf("specular");
 
-            //Continue here
-            this.onXMLMinorError("To do: Parse materials.");
+            var material = new CGFappearance(this.scene);
+            material.setAmbient(this.reader.getFloat(grandChildren[materialAmbientIndex],'r'), this.reader.getFloat(grandChildren[materialAmbientIndex],'g'), this.reader.getFloat(grandChildren[materialAmbientIndex],'b'), this.reader.getFloat(grandChildren[materialAmbientIndex],'a'));
+            material.setDiffuse(this.reader.getFloat(grandChildren[materialDiffuseIndex],'r'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'g'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'b'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'a'));
+            material.setSpecular(this.reader.getFloat(grandChildren[materialSpecularIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],'b'), this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
+            material.setEmission(this.reader.getFloat(grandChildren[materialEmissionIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],'b'),this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
+            material.setShininess(this.reader.getFloat(children[i],'shininess'));
+
+            this.materials[materialID] = material;
         }
 
         //this.log("Parsed materials");
@@ -477,12 +545,25 @@ class MySceneGraph {
                         transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
                         break;
                     case 'scale':                        
-                        this.onXMLMinorError("To do: Parse scale transformations.");
+                        var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " + transformationID);
+                        if (!Array.isArray(coordinates))
+                            return coordinates;
+
+                        transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);                        
                         break;
                     case 'rotate':
-                        // angle
-                        this.onXMLMinorError("To do: Parse rotate transformations.");
-                        break;
+                        switch(this.reader.getString(grandChildren[j], 'axis')){
+                            case 'x':     
+                                transfMatrix = mat4.rotateX( transfMatrix, transfMatrix, (this.reader.getFloat(grandChildren[j],'angle')*Math.PI)/180 );
+                                break;
+                            case 'y':     
+                                transfMatrix = mat4.rotateY( transfMatrix, transfMatrix, (this.reader.getFloat(grandChildren[j],'angle')*Math.PI)/180 );
+                                break;
+                            case 'z':     
+                                transfMatrix = mat4.rotateZ( transfMatrix, transfMatrix, (this.reader.getFloat(grandChildren[j],'angle')*Math.PI)/180 );
+                                break;
+                        }
+                       
                 }
             }
             this.transformations[transformationID] = transfMatrix;

@@ -45,6 +45,24 @@ class MySceneGraph {
         this.reader.open('scenes/' + filename, this);
     }
 
+    //multiplys two matrices
+    multiply(a, b) {
+        var aNumRows = a.length, aNumCols = a[0].length,
+            bNumRows = b.length, bNumCols = b[0].length,
+            m = new Array(aNumRows);  // initialize array of rows
+        for (var r = 0; r < aNumRows; ++r) {
+          m[r] = new Array(bNumCols); // initialize the current row
+          for (var c = 0; c < bNumCols; ++c) {
+            m[r][c] = 0;             // initialize the current cell
+            for (var i = 0; i < aNumCols; ++i) {
+              m[r][c] += a[r][i] * b[i][c];
+            }
+          }
+        }
+        return m;
+    }
+      
+
     /*
      * Callback to be executed after successful reading
      */
@@ -875,7 +893,7 @@ class MySceneGraph {
             for (let j=0; j<transChildren.length; j++){
                 switch (transChildren[j].nodeName) {
                     case 'transformationref':
-                        transfMatrix = Math.multiply(this.transformations[this.reader.getString(transChildren[j],'id')], transfMatrix);
+                        transfMatrix = this.multiply(this.transformations[this.reader.getString(transChildren[j],'id')], transfMatrix);
                         break;
                     case 'translate':
                         var coordinates = this.parseCoordinates3D(transChildren[j], "translate transformation");
@@ -1063,7 +1081,7 @@ class MySceneGraph {
                 var texture_c = child.texture;
                 if (child.texture=="inherit")
                     texture_c=texture;
-                processNode(child.id, math.multiply(transformation_matrix, child.transformation_matrix), material_c, texture_c);
+                processNode(child.id, this.multiply(transformation_matrix, child.transformation_matrix), material_c, texture_c);
             }
             for (let i=0; i<component.childrenPrimitives.length; i++)
             {
@@ -1074,7 +1092,7 @@ class MySceneGraph {
                 var texture_c = child.texture;
                 if (child.texture=="inherit")
                     texture_c=texture;
-                processNode(child.id, math.multiply(transformation_matrix, child.transformation_matrix), material_c, texture_c);
+                processNode(child.id, this.multiply(transformation_matrix, child.transformation_matrix), material_c, texture_c);
             }
         }
     }
@@ -1091,6 +1109,6 @@ class MySceneGraph {
         //this.primitives['demoCylinder'].display();
         //this.primitives['demoTriangle'].display();
         //this.primitives['demoSphere'].display();
-        this.primitives['demoTorus'].display();
+        //this.primitives['demoTorus'].display();
     }
 }

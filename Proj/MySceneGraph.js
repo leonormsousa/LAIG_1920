@@ -889,7 +889,6 @@ class MySceneGraph {
             // Transformations
             var transfMatrix = mat4.create();
             var transChildren= children[i].children[transformationIndex].children;
-            console.log(transChildren);
             for (let j=0; j<transChildren.length; j++){
                 switch (transChildren[j].nodeName) {
                     case 'transformationref':
@@ -925,20 +924,23 @@ class MySceneGraph {
             }
 
             // Materials
-            var materials=nodeNames[materialsIndex].children;
+            var materials=[];
+            var childrens=children[i].children[materialsIndex].children;
+            for(let j=0; j<childrens.length;j++)
+                materials.push(this.reader.getString(childrens[j], 'id'));
 
             // Texture
-            var texture=nodeNames[textureIndex];
+            var texture=this.reader.getString(children[i].children[textureIndex], 'id');
 
             // Children
-            var childrens=nodeNames[childrenIndex];
+            var childrens=children[i].children[childrenIndex].children;
             var childrenPrimitives = [];
             var childrenComponents = [];
-            for(let i=0; i<childrens.length;i++){
-                if(childrens[i].nodeName=="primitiveref")
-                    childrenPrimitives[this.reader.getString(childrens[i], 'id')] = childrens[i];
-                else if(childrens[i].nodeName=="componentref"){
-                    childrenComponents[this.reader.getString(childrens[i], 'id')] = childrens[i];
+            for(let j=0; j<childrens.length;j++){
+                if(childrens[j].nodeName=="primitiveref")
+                    childrenPrimitives.push(this.reader.getString(childrens[j], 'id'));
+                else if(childrens[j].nodeName=="componentref"){
+                    childrenComponents.push(this.reader.getString(childrens[j], 'id'));
                 }
             }
 
@@ -1061,8 +1063,12 @@ class MySceneGraph {
     processNode(id, transformation_matrix, material, texture){
         if (this.primitives[id] != null)
         {
-            this.materials[material].apply();
-            this.textures[texture].apply();
+            var mat = new CGFappearance(this.scene);
+            mat=this.materials[material];
+            if (texture=="none")
+                mat.setTexture(null);
+            else
+                mat.setTexture(textures[texture])
             this.scene.pushMatrix();
             this.scene.multMatrix(transformation_matrix);
             this.primitives[id].display();
@@ -1071,28 +1077,22 @@ class MySceneGraph {
         else
         {
             var component=this.components[id];
-            console.log(component);
+            var material_c=component.getCurrentMaterial();
+            if (material_c=='inherit')
+                material_c=material;
+            var texture_c = component.texture;
+            if (texture_c=="inherit")
+                texture_c=texture;
             for (let i=0; i<component.childrenComponents.length; i++)
             {
-                var child=this.components[component.childrenComponents[i]];
-                var material_c=child.getCurrentMaterial();
-                if (child.material=="inherit")
-                    material_c=material;
-                var texture_c = child.texture;
-                if (child.texture=="inherit")
-                    texture_c=texture;
-                processNode(child.id, this.multiply(transformation_matrix, child.transformation_matrix), material_c, texture_c);
-            }
-            for (let i=0; i<component.childrenPrimitives.length; i++)
-            {
-                var child=this.primitives[component.childrenPrimitives[i]];
-                var material_c=child.getCurrentMaterial();
-                if (child.material=="inherit")
-                    material_c=material;
-                var texture_c = child.texture;
-                if (child.texture=="inherit")
-                    texture_c=texture;
-                processNode(child.id, this.multiply(transformation_matrix, child.transformation_matrix), material_c, texture_c);
+                var childIndex=component.childrenComponents[i];
+                var child = this.components[childIndex];
+                console.log(component.id);
+                console.log(child);
+                this.processNode(child.id, this.multiply(transformation_matrix, component.transformation_matrix), material_c, texture_c);
+            }    
+            for (let i=0; i<component.childrenPrimitives.length; i++){
+                this.processNode(component.childrenPrimitives[i], transformation_matrix, material, texture);
             }
         }
     }
@@ -1103,12 +1103,5 @@ class MySceneGraph {
     displayScene() {
         var transMatrix = mat4.create();
         this.processNode(this.idRoot, transMatrix, null, 'none')
-        
-        //To test the parsing/creation of the primitives, call the display function directly
-        //this.primitives['demoRectangle'].display();
-        //this.primitives['demoCylinder'].display();
-        //this.primitives['demoTriangle'].display();
-        //this.primitives['demoSphere'].display();
-        //this.primitives['demoTorus'].display();
     }
 }

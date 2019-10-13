@@ -108,14 +108,14 @@
             </materials>
             <texture id="none" length_s="1" length_t="1"/>
             <children>
-                <primitiveref id="triangle" />
+                <primitiveref id="rectangle" />
             </children>
         </component>
         <component id="hull_triangle_left">
             <transformation>
                 <translation x="2" y="2" z="0" />
                 <scale x="0.5" y="0.5" z="1"/>
-                <rotate axis="z" angle="0.5"/>
+                <rotate axis="z" angle="180"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -129,7 +129,7 @@
             <transformation>
                 <translation x="6" y="2" z="0" />
                 <scale x="-0.5" y="0.5" z="1"/>
-                <rotate axis="z" angle="0.5"/>
+                <rotate axis="z" angle="180"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -167,7 +167,7 @@
         <component id="sail_left">
             <transformation>
                 <translation x="4" y="3" z="0" />
-                <scale x="-1" y="1" z="1" />
+                <scale x="-1" y="1" z="-1" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -218,7 +218,7 @@
         </component>
         <component id="boat">
             <transformation>
-                <translate x="0" y="0" z="0" />
+                <translate x="0" y="0" z="0.1" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -239,7 +239,7 @@
             </materials>
             <texture id="none"/>
             <children>
-                <componentref id="frame"/>
+                <!--<componentref id="frame"/>-->
                 <componentref id="boat"/>
             </children>
         </component>
@@ -719,7 +719,7 @@
             <texture id="none"/>
             <children>
                 <componentref id="leftshoe"/>  
-                <componentref id="leftshoe"/>                      
+                <componentref id="rightshoe"/>                      
             </children>
         </component>
         <component id="homer">
@@ -739,7 +739,7 @@
         </component>
         <component id="root">
             <transformation>
-                <translate x="0" y="0" z="0" />
+                <scale x="0.1" y="0.1" z="0.1" />
             </transformation>
             <materials>
                 <material id="yellow" />

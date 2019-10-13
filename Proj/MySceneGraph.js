@@ -1067,16 +1067,16 @@ class MySceneGraph {
             var texture_c = component.texture;
             if (texture_c=="inherit")
                 texture_c=texture;
+            var mult = mat4.create();
+            mat4.multiply(mult, transformation_matrix, component.transformation_matrix);
             for (let i=0; i<component.childrenComponents.length; i++)
             {
-                var mult = mat4.create();
-                mat4.multiply(mult, transformation_matrix, component.transformation_matrix);
                 var childIndex = component.childrenComponents[i];
                 var child = this.components[childIndex];
                 this.processNode(child.id, mult, material_c, texture_c);
             }    
             for (let i=0; i<component.childrenPrimitives.length; i++){
-                this.processNode(component.childrenPrimitives[i], transformation_matrix, material, texture);
+                this.processNode(component.childrenPrimitives[i], mult, material, texture);
             }
         }
     }

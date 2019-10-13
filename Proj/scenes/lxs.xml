@@ -2,7 +2,7 @@
     <scene root="root" axis_length="5"/>
 
     <views default="homerCamera">
-        <perspective id="homerCamera" near="0.1" far="500" angle="30">
+        <perspective id="homerCamera" near="0.1" far="500" angle="0">
             <from x="0" y="40" z="30" />
             <to x="0" y="20" z="5" />
         </perspective>
@@ -20,14 +20,14 @@
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </omni>
-        <spot id="spotlight" enabled="1" angle="20" exponent="10">
+        <!-- <spot id="spotlight" enabled="1" angle="20" exponent="10">
             <location x="0" y="40" z="-10" w="1.0" />
             <target x="0" y="20" z="5" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="0" linear="0" quadratic="0" />
-        </spot>
+        </spot> -->
     </lights>
 
     <textures>
@@ -53,17 +53,23 @@
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="0.25" g="0.25" b="0.25" a="1.0" />
         </material>
+        <material id="blackMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0" g="0" b="0" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+        </material>
         <material id="shoesMaterial" shininess="10">
-            <emission r="0" g="0." b="0" a="1.0" />
-            <ambient r="0.26" g="1.0" b="0.27" a="1.0" />
-            <diffuse r="0.26" g="1.0" b="0.27" a="1.0" />
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.82" g="0.7" b="0.44" a="1.0" />
+            <diffuse r="0.82" g="0.7" b="0.44" a="1.0" />
             <specular r="0.7" g="0.25" b="0.1" a="1.0" />
         </material>
         <material id="donutMaterial" shininess="10">
             <emission r="0" g="0" b="0" a="1.0" />
-            <ambient r="0.26" g="1.0" b="0.27" a="1.0" />
-            <diffuse r="0.26" g="1.0" b="0.27" a="1.0" />
-            <specular r="0.1" g="0.5" b="0.14" a="1.0" />
+            <ambient r="0.93" g="0.51" b="0.67" a="1.0" />
+            <diffuse r="0.93" g="0.51" b="0.67" a="1.0" />
+            <specular r="0.93" g="0.51" b="0.67" a="1.0" />
         </material>
     </materials>
 
@@ -254,7 +260,7 @@
                 <scale x="1" y="1" z="1" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="shirtMaterial" />
             </materials>
             <texture id="none"/>
             <children>
@@ -263,11 +269,11 @@
         </component>
         <component id="inner_eye">
             <transformation>
-                <translation x="0" y="0" z="0.9" />
-                <scale x="0.2" y="0.2" z="0.2" />
+                <translate x="0" y="0" z="1" />
+                <scale x="0.5" y="0.5" z="0.5" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="blackMaterial" />
             </materials>
             <texture id="none"/>
             <children>
@@ -276,7 +282,7 @@
         </component>
         <component id="eye">
             <transformation>
-                <translate x="0" y="0" z="0" />
+                <translate x="0" y="-5" z="2" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -311,7 +317,7 @@
                 <componentref id="eye"/>
             </children>
         </component>
-        <component id="neck">
+        <!-- <component id="neck">
             <transformation>
                 <translate x="0" y="-3" z="0" />
                 <transformationref id="vertical_cylinder" />
@@ -323,14 +329,14 @@
             <children>
                 <primitiveref id="cylinder_3to2"/>
             </children>
-        </component>
+        </component> -->
         <component id="mouth">
             <transformation>
-                <translate x="0" y="-3" z="0" />
-                <scale x="2.5" y="1.5" z="2.5" />
+                <translate x="0" y="-1" z="2" />
+                <scale x="2" y="1" z="2" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="shoesMaterial" />
             </materials>
             <texture id="none"/>
             <children>
@@ -339,8 +345,8 @@
         </component>
         <component id="head_sphere">
             <transformation>
-                <translate x="0" y="8" z="0" />
-                <scale x="3" y="2" z="3" />
+                <translate x="0" y="0" z="0" />
+                <scale x="2.5" y="3" z="3" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -350,10 +356,11 @@
                 <primitiveref id="sphere"/>
             </children>
         </component>
-        <component id="head_cylinder">
+        <component id="neck">
             <transformation>
-                <translate x="0" y="0.5" z="0" />
-                <scale x="1" y="7.5" z="1" />
+                <translate x="0" y="0" z="-4" />
+                <scale x="2" y="2" z="1" />
+                <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -365,7 +372,7 @@
         </component>
         <component id="head_components">
             <transformation>
-                <translate x="0" y="24" z="1" />
+                <translate x="0" y="23" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -377,13 +384,13 @@
                 <componentref id="neck"/>
                 <componentref id="mouth"/>
                 <componentref id="head_sphere"/>
-                <componentref id="head_cylinder"/>
+                <!-- <componentref id="head_cylinder"/> -->
             </children>
         </component>
-        <component id="right_forearm">
+        <component id="right_lowarm">
             <transformation>
-                <translate x="-4" y="21" z="0" />
-                <scale x="3" y="3" z="1" />
+                <translate x="0" y="18" z="4" />
+                <scale x="0.8" y="0.8" z="4" />
                 <transformationref id="horizontal_cylinder" />
             </transformation>
             <materials>
@@ -394,10 +401,10 @@
                 <primitiveref id="straightCylinder"/>
             </children>
         </component>
-        <component id="right_lowarm">
+        <component id="right_forearm">
             <transformation>
-                <translate x="-7" y="21" z="0" />
-                <scale x="1" y="5.5" z="1" />
+                <translate x="-8" y="0" z="18" />
+                <scale x="0.8" y="0.8" z="5.5" />
                 <transformationref id="vertical_cylinder" />
             </transformation>
             <materials>
@@ -410,7 +417,7 @@
         </component>
         <component id="right_elbow">
             <transformation>
-                <translate x="-7" y="21" z="0" />
+                <translate x="-8" y="18" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -422,7 +429,7 @@
         </component>
         <component id="donut">
             <transformation>
-                <translate x="-7" y="29" z="0" />
+                <translate x="-8" y="25" z="0" />
             </transformation>
             <materials>
                 <material id="donutMaterial" />
@@ -434,7 +441,7 @@
         </component>
         <component id="right_arm">
             <transformation>
-                <translate x="0" y="0" z="0" />
+                <translate x="-0.6" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -449,8 +456,9 @@
         </component>
         <component id="arm_cylinder">
             <transformation>
-                <translate x="2.5" y="12" z="0" />
-                <scale x="1" y="8" z="1" />
+                <translate x="9.5" y="0" z="13" />
+                <rotate axis="y" angle="-45" />
+                <scale x="1" y="1" z="8" />
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
@@ -463,7 +471,9 @@
         </component>
         <component id="finger">
             <transformation>
-                <scale x="0.2" y="2" z="0.2" />
+                <translate x="10" y="0" z="12"/>
+                <rotate axis="y" angle="-45" />
+                <scale x="0.15" y="0.15" z="2" />
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
@@ -476,7 +486,7 @@
         </component>
         <component id="finger1">
             <transformation>
-                <translate x="3.3" y="10" z="0" />
+                <translate x="0.4" y="-0.3" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -488,7 +498,7 @@
         </component>
         <component id="finger2">
             <transformation>
-                <translate x="2.8" y="10" z="0" />
+                <translate x="0.8" y="0.1" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -500,7 +510,7 @@
         </component>
         <component id="finger3">
             <transformation>
-                <translate x="2.3" y="10" z="0" />
+                <translate x="1.2" y="0.5" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -512,8 +522,9 @@
         </component>
         <component id="thumb">
             <transformation>
-                <translate x="1.5" y="10" z="0" />
-                <scale x="0.2" y="1" z="0.2" />
+                <translate x="9.5" y="0" z="11.5" />
+                <rotate axis="y" angle="-30" />
+                <scale x="0.2" y="0.2" z="1.5" />
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
@@ -556,7 +567,7 @@
         </component>
         <component id="torso">
             <transformation>
-            <translate x="0" y="13" z="0"/>
+            <translate x="0" y="0" z="10"/>
             <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
@@ -567,10 +578,11 @@
                 <primitiveref id="cylinder_3to8"/>
             </children>
         </component>
-        <component id="left-shoulder">
+        <component id="right-shoulder">
             <transformation>   
-                <translate x="3" y="21" z="4"/>
-                <transformationref id="vertical_cylinder"/>
+                <translate x="0" y="18" z="5"/>
+                <scale x="1" y="1" z="-1"/>
+                <transformationref id="horizontal_cylinder"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -580,9 +592,10 @@
                 <primitiveref id="cylinder_5to15"/>
             </children>
         </component>
-        <component id="right-shoulder">
+        <component id="left-shoulder">
             <transformation>
-            <translate x="-2" y="21" z="4"/>
+            <translate x="4.5" y="0" z="18"/>
+            <rotate axis="y" angle="-45"/>
             <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
@@ -609,7 +622,7 @@
         </component>
         <component id="pelvis">
             <transformation>
-                <translate x="0" y="0" z="0" />
+                <translate x="0" y="10" z="0" />
                 <scale x="6" y="3" z="6"/>
             </transformation>
             <materials>
@@ -622,8 +635,8 @@
         </component>
         <component id="leftleg">
             <transformation>
-                <translate x="-1.75" y="0" z="0" />
-                <scale x="1.75" y="9" z="1.75"/>
+                <translate x="2" y="0" z="3" />
+                <scale x="1.75" y="1.75" z="9"/>
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
@@ -636,8 +649,8 @@
         </component>
         <component id="rightleg">
             <transformation>
-                <translate x="1.75" y="0" z="0" />
-                <scale x="1.75" y="9" z="1.75"/>
+                <translate x="-2" y="0" z="3" />
+                <scale x="1.75" y="1.75" z="9"/>
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
@@ -677,8 +690,8 @@
         </component>
         <component id="leftheel">
             <transformation>
-                <translate x="-1.5" y="1" z="0" />
-                <scale x="0.5" y="1" z="0.5"/>
+                <translate x="0.4" y="0" z="0" />
+                <scale x="0.5" y="0.5" z="1"/>
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
@@ -692,7 +705,7 @@
         <component id="leftshoe">
             <transformation>
                 <translate x="-1.5" y="1" z="0" />
-                <scale x="2.5" y="1" z="1"/>
+                <scale x="1.5" y="1" z="1"/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -752,8 +765,8 @@
             </materials>
             <texture id="none"/>
             <children>
-                <componentref id="homer"/>
                 <componentref id="painting"/>
+                <componentref id="homer"/>
             </children>
         </component>
     </components>

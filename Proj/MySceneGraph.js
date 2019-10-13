@@ -306,6 +306,8 @@ class MySceneGraph {
             }
 
             this.views[viewID] = global;
+            console.log("global");
+            console.log(global);
             numViews++;
         }
 

@@ -1,5 +1,5 @@
 <lxs>
-    <scene root="homer" axis_length="5"/>
+    <scene root="root" axis_length="5"/>
 
     <views default="homerCamera">
         <perspective id="homerCamera" near="0.1" far="500" angle="30">
@@ -78,7 +78,7 @@
             <triangle x1="0" y1="0" z1="0" x2="0" y2="1" z2="0" x3="1" y3="0" z3="0"/>
         </primitive>
         <primitive id="torus">
-            <torus inner="2" outer="0.5" slices="40" loops="40"/>
+            <torus inner="0.5" outer="2" slices="40" loops="40"/>
         </primitive>
         <primitive id="sphere">
             <sphere radius="1" slices="40" stacks="20"/>
@@ -515,7 +515,7 @@
             </materials>
             <texture id="none"/>
             <children>
-                <componentref id="straigthCylinder"/>
+                <primitiveref id="straightCylinder"/>
             </children>
         </component>
         <component id="left_arm">
@@ -735,6 +735,19 @@
                 <componentref id="tshirt"/>
                 <componentref id="pants"/>
                 <componentref id="shoes"/>
+            </children>
+        </component>
+        <component id="root">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="yellow" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="homer"/>
+                <componentref id="painting"/>
             </children>
         </component>
     </components>

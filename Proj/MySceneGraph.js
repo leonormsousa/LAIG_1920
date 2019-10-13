@@ -43,25 +43,7 @@ class MySceneGraph {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
         this.reader.open('scenes/' + filename, this);
-    }
-
-    //multiplys two matrices
-    multiply(a, b) {
-        var aNumRows = a.length, aNumCols = a[0].length,
-            bNumRows = b.length, bNumCols = b[0].length,
-            m = new Array(aNumRows);  // initialize array of rows
-        for (var r = 0; r < aNumRows; ++r) {
-          m[r] = new Array(bNumCols); // initialize the current row
-          for (var c = 0; c < bNumCols; ++c) {
-            m[r][c] = 0;             // initialize the current cell
-            for (var i = 0; i < aNumCols; ++i) {
-              m[r][c] += a[r][i] * b[i][c];
-            }
-          }
-        }
-        return m;
-    }
-      
+    } 
 
     /*
      * Callback to be executed after successful reading
@@ -888,11 +870,12 @@ class MySceneGraph {
 
             // Transformations
             var transfMatrix = mat4.create();
+            var mult;
             var transChildren= children[i].children[transformationIndex].children;
             for (let j=0; j<transChildren.length; j++){
                 switch (transChildren[j].nodeName) {
                     case 'transformationref':
-                        transfMatrix = this.multiply(this.transformations[this.reader.getString(transChildren[j],'id')], transfMatrix);
+                        mat4.multiply(transfMatrix, this.transformations[this.reader.getString(transChildren[j],'id')], transfMatrix);
                         break;
                     case 'translate':
                         var coordinates = this.parseCoordinates3D(transChildren[j], "translate transformation");
@@ -1069,6 +1052,7 @@ class MySceneGraph {
                 mat.setTexture(null);
             else
                 mat.setTexture(textures[texture])
+            mat.apply();
             this.scene.pushMatrix();
             this.scene.multMatrix(transformation_matrix);
             this.primitives[id].display();
@@ -1085,11 +1069,11 @@ class MySceneGraph {
                 texture_c=texture;
             for (let i=0; i<component.childrenComponents.length; i++)
             {
-                var childIndex=component.childrenComponents[i];
+                var mult = mat4.create();
+                mat4.multiply(mult, transformation_matrix, component.transformation_matrix);
+                var childIndex = component.childrenComponents[i];
                 var child = this.components[childIndex];
-                console.log(component.id);
-                console.log(child);
-                this.processNode(child.id, this.multiply(transformation_matrix, component.transformation_matrix), material_c, texture_c);
+                this.processNode(child.id, mult, material_c, texture_c);
             }    
             for (let i=0; i<component.childrenPrimitives.length; i++){
                 this.processNode(component.childrenPrimitives[i], transformation_matrix, material, texture);

@@ -334,7 +334,7 @@
         <component id="head_sphere">
             <transformation>
                 <translate x="0" y="8" z="0" />
-                <scale x="3" y="2" z="1" />
+                <scale x="3" y="2" z="3" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -377,7 +377,7 @@
         <component id="right_forearm">
             <transformation>
                 <translate x="-4" y="21" z="0" />
-                <scale x="3" y="1" z="1" />
+                <scale x="3" y="3" z="1" />
                 <transformationref id="horizontal_cylinder" />
             </transformation>
             <materials>
@@ -507,7 +507,7 @@
         <component id="thumb">
             <transformation>
                 <translate x="1.5" y="10" z="0" />
-                <scale x="0.2" y="1" z="1" />
+                <scale x="0.2" y="1" z="0.2" />
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>

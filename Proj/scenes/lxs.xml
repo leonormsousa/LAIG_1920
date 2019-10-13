@@ -334,7 +334,7 @@
         <component id="head_sphere">
             <transformation>
                 <translate x="0" y="8" z="0" />
-                <scale x="3" y="2" z="0" />
+                <scale x="3" y="2" z="1" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -347,7 +347,7 @@
         <component id="head_cylinder">
             <transformation>
                 <translate x="0" y="0.5" z="0" />
-                <scale x="1" y="7.5" z="0" />
+                <scale x="1" y="7.5" z="1" />
             </transformation>
             <materials>
                 <material id="none" />
@@ -359,7 +359,7 @@
         </component>
         <component id="head_components">
             <transformation>
-                <translate x="0" y="24" z="0" />
+                <translate x="0" y="24" z="1" />
             </transformation>
             <materials>
                 <material id="inherit" />

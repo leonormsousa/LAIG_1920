@@ -158,7 +158,6 @@ class MySceneGraph {
             if ((error = this.parseMaterials(nodes[index])) != null)
                 return error;
         }
-
         // <transformations>
         if ((index = nodeNames.indexOf("transformations")) == -1)
             return "tag <transformations> missing";
@@ -502,9 +501,7 @@ class MySceneGraph {
                 return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
             
                         
-                var texture = new CGFappearance(this.scene);
-                texture.loadTexture(textureURL);
-                texture.setTextureWrap('REPEAT', 'REPEAT');
+                var texture = new CGFtexture(this.scene, textureURL);
 
             this.textures[textureID] = texture;
         }
@@ -540,8 +537,9 @@ class MySceneGraph {
                 return "ID must be unique for each light (conflict: ID = " + materialID + ")";
             
             grandChildren=children[i].children;
+
             for(let j=0; j<grandChildren.length;j++){
-                nodeNames.push(grandChildren[j]);
+                nodeNames.push(grandChildren[j].nodeName);
             }
             var materialEmissionIndex = nodeNames.indexOf("emission");
             var materialAmbientIndex = nodeNames.indexOf("ambient");
@@ -549,10 +547,12 @@ class MySceneGraph {
             var materialSpecularIndex = nodeNames.indexOf("specular");
 
             var material = new CGFappearance(this.scene);
-            // material.setAmbient(this.reader.getFloat(grandChildren[materialAmbientIndex],'r'), this.reader.getFloat(grandChildren[materialAmbientIndex],'g'), this.reader.getFloat(grandChildren[materialAmbientIndex],'b'), this.reader.getFloat(grandChildren[materialAmbientIndex],'a'));
-            // material.setDiffuse(this.reader.getFloat(grandChildren[materialDiffuseIndex],'r'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'g'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'b'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'a'));
-            // material.setSpecular(this.reader.getFloat(grandChildren[materialSpecularIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],'b'), this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
-            // material.setEmission(this.reader.getFloat(grandChildren[materialEmissionIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],'b'),this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
+            material.setTextureWrap('REPEAT', 'REPEAT');
+
+            material.setAmbient(this.reader.getFloat(grandChildren[materialAmbientIndex],'r'), this.reader.getFloat(grandChildren[materialAmbientIndex],'g'), this.reader.getFloat(grandChildren[materialAmbientIndex],'b'), this.reader.getFloat(grandChildren[materialAmbientIndex],'a'));
+            material.setDiffuse(this.reader.getFloat(grandChildren[materialDiffuseIndex],'r'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'g'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'b'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'a'));
+            material.setSpecular(this.reader.getFloat(grandChildren[materialSpecularIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],'b'), this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
+            material.setEmission(this.reader.getFloat(grandChildren[materialEmissionIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],'b'),this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
             material.setShininess(this.reader.getFloat(children[i],'shininess'));
 
             this.materials[materialID] = material;
@@ -1045,13 +1045,13 @@ class MySceneGraph {
 
     processNode(id, transformation_matrix, material, texture){
         if (this.primitives[id] != null)
-        {
+        {;
             var mat = new CGFappearance(this.scene);
             mat=this.materials[material];
             if (texture=="none")
                 mat.setTexture(null);
             else
-                mat.setTexture(textures[texture])
+                mat.setTexture(this.textures[texture]);
             mat.apply();
             this.scene.pushMatrix();
             this.scene.multMatrix(transformation_matrix);
@@ -1076,7 +1076,7 @@ class MySceneGraph {
                 this.processNode(child.id, mult, material_c, texture_c);
             }    
             for (let i=0; i<component.childrenPrimitives.length; i++){
-                this.processNode(component.childrenPrimitives[i], mult, material, texture);
+                this.processNode(component.childrenPrimitives[i], mult, material_c, texture_c);
             }
         }
     }

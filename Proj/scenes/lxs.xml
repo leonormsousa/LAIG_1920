@@ -36,28 +36,34 @@
 
     <materials>
         <material id="yellow" shininess="10">
-            <emission r="0.99" g="0.85" b="0.06" a="1.0" />
+            <emission r="0" g="0" b="0" a="1.0" />
             <ambient r="0.99" g="0.85" b="0.06" a="1.0" />
             <diffuse r="0.99" g="0.85" b="0.06" a="1.0" />
-            <specular r="0.99" g="0.85" b="0.06" a="1.0" />
+            <specular r="0.7" g="0.6" b="0.05" a="1.0" />
         </material>
         <material id="pantsMaterial" shininess="10">
-            <emission r="0.44" g="0.82" b="0.99" a="1.0" />
+            <emission r="0" g="0" b="0" a="1.0" />
             <ambient r="0.44" g="0.82" b="0.99" a="1.0" />
             <diffuse r="0.44" g="0.82" b="0.99" a="1.0" />
-            <specular r="0.44" g="0.82" b="0.99" a="1.0" />
+            <specular r="0.1" g="0.2" b="0.25" a="1.0" />
         </material>
         <material id="shirtMaterial" shininess="10">
-            <emission r="1.0" g="1.0" b="1.0" a="1.0" />
+            <emission r="0" g="0" b="0" a="1.0" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="0.25" g="0.25" b="0.25" a="1.0" />
         </material>
         <material id="shoesMaterial" shininess="10">
-            <emission r="0.26" g="0.31" b="0.27" a="1.0" />
+            <emission r="0" g="0." b="0" a="1.0" />
             <ambient r="0.26" g="1.0" b="0.27" a="1.0" />
             <diffuse r="0.26" g="1.0" b="0.27" a="1.0" />
-            <specular r="0.26" g="1.0" b="0.27" a="1.0" />
+            <specular r="0.7" g="0.25" b="0.1" a="1.0" />
+        </material>
+        <material id="donutMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.26" g="1.0" b="0.27" a="1.0" />
+            <diffuse r="0.26" g="1.0" b="0.27" a="1.0" />
+            <specular r="0.1" g="0.5" b="0.14" a="1.0" />
         </material>
     </materials>
 
@@ -350,7 +356,7 @@
                 <scale x="1" y="7.5" z="1" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -381,7 +387,7 @@
                 <transformationref id="horizontal_cylinder" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -395,7 +401,7 @@
                 <transformationref id="vertical_cylinder" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -407,7 +413,7 @@
                 <translate x="-7" y="21" z="0" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -419,7 +425,7 @@
                 <translate x="-7" y="29" z="0" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="donutMaterial" />
             </materials>
             <texture id="donutTexture"/>
             <children>
@@ -448,7 +454,7 @@
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
@@ -461,7 +467,7 @@
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>

@@ -881,14 +881,12 @@ class MySceneGraph {
                         var coordinates = this.parseCoordinates3D(transChildren[j], "translate transformation");
                         if (!Array.isArray(coordinates))
                             return coordinates;
-
                         transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
                         break;
                     case 'scale':                        
                         var coordinates = this.parseCoordinates3D(transChildren[j], "scale transformation");
                         if (!Array.isArray(coordinates))
                             return coordinates;
-
                         transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);                        
                         break;
                     case 'rotate':
@@ -904,6 +902,8 @@ class MySceneGraph {
                                 break;
                         }  
                 }
+                if (componentID=="finger")
+                console.log(transfMatrix);
             }
 
             // Materials

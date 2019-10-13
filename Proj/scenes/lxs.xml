@@ -78,7 +78,7 @@
             <triangle x1="0" y1="0" z1="0" x2="0" y2="1" z2="0" x3="1" y3="0" z3="0"/>
         </primitive>
         <primitive id="torus">
-            <torus inner="0.5" outer="2" slices="40" loops="40"/>
+            <torus inner="1" outer="1.5" slices="40" loops="40"/>
         </primitive>
         <primitive id="sphere">
             <sphere radius="1" slices="40" stacks="20"/>
@@ -457,7 +457,7 @@
         </component>
         <component id="finger">
             <transformation>
-                <scale x="0.2" y="2" z="1" />
+                <scale x="0.2" y="2" z="0.2" />
                 <transformationref id="vertical_cylinder"/>
             </transformation>
             <materials>

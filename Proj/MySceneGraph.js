@@ -467,6 +467,7 @@ class MySceneGraph {
             this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
 
         this.log("Parsed lights");
+        console.log(this.lights);
         return null;
     }
 
@@ -835,6 +836,7 @@ class MySceneGraph {
     parseComponents(componentsNode) {
         var children = componentsNode.children;
         this.components = [];
+        var componentsid=[];
 
         var grandChildren = [];
         var grandgrandChildren = [];
@@ -946,6 +948,16 @@ class MySceneGraph {
             }
 
             this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, childrenPrimitives, childrenComponents);
+            componentsid.push(componentID);
+        }
+        for (let i=0; i<componentsid.length; i++)
+        {
+            for (let j=0; j<this.components[componentsid[i]].childrenComponents.length; j++)
+            {
+                var child=this.components[componentsid[i]].childrenComponents[j];
+                if (this.components[child] == undefined)
+                    return "child component with id " + child + " in component " + this.components[componentsid[i]].id + " is not referenced.";
+            }
         }
     }
 

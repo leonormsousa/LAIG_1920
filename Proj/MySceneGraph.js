@@ -306,8 +306,6 @@ class MySceneGraph {
             }
 
             this.views[viewID] = global;
-            console.log("global");
-            console.log(global);
             numViews++;
         }
 
@@ -877,7 +875,10 @@ class MySceneGraph {
             for (let j=0; j<transChildren.length; j++){
                 switch (transChildren[j].nodeName) {
                     case 'transformationref':
-                        mat4.multiply(transfMatrix, this.transformations[this.reader.getString(transChildren[j],'id')], transfMatrix);
+                        var transref=this.reader.getString(transChildren[j],'id');
+                        if (this.transformations.indexOf(this.transformations[transref])==-1)
+                            return "the transformation with the id" + transref + "is not referenced";
+                        mat4.multiply(transfMatrix, this.transformations[transref], transfMatrix);
                         break;
                     case 'translate':
                         var coordinates = this.parseCoordinates3D(transChildren[j], "translate transformation");
@@ -904,26 +905,41 @@ class MySceneGraph {
                                 break;
                         }  
                 }
-                if (componentID=="finger")
-                console.log(transfMatrix);
             }
 
             // Materials
             var materials=[];
             var childrens=children[i].children[materialsIndex].children;
             for(let j=0; j<childrens.length;j++)
-                materials.push(this.reader.getString(childrens[j], 'id'));
+            {
+                var matref=this.reader.getString(childrens[j], 'id');
+                if (this.materials.indexOf(this.materials[matref])==-1)
+                {
+                    onXMLMinorError("the material with the id" + matref + "in the component" + componentID + "is not referenced. The material will be replaced by inherit.");
+                    matref="inherit";
+                }
+                materials.push(matref);
+            }
 
             // Texture
             var texture=this.reader.getString(children[i].children[textureIndex], 'id');
+            if (this.textures.indexOf(this.textures[texture])==-1)
+            {
+                onXMLMinorError("the texture with the id" + texture + "in the component" + componentID + "is not referenced. The texture will be replaced by none.");
+                texture="none";
+            }
 
             // Children
             var childrens=children[i].children[childrenIndex].children;
             var childrenPrimitives = [];
             var childrenComponents = [];
             for(let j=0; j<childrens.length;j++){
-                if(childrens[j].nodeName=="primitiveref")
-                    childrenPrimitives.push(this.reader.getString(childrens[j], 'id'));
+                if(childrens[j].nodeName=="primitiveref"){
+                    var primref=this.reader.getString(childrens[j], 'id');
+                    if (this.primitives.indexOf(this.primitives[primref])==-1)
+                        return "primitive with id " + primref + " in component " + componentID + " is not referenced     .";
+                    childrenPrimitives.push(primref);
+                }
                 else if(childrens[j].nodeName=="componentref"){
                     childrenComponents.push(this.reader.getString(childrens[j], 'id'));
                 }

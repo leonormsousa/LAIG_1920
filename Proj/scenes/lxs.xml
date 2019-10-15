@@ -881,6 +881,8 @@
             </transformation>
             <materials>
                 <material id="shirtMaterial" />
+                <material id="pantsMaterial" />
+                <material id="blackMaterial" />
             </materials>
             <texture id="none"/>
             <children>
@@ -936,6 +938,8 @@
             </transformation>
             <materials>
                 <material id="pantsMaterial" />
+                <material id="shirtMaterial" />
+                <material id="blackMaterial" />
             </materials>
             <texture id="none"/>
             <children>
@@ -1032,7 +1036,6 @@
             </transformation>
             <materials>
                 <material id="yellow" />
-                <material id="donutMaterial" />
             </materials>
             <texture id="none"/>
             <children>

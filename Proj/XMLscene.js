@@ -102,6 +102,10 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
 
+    update(t) {
+        this.graph.checkKeys(this.gui);
+    }
+
     /**
      * Displays the scene.
      */

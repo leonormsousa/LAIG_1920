@@ -836,7 +836,6 @@ class MySceneGraph {
     parseComponents(componentsNode) {
         var children = componentsNode.children;
         this.components = [];
-        var componentsid=[];
 
         var grandChildren = [];
         var grandgrandChildren = [];
@@ -880,7 +879,7 @@ class MySceneGraph {
                         var transref=this.reader.getString(transChildren[j],'id');
                         if (this.transformations[transref]==undefined)
                             return "the transformation with the id " + transref + " is not referenced.";
-                        mat4.multiply(transfMatrix, this.transformations[transref], transfMatrix);
+                        mat4.multiply(transfMatrix, transfMatrix, this.transformations[transref]);
                         break;
                     case 'translate':
                         var coordinates = this.parseCoordinates3D(transChildren[j], "translate transformation");
@@ -948,15 +947,13 @@ class MySceneGraph {
             }
 
             this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, childrenPrimitives, childrenComponents);
-            componentsid.push(componentID);
         }
-        for (let i=0; i<componentsid.length; i++)
-        {
-            for (let j=0; j<this.components[componentsid[i]].childrenComponents.length; j++)
+        for (var key in this.components){
+            for (let j=0; j<this.components[key].childrenComponents.length; j++)
             {
-                var child=this.components[componentsid[i]].childrenComponents[j];
+                var child=this.components[key].childrenComponents[j];
                 if (this.components[child] == undefined)
-                    return "child component with id " + child + " in component " + this.components[componentsid[i]].id + " is not referenced.";
+                    return "child component with id " + child + " in component " + this.components[key].id + " is not referenced.";
             }
         }
     }
@@ -1071,6 +1068,14 @@ class MySceneGraph {
      */
     log(message) {
         console.log("   " + message);
+    }
+
+    checkKeys(gui) {
+        if (gui.isKeyPressed("KeyM")) {
+            for (var key in this.components){
+                this.components[key].incrementMaterialNumber();
+            }
+        }
     }
 
     processNode(id, transformation_matrix, material, texture){

@@ -302,10 +302,13 @@ class MySceneGraph {
                 else
                     return "up for ortho undefined for ID = " + viewID;
 
-                global.push(...[upView])
+                global.push(...[upView]);
             }
 
-            this.views[viewID] = global;
+            console.log(global[0]);
+            var camera = new CGFcamera(this.reader.getFloat(children[i],'angle'), this.reader.getFloat(children[i],'near'), this.reader.getFloat(children[i],'far'), global[0], global[1]);
+            console.log(camera);
+            this.views[viewID] = camera;
             numViews++;
         }
 
@@ -884,7 +887,7 @@ class MySceneGraph {
                         var transref=this.reader.getString(transChildren[j],'id');
                         if (this.transformations[transref]==undefined)
                             return "the transformation with the id " + transref + " is not referenced.";
-                        mat4.multiply(transfMatrix, this.transformations[transref], transfMatrix);
+                        mat4.multiply(transfMatrix, transfMatrix,  this.transformations[transref]);
                         break;
                     case 'translate':
                         var coordinates = this.parseCoordinates3D(transChildren[j], "translate transformation");

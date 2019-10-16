@@ -23,8 +23,6 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
 
-        this.initCameras();
-
         this.enableTextures(true);
 
         this.gl.clearDepth(100.0);
@@ -34,13 +32,27 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(100);
+        this.initCameras();
     }
 
     /**
      * Initializes the scene cameras.
      */
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+            var i = 0;
+            // cameras index.
+    
+            if(this.sceneInited)
+            // Reads the cameras from the scene graph.
+            for (var key in this.graph.views) {
+                var view = this.graph.views[key];
+                this.camera = view;
+                i++;
+            }
+            else
+            this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+
+        
     }
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -53,19 +65,23 @@ class XMLscene extends CGFscene {
         for (var key in this.graph.lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebGL.
-
             if (this.graph.lights.hasOwnProperty(key)) {
                 var light = this.graph.lights[key];
-
+                
                 this.lights[i].setPosition(light[2][0], light[2][1], light[2][2], light[2][3]);
                 this.lights[i].setAmbient(light[3][0], light[3][1], light[3][2], light[3][3]);
                 this.lights[i].setDiffuse(light[4][0], light[4][1], light[4][2], light[4][3]);
                 this.lights[i].setSpecular(light[5][0], light[5][1], light[5][2], light[5][3]);
+                this.lights[i].setConstantAttenuation(light[6][0]);
+            
+                this.lights[i].setLinearAttenuation(light[6][1]);
+                this.lights[i].setQuadraticAttenuation(light[6][2]);
+
 
                 if (light[1] == "spot") {
-                    this.lights[i].setSpotCutOff(light[6]);
-                    this.lights[i].setSpotExponent(light[7]);
-                    this.lights[i].setSpotDirection(light[8][0], light[8][1], light[8][2]);
+                    this.lights[i].setSpotCutOff(light[7]);
+                    this.lights[i].setSpotExponent(light[8]);
+                    this.lights[i].setSpotDirection(light[9][0], light[9][1], light[9][2]);
                 }
 
                 this.lights[i].setVisible(true);
@@ -92,14 +108,11 @@ class XMLscene extends CGFscene {
      */
     onGraphLoaded() {
         this.axis = new CGFaxis(this, this.graph.referenceLength);
-
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
-
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
-
         this.initLights();
-
         this.sceneInited = true;
+        this.initCameras();
     }
 
     /**

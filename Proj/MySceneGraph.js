@@ -302,10 +302,13 @@ class MySceneGraph {
                 else
                     return "up for ortho undefined for ID = " + viewID;
 
-                global.push(...[upView])
+                global.push(...[upView]);
             }
 
-            this.views[viewID] = global;
+            console.log(global[0]);
+            var camera = new CGFcamera(this.reader.getFloat(children[i],'angle'), this.reader.getFloat(children[i],'near'), this.reader.getFloat(children[i],'far'), global[0], global[1]);
+            console.log(camera);
+            this.views[viewID] = camera;
             numViews++;
         }
 
@@ -379,8 +382,8 @@ class MySceneGraph {
                 continue;
             }
             else {
-                attributeNames.push(...["location", "ambient", "diffuse", "specular"]);
-                attributeTypes.push(...["position", "color", "color", "color"]);
+                attributeNames.push(...["location", "ambient", "diffuse", "specular","attenuation"]);
+                attributeTypes.push(...["position", "color", "color", "color","attenuationType"]);
             }
 
             // Get id of the current light.
@@ -411,13 +414,17 @@ class MySceneGraph {
             for (var j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
-
+            console.log("nodeNames");
+            console.log(nodeNames);
             for (var j = 0; j < attributeNames.length; j++) {
+                console.log(attributeNames[j]);
                 var attributeIndex = nodeNames.indexOf(attributeNames[j]);
 
                 if (attributeIndex != -1) {
                     if (attributeTypes[j] == "position")
                         var aux = this.parseCoordinates4D(grandChildren[attributeIndex], "light position for ID" + lightId);
+                    else if (attributeTypes[j]=="attenuationType")
+                        var aux = this.parseAttenuation(grandChildren[attributeIndex], "light attenuation for ID" + lightId);
                     else
                         var aux = this.parseColor(grandChildren[attributeIndex], attributeNames[j] + " illumination for ID" + lightId);
 
@@ -427,7 +434,7 @@ class MySceneGraph {
                     global.push(aux);
                 }
                 else
-                    return "light " + attributeNames[i] + " undefined for ID = " + lightId;
+                    return "light " + attributeNames[j] + " undefined for ID = " + lightId;
             }
 
             // Gets the additional attributes of the spot light
@@ -1045,6 +1052,34 @@ class MySceneGraph {
         color.push(...[r, g, b, a]);
 
         return color;
+    }
+
+    /**
+     * Parse the attenuation components from a node
+     * @param {block element} node
+     * @param {message to be displayed in case of error} messageError
+     */
+    parseAttenuation(node, messageError) {
+        var attenuation = [];
+
+        // constant
+        var constant = this.reader.getFloat(node, 'constant');
+        if (!(constant != null && !isNaN(constant) && constant >= 0 && constant <= 1))
+            return "unable to parse constant component of the " + messageError;
+
+        // linear
+        var linear = this.reader.getFloat(node, 'linear');
+        if (!(linear != null && !isNaN(linear) && linear >= 0 && linear <= 1))
+            return "unable to parse linear component of the " + messageError;
+
+        // quadratic
+        var quadratic = this.reader.getFloat(node, 'quadratic');
+        if (!(quadratic != null && !isNaN(quadratic) && quadratic >= 0 && quadratic <= 1))
+            return "unable to parse quadratic component of the " + messageError;
+
+        attenuation.push(...[constant,linear, quadratic]);
+
+        return attenuation;
     }
 
     /*

@@ -277,7 +277,7 @@
             <materials>
                 <material id="shirtMaterial" />
             </materials>
-            <texture id="paintingTexture"/>
+            <texture id="paintingTexture" length_s="0.2" length_t="0.2"/>
             <children>
                 <componentref id="frame"/>
                 <componentref id="boat"/>
@@ -645,7 +645,7 @@
             <materials>
                 <material id="donutMaterial" />
             </materials>
-            <texture id="donutTexture"/>
+            <texture id="donutTexture" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="torus"/>
             </children>

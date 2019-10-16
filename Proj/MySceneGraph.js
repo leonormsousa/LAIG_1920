@@ -555,7 +555,6 @@ class MySceneGraph {
             var materialSpecularIndex = nodeNames.indexOf("specular");
 
             var material = new CGFappearance(this.scene);
-            material.setTextureWrap('REPEAT', 'REPEAT');
 
             material.setAmbient(this.reader.getFloat(grandChildren[materialAmbientIndex],'r'), this.reader.getFloat(grandChildren[materialAmbientIndex],'g'), this.reader.getFloat(grandChildren[materialAmbientIndex],'b'), this.reader.getFloat(grandChildren[materialAmbientIndex],'a'));
             material.setDiffuse(this.reader.getFloat(grandChildren[materialDiffuseIndex],'r'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'g'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'b'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'a'));
@@ -931,12 +930,16 @@ class MySceneGraph {
 
             // Texture
             var texture=this.reader.getString(children[i].children[textureIndex], 'id');
-            var length_s=this.reader.getString(children[i].children[textureIndex], 'length_s');
-            var length_t=this.reader.getString(children[i].children[textureIndex], 'length_t');
+            var length_s=1;
+            var length_t=1;
             if (texture!="inherit" && texture!="none" && this.textures[texture]==undefined)
             {
                 this.onXMLMinorError("the texture with the id " + texture + " in the component " + componentID + " is not referenced. The texture will be replaced by none.");
                 texture="none";
+            }
+            else if (texture!="inherit" && texture!="none"){
+                length_s=this.reader.getFloat(children[i].children[textureIndex], 'length_s');
+                length_t=this.reader.getFloat(children[i].children[textureIndex], 'length_t');
             }
 
             // Children
@@ -1117,38 +1120,58 @@ class MySceneGraph {
 
     processNode(id, transformation_matrix, material, texture, length_s, length_t){
         if (this.primitives[id] != null)
-        {;
+        {   
             var mat = new CGFappearance(this.scene);
             mat=this.materials[material];
+
+            var old_texCoords=this.primitives[id].texCoords;
             if (texture=="none")
                 mat.setTexture(null);
-            else
+            else{
+                this.primitives[id].changeTexCoords(length_s, length_t);
                 mat.setTexture(this.textures[texture]);
+                mat.setTextureWrap('REPEAT', 'REPEAT');
+            }            
             mat.apply();
+
+            if (texture=="paintingTexture")
+                console.log(this.primitives[id].texCoords);
+
             this.scene.pushMatrix();
             this.scene.multMatrix(transformation_matrix);
             this.primitives[id].display();
             this.scene.popMatrix();
+            
+            this.primitives[id].texCoords=old_texCoords; 
         }
         else
         {
             var component=this.components[id];
+
             var material_c=component.getCurrentMaterial();
             if (material_c=='inherit')
                 material_c=material;
+
             var texture_c = component.texture;
             if (texture_c=="inherit")
                 texture_c=texture;
+            else{
+                length_s=component.length_s;
+                length_t=component.length_t;
+            }
+
             var mult = mat4.create();
             mat4.multiply(mult, transformation_matrix, component.transformation_matrix);
+
             for (let i=0; i<component.childrenComponents.length; i++)
             {
                 var childIndex = component.childrenComponents[i];
                 var child = this.components[childIndex];
-                this.processNode(child.id, mult, material_c, texture_c);
+                this.processNode(child.id, mult, material_c, texture_c, length_s, length_t);
             }    
+
             for (let i=0; i<component.childrenPrimitives.length; i++){
-                this.processNode(component.childrenPrimitives[i], mult, material_c, texture_c);
+                this.processNode(component.childrenPrimitives[i], mult, material_c, texture_c, length_s, length_t);
             }
         }
     }

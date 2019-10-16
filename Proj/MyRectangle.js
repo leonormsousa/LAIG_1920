@@ -70,10 +70,10 @@ class MyRectangle extends CGFobject {
 
 	changeTexCoords(length_s, length_t){
 		this.texCoords = [
-			0, 1/length_t,
-			1/length_s, 1/length_t,
+			0, (this.y2-this.y1)/length_t,
+			(this.x2-this.x1)/length_s, (this.y2-this.y1)/length_t,
 			0, 0,
-			1/length_s, 0
+			(this.x2-this.x1)/length_s, 0
 		]
 	}
 }

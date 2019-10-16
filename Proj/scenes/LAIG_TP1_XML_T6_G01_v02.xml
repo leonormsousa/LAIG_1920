@@ -1,0 +1,2257 @@
+<lxs>
+    <scene root="scene" axis_length="0"/>
+
+    <views default="fightSceneCamera">
+        <perspective id="fightSceneCamera" near="5" far="1000" angle="45">
+            <from x="0" y="0" z="100" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+        <perspective id="xFleetCamera" near="5" far="1000" angle="45">
+            <from x="0" y="0" z="0" />
+            <to x="-10" y="0" z="0" />
+        </perspective>
+        <perspective id="yFleetCamera" near="5" far="1000" angle="45">
+            <from x="0" y="0" z="0" />
+            <to x="10" y="0" z="0" />
+        </perspective>
+        <perspective id="xPlanetCamera" near="5" far="1000" angle="45">
+            <from x="-70" y="0" z="0" />
+            <to x="-50" y="0" z="0" />
+        </perspective>
+        <perspective id="yPlanetCamera" near="5" far="1000" angle="45">
+            <from x="70" y="0" z="0" />
+            <to x="50" y="0" z="0" />
+        </perspective>
+        <perspective id="dinerCamera" near="5" far="1000" angle="45">
+            <from x="0" y="8" z="-15" />
+            <to x="0" y="-10" z="-50" />
+        </perspective>
+    </views>
+
+    <globals>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <background r="0.0" g="0.0" b="0.0" a="1.0" />
+    </globals>
+
+    <lights>
+        <omni id="mainLight" enabled="1">
+            <location x="0" y="0" z="0" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="0" linear="1" quadratic="0" />  
+        </omni>
+    </lights>
+
+    <textures>
+        <texture id="saturn-ring" file="scenes/images/saturn_ring.jpg" />
+        <texture id="saturn-planet" file="scenes/images/saturn_planet.jpg" />
+        <texture id="stargate" file="scenes/images/stargate.png" />
+        <texture id="steel" file="scenes/images/steel.jpg" />
+        <texture id="X_spaceship_hull" file="scenes/images/X_spaceship_hull.jpg" />
+        <texture id="Y_spaceship_hull" file="scenes/images/Y_spaceship_hull.jpg" />
+        <texture id="gun_metal" file="scenes/images/gun_metal.png" />
+        <texture id="futuristic_blue" file="scenes/images/futuristic_blue.png" />
+        <texture id="futuristic_red" file="scenes/images/futuristic_red.jpg" />
+        <texture id="ion_blast" file="scenes/images/ion_blast.jpg" />
+        <texture id="space_rocks" file="scenes/images/space_rocks.jpg" />
+        <texture id="neon_sign" file="scenes/images/neon-sign.jpg" />
+        <texture id="mars" file="scenes/images/mars.jpg" />
+        <texture id="solar" file="scenes/images/solar.jpg" />
+        <texture id="neptune" file="scenes/images/neptune.jpg" />
+        <texture id="cosmos" file="scenes/images/cosmos.jpg" />
+        <texture id="starfield" file="scenes/images/starfield.jpg" />
+    </textures>
+
+    <materials>
+        <material id="whiteMaterial" shininess="1">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+        </material>
+        <material id="red" shininess="10">
+            <emission r="0.2" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.7" g="0" b="0" a="1.0" />
+            <diffuse r="0.7" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.7" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="darkred" shininess="10">
+            <emission r="0.1" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.7" g="0" b="0" a="1.0" />
+            <diffuse r="0.39" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.39" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="x_ship_ring_mat" shininess="10">
+            <emission r="0.5" g="0" b="0" a="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+        </material>
+        <material id="ion_blue" shininess="10">
+            <emission r="0" g="0.1" b="0.2" a="1.0" />
+            <ambient r="0.137" g="0.6" b="0.94" a="1" />
+            <diffuse r="0.137" g="0.81" b="0.94" a="1.0" />
+            <specular r="0.137" g="0.81" b="0.94" a="1.0" />
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="Y-fleet-transform">
+            <translate x="80" y="0" z="0" />
+            <rotate axis="y" angle="-90" />
+        </transformation>
+    </transformations>
+
+    <primitives>
+        <primitive id="triangle">
+            <triangle x1="0" y1="0" z1="1" x2="1" y2="0" z2="0" x3="0" y3="1" z3="0" />
+        </primitive>
+        <primitive id="rectangle">
+            <rectangle x1="-1" y1="-1" x2="1" y2="1" />
+        </primitive>
+        <primitive id="square">
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+        </primitive>
+        <primitive id="sphere">
+            <sphere radius="1" slices="28" stacks="10"/>
+        </primitive>
+        <primitive id="torus">
+            <torus inner="0.1" outer="0.9" slices="20" loops="40"/>
+        </primitive>
+        <primitive id="Y-spaceship-torus">
+            <torus inner="0.15" outer="0.85" slices="20" loops="40"/>
+        </primitive>
+        <primitive id="torus0.4">
+            <torus inner="0.4" outer="0.6" slices="20" loops="40"/>
+        </primitive>
+        <primitive id="torus0.3">
+            <torus inner="0.3" outer="0.7" slices="20" loops="40"/>
+        </primitive>
+        <primitive id="torus0.2">
+            <torus inner="0.2" outer="0.8" slices="20" loops="40"/>
+        </primitive>
+        <primitive id="cylinder">
+            <cylinder base="1" top="1" height="1" slices="30" stacks="10"/>
+        </primitive>
+        <primitive id="laser-cylinder">
+            <cylinder base="1" top="1" height="1" slices="8" stacks="1"/>
+        </primitive>
+        <primitive id="cone">
+            <cylinder base="1" top="0" height="1" slices="30" stacks="5"/>
+        </primitive>
+        <primitive id="X-spaceship-arm-base">
+            <cylinder base="1" top="0.2" height="1" slices="30" stacks="5"/>
+        </primitive>
+        <primitive id="lg-gun-cylinder-conn">
+            <cylinder base="1" top="0.8" height="1" slices="30" stacks="5"/>
+        </primitive>
+    </primitives>
+
+    <components>
+        <component id="pyramid_component">
+            <transformation>
+                <rotate axis="y" angle="45"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+        <component id="x_z_square">
+            <transformation>
+                <scale x="0.71" y="0.71" z="0.71"/>
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+        <component id="cube_side_1">
+            <transformation>
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+        <component id="cube_side_2">
+            <transformation>
+                <translate x="0" y="1" z="1" /> 
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube_side_1" />
+            </children>
+        </component>
+        <component id="cube_side_3">
+            <transformation>
+                <translate x="0" y="1" z="-1" /> 
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube_side_1" />
+            </children>
+        </component>
+        <component id="cube_side_4">
+            <transformation>
+                <translate x="1" y="1" z="0" /> 
+                <rotate axis="z" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube_side_1" />
+            </children>
+        </component>
+        <component id="cube_side_5">
+            <transformation>
+                <translate x="-1" y="1" z="0" /> 
+                <rotate axis="z" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube_side_1" />
+            </children>
+        </component>
+        <component id="cube_side_6">
+            <transformation>
+                <translate x="0" y="2" z="0" /> 
+                <rotate axis="z" angle="-180" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube_side_1" />
+            </children>
+        </component>
+        <component id="cube">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube_side_1" />
+                <componentref id="cube_side_2" />
+                <componentref id="cube_side_3" />
+                <componentref id="cube_side_4" />
+                <componentref id="cube_side_5" />
+                <componentref id="cube_side_6" />
+            </children>
+        </component>
+        <component id="sign_pole">
+            <transformation>
+                <scale x="0.1" y="0.7" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+        <component id="sign_board">
+            <transformation>
+                <translate x="0" y="1.3" z="0"/>
+                <scale x="0.1" y="0.5" z="0.9"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+        <component id="sign_info">
+            <transformation>
+                <translate x="0.11" y="1.8" z="0"/>
+                <rotate axis="y" angle="90" />
+                <scale x="1" y="0.5" z="0.01"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="neon_sign" length_s="2" length_t="2"/>
+            <children>
+                <primitiveref id="rectangle" />
+            </children>
+        </component>
+        <component id="sign">
+            <transformation>
+                <translate x="5" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="steel" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="sign_board" />
+                <componentref id="sign_pole" />
+                <componentref id="sign_info" />
+            </children>
+        </component>
+        <component id="space-laser">
+            <transformation>
+                <scale x="0.05" y="0.05" z="1" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="laser-cylinder" />
+            </children>
+        </component>
+
+
+        <component id="pyramid_side_1">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="pyramid_component" />
+            </children>
+        </component>
+        <component id="pyramid_side_2">
+            <transformation>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="pyramid_component" />
+            </children>
+        </component>
+        <component id="pyramid_side_3">
+            <transformation>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="pyramid_component" />
+            </children>
+        </component>
+        <component id="pyramid_side_4">
+            <transformation>
+                <rotate axis="y" angle="270"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="pyramid_component" />
+            </children>
+        </component>
+        <component id="pyramid">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="pyramid_side_1" />
+                <componentref id="pyramid_side_2" />
+                <componentref id="pyramid_side_3" />
+                <componentref id="pyramid_side_4" />
+                <componentref id="x_z_square" />
+            </children>
+        </component>
+
+        <component id="base_diner">
+            <transformation>
+                <scale x="2" y="1.5" z="4" />
+                <translate x="-2" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="steel" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+        <component id="roof_neon">
+            <transformation>
+                <translate x="0.7" y="0" z="-0.7" /> 
+                <scale x="1" y="1" z="1.4" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="space-laser" />
+            </children>
+        </component>
+        <component id="roof_neon_side_1">
+            <transformation>
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="roof_neon" />
+            </children>
+        </component>
+        <component id="roof_neon_side_2">
+            <transformation>
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="roof_neon" />
+            </children>
+        </component>
+        <component id="roof_neon_side_3">
+            <transformation>
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="roof_neon" />
+            </children>
+        </component>
+        <component id="roof_diner">
+            <transformation>
+                <translate x="-4" y="3" z="0" /> 
+                <scale x="5" y="2" z="7" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="steel" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="pyramid" />
+                <componentref id="roof_neon" />
+                <componentref id="roof_neon_side_1" />
+                <componentref id="roof_neon_side_2" />
+                <componentref id="roof_neon_side_3" />
+            </children>
+        </component>
+        <component id="diner_window_1">
+            <transformation>
+                <scale x="0.5" y="0.7" z="0.5"/>
+                <translate x="-4.8" y="0.5" z="0" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="stargate" length_s="2" length_t="2"/>
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+        <component id="diner_window_2">
+            <transformation>
+                <translate x="0" y="0" z="2.5" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="stargate" length_s="2" length_t="2"/>
+            <children>
+                <componentref id="diner_window_1" />
+            </children>
+        </component>
+        <component id="diner_window_3">
+            <transformation>
+                <translate x="0" y="0" z="-2.5" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="stargate" length_s="2" length_t="2"/>
+            <children>
+                <componentref id="diner_window_1" />
+            </children>
+        </component>
+        <component id="diner">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="steel" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="roof_diner" />
+                <componentref id="base_diner" />
+                <componentref id="diner_window_1" />
+                <componentref id="diner_window_2" />
+                <componentref id="diner_window_3" />
+            </children>
+        </component>
+        <component id="space_rock">
+            <transformation>
+                <scale x="-10" y="-10" z="10"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="space_rocks" length_s="2" length_t="2"/>
+            <children>
+                <componentref id="pyramid_side_1" />
+                <componentref id="pyramid_side_2" />
+                <componentref id="pyramid_side_3" />
+                <componentref id="pyramid_side_4" />
+                <componentref id="x_z_square" />
+            </children>
+        </component>
+        <component id="space_station">
+            <transformation>
+                <rotate axis="y" angle="-90"/>
+                <translate x="-30" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="space_rocks" length_s="2" length_t="2"/>
+            <children>
+                <componentref id="space_rock" />
+                <componentref id="sign" />
+                <componentref id="diner" />
+            </children>
+        </component>
+        <component id="wormhole-circle">
+            <transformation>
+                <scale x="10" y="4" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="stargate" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+        <component id="wormhole-ring">
+            <transformation>
+                <scale x="5" y="5" z="3" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="saturn-ring" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus" />
+            </children>
+        </component>
+        <component id="wormhole">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="wormhole-circle" />
+                <componentref id="wormhole-ring" />
+            </children>
+        </component>
+        <component id="ion-blast">
+            <transformation>
+                <scale x="0.5" y="0.5" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="ion_blast" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus0.2" />
+            </children>
+        </component>
+
+        <!-- PLANETS START -->
+        <component id="ring-planet-ring">
+            <transformation>
+                <rotate axis="x" angle="90" />
+                <scale x="9" y="9" z="0.001" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus" />
+            </children>
+        </component>
+        <component id="planet-sphere">
+            <transformation>
+                <scale x="5" y="5" z="5" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+        <component id="saturn-sphere">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="saturn-planet" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>
+        <component id="saturn-ring">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="saturn-ring" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ring-planet-ring" />
+            </children>
+        </component>
+        <component id="saturn">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="saturn-sphere" />
+                <componentref id="saturn-ring" />
+            </children>
+        </component>
+
+        <component id="X-planet-sphere">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="mars" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>
+        <component id="X-planet-ring">
+            <transformation>
+                <scale x="1" y="2000" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ring-planet-ring" />
+            </children>
+        </component>
+        <component id="X-planet-ring-1">
+            <transformation>
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="solar" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-planet-ring" />
+            </children>
+        </component>
+        <component id="X-planet-ring-2">
+            <transformation>
+                <rotate axis="z" angle="-45" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="solar" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-planet-ring" />
+            </children>
+        </component>
+        <component id="X-planet">
+            <transformation>
+                <scale x="2" y="2" z="2" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-planet-sphere" />
+                <componentref id="X-planet-ring-1" />
+                <componentref id="X-planet-ring-2" />
+            </children>
+        </component>
+
+        <component id="Y-planet-sphere">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="neptune" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>
+        <component id="Y-planet-ring">
+            <transformation>
+                <translate x="2" y="0" z="0" />
+                <scale x="0.6" y="2000" z="0.6" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ring-planet-ring" />
+            </children>
+        </component>
+        <component id="Y-planet-ring-1">
+            <transformation>
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="cosmos" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-planet-ring" />
+            </children>
+        </component>
+        <component id="Y-planet-ring-2">
+            <transformation>
+                <rotate axis="z" angle="135" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="cosmos" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-planet-ring" />
+            </children>
+        </component>
+        <component id="Y-planet-ring-3">
+            <transformation>
+                <rotate axis="z" angle="270" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="cosmos" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-planet-ring" />
+            </children>
+        </component>
+        <component id="Y-planet">
+            <transformation>
+                <scale x="2" y="2" z="2" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-planet-sphere" />
+                <componentref id="Y-planet-ring-1" />
+                <componentref id="Y-planet-ring-2" />
+                <componentref id="Y-planet-ring-3" />
+            </children>
+        </component>                   
+        <component id="planet-1">
+            <transformation>
+                <translate x="100" y="120" z="-150" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="neptune" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>                   
+        <component id="planet-2">
+            <transformation>
+                <translate x="50" y="-80" z="-150" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="mars" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>                    
+        <component id="planet-3">
+            <transformation>
+                <translate x="100" y="120" z="-150" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="stargate" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>                    
+        <component id="planet-4">
+            <transformation>
+                <translate x="140" y="-90" z="-20" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="gun_metal" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>                    
+        <component id="planet-5">
+            <transformation>
+                <translate x="-60" y="-100" z="150" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="neptune" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>                        
+        <component id="planet-6">
+            <transformation>
+                <translate x="60" y="60" z="150" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="mars" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>                        
+        <component id="planet-7">
+            <transformation>
+                <translate x="-120" y="-120" z="-120" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="steel" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>                        
+        <component id="planet-8">
+            <transformation>
+                <translate x="200" y="20" z="-10" />
+                <rotate axis="x" angle="30" />
+            </transformation>
+            <materials>
+                <material id="darkred" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="saturn" />
+            </children>
+        </component>                        
+        <component id="planet-9">
+            <transformation>
+                <translate x="-150" y="80" z="50" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="cosmos" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>                      
+        <component id="planet-10">
+            <transformation>
+                <translate x="-20" y="280" z="200" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="steel" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-sphere" />
+            </children>
+        </component>                       
+        <component id="planet-11">
+            <transformation>
+                <translate x="-150" y="80" z="-200" />
+                <rotate axis="x" angle="60" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="saturn" />
+            </children>
+        </component>                              
+        <component id="background-planets">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="planet-1" />
+                <componentref id="planet-2" />
+                <componentref id="planet-3" />
+                <componentref id="planet-4" />
+                <componentref id="planet-5" />
+                <componentref id="planet-6" />
+                <componentref id="planet-7" />
+                <componentref id="planet-8" />
+                <componentref id="planet-9" />
+                <componentref id="planet-10" />
+                <componentref id="planet-11" />
+            </children>
+        </component>
+        <!-- PLANETS END -->
+
+        <!-- LASER GUN START-->
+        <component id="lg-connector">
+            <transformation>
+                <rotate axis="x" angle="45" />
+                <scale x="0.2" y="0.2" z="3" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="X_spaceship_hull" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+        <component id="lg-gun-base">
+            <transformation>
+                <scale x="1" y="1" z="3" />            
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+        <component id="lg-gun-base-connector">
+            <transformation>
+                <translate x="0" y="0" z="3" />
+                <scale x="1" y="1" z="0.5" />                
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="lg-gun-cylinder-conn" />
+            </children>
+        </component>   
+        <component id="lg-gun-mid">
+            <transformation>
+                <translate x="0" y="0" z="3.5" />
+                <scale x="0.8" y="0.8" z="1.5" />            
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>   
+        <component id="lg-gun-mid-connector">
+            <transformation>
+                <translate x="0" y="0" z="5" />
+                <scale x="0.8" y="0.8" z="0.5" />                
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="lg-gun-cylinder-conn" />
+            </children>
+        </component>
+        <component id="lg-gun-edge">
+            <transformation>
+                <translate x="0" y="0" z="5.5" />
+                <scale x="0.64" y="0.64" z="10" />            
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus" />
+            </children>
+        </component>  
+        <component id="lg-gun-ring">
+            <transformation>
+                <scale x="0.85" y="0.85" z="1" />            
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus" />
+            </children>
+        </component>  
+        <component id="lg-gun-ring-1">
+            <transformation>
+                <translate x="0" y="0" z="3.6" />        
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="lg-gun-ring" />
+            </children>
+        </component> 
+        <component id="lg-gun-ring-2">
+            <transformation>
+                <translate x="0" y="0" z="3.9" />        
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="lg-gun-ring" />
+            </children>
+        </component>   
+        <component id="lg-gun-ring-3">
+            <transformation>
+                <translate x="0" y="0" z="4.2" />        
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="lg-gun-ring" />
+            </children>
+        </component>     
+        <component id="lg-gun-rings">
+            <transformation>     
+            </transformation>
+            <materials>
+                <material id="darkred" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="lg-gun-ring-1" />
+                <componentref id="lg-gun-ring-2" />
+                <componentref id="lg-gun-ring-3" />
+            </children>
+        </component>    
+        <component id="lg-gun-charge">
+            <transformation>
+                <scale x="0.6" y="0.6" z="1" />  
+            </transformation>
+            <materials>
+                <material id="darkred" />
+            </materials>
+            <texture id="X_spaceship_hull" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>     
+        <component id="lg-gun-charge-left">
+            <transformation>
+                <translate x="1" y="0" z="1" />  
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="lg-gun-charge" />
+            </children>
+        </component>     
+        <component id="lg-gun-charge-right">
+            <transformation>
+                <translate x="-1" y="0" z="1" />  
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="lg-gun-charge" />
+            </children>
+        </component>    
+        <component id="lg-gun-connector">
+            <transformation>
+                <scale x="1" y="1" z="1" />  
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>    
+        <component id="lg-gun-inner">
+            <transformation>
+                <scale x="0.6" y="0.6" z="8" />  
+                <translate x="0" y="0" z="0.4" />
+            </transformation>
+            <materials>
+                <material id="darkred" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus0.4" />
+            </children>
+        </component>
+        <component id="lg-gun">
+            <transformation>
+                <translate x="0" y="-2.1213" z="2.1213" /> <!-- 3*sqrt(2)/2 = 2.1213 -->
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="lg-gun-connector" />
+                <componentref id="lg-gun-base" />
+                <componentref id="lg-gun-base-connector" />
+                <componentref id="lg-gun-mid" />
+                <componentref id="lg-gun-mid-connector" />
+                <componentref id="lg-gun-edge" />
+                <componentref id="lg-gun-rings" />
+                <componentref id="lg-gun-charge-right" />
+                <componentref id="lg-gun-charge-left" />
+                <componentref id="lg-gun-inner" />
+            </children>
+        </component>
+        <component id="laser-gun">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="futuristic_red" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="lg-connector" />
+                <componentref id="lg-gun" />
+            </children>
+        </component>
+        <!-- LASER GUN END-->
+
+        <!-- ION CANNON START -->
+        <component id="ic-gun-connector">
+            <transformation>
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+        <component id="ic-gun-base">
+            <transformation>
+                <scale x="1" y="1" z="2" />
+                <translate x="0" y="0" z="0.4" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus0.4" />
+            </children>
+        </component>
+        <component id="ic-gun-tube">
+            <transformation>
+                <scale x="0.2" y="0.2" z="4" />
+                <translate x="0" y="0" z="0.4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus0.4" />
+            </children>
+        </component>
+        <component id="ic-gun-tube-1">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ic-gun-tube" />
+            </children>
+        </component>
+        <component id="ic-gun-tube-2">
+            <transformation>
+                <translate x="0" y="-0.5" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ic-gun-tube" />
+            </children>
+        </component>
+        <component id="ic-gun-tube-3">
+            <transformation>
+                <translate x="0.5" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ic-gun-tube" />
+            </children>
+        </component>
+        <component id="ic-gun-tube-4">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ic-gun-tube" />
+            </children>
+        </component>
+        <component id="ic-gun-tubes">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="ion_blue" />
+            </materials>
+            <texture id="gun_metal" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ic-gun-tube-1" />
+                <componentref id="ic-gun-tube-2" />
+                <componentref id="ic-gun-tube-3" />
+                <componentref id="ic-gun-tube-4" />
+            </children>
+        </component>
+        <component id="ic-gun-inner-tube">
+            <transformation>
+                <scale x="2.5" y="2.5" z="1" />
+                <scale x="0.2" y="0.2" z="6" />
+                <translate x="0" y="0" z="0.4" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="futuristic_blue" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus0.4" />
+            </children>
+        </component>
+        <component id="ic-gun-ion-tube">
+            <transformation>
+                <translate x="0" y="0" z="3" />
+                <scale x="0.65" y="0.65" z="3.2" />
+                <translate x="0" y="0" z="0.3" />
+            </transformation>
+            <materials>
+                <material id="ion_blue" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus0.3" />
+            </children>
+        </component>
+        <component id="ic-gun-end">
+            <transformation>
+                <translate x="0" y="0" z="3.6" />
+                <scale x="0.8" y="0.8" z="8" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Y-spaceship-torus" />
+            </children>
+        </component>
+        <component id="ic-gun">
+            <transformation>
+                <translate x="0" y="-1.414" z="1.414" /><!-- 2*sqrt(2)/2 = 1.414 -->
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ic-gun-connector" />
+                <componentref id="ic-gun-base" />
+                <componentref id="ic-gun-tubes" />
+                <componentref id="ic-gun-inner-tube" />
+                <componentref id="ic-gun-ion-tube" />
+                <componentref id="ic-gun-end" />
+            </children>
+        </component>
+        <component id="ic-connector">
+            <transformation>
+                <rotate axis="x" angle="45" />
+                <scale x="0.2" y="0.2" z="2" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="Y_spaceship_hull" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+        <component id="ion-cannon">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="futuristic_blue" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ic-connector" />
+                <componentref id="ic-gun" />
+            </children>
+        </component>
+        <!-- ION CANNON END -->
+
+        <!-- X SPACESHIP START -->
+        <component id="X-spaceship-arm-cone">
+            <transformation>
+                <scale x="1" y="1" z="2" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cone" />
+            </children>
+        </component>
+        <component id="X-spaceship-arm-cone-base">
+            <transformation>
+                <rotate axis="y" angle="180" />
+                <scale x="1" y="1" z="0.5" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="X-spaceship-arm-base" />
+            </children>
+        </component>
+        <component id="X-spaceship-arm-connector">
+            <transformation>
+                <translate x="0" y="0" z="-0.5" />
+                <rotate axis="y" angle="180" />
+                <scale x="0.2" y="0.2" z="1" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="X_spaceship_hull" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+        <component id="X-spaceship-arm-ring">
+            <transformation>
+                <translate x="0" y="0" z="-1" />
+                <scale x="2.5" y="2.5" z="3" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="futuristic_red" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus" />
+            </children>
+        </component>
+        <component id="X-spaceship-arm">
+            <transformation>                
+                <translate x="0" y="0" z="1.5" /> <!-- 0.5 from cone base + 1 from arm connector -->
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="X_spaceship_hull" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship-arm-cone" />
+                <componentref id="X-spaceship-arm-cone-base" />
+                <componentref id="X-spaceship-arm-connector" />
+                <componentref id="X-spaceship-arm-ring" />
+            </children>
+        </component>
+        <component id="X-spaceship-arm-left">
+            <transformation>                
+                <translate x="-3.5" y="0" z="0" />    
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship-arm" />
+            </children>
+        </component>
+        <component id="X-spaceship-arm-right">
+            <transformation>       
+                <translate x="3.5" y="0" z="0" />         
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship-arm" />
+            </children>
+        </component>
+        <component id="X-spaceship-body">
+            <transformation>
+                <scale x="3.5" y="3.5" z="3.5" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+        <component id="X-spaceship-ring">
+            <transformation>
+                <scale x="3" y="3.6" z="3.6" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="x_ship_ring_mat" />
+            </materials>
+            <texture id="futuristic_red" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="torus" />
+            </children>
+        </component>
+        <component id="X-spaceship-ring-1">
+            <transformation>
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship-ring" />
+            </children>
+        </component>
+        <component id="X-spaceship-ring-2">
+            <transformation>
+                <rotate axis="z" angle="-45" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship-ring" />
+            </children>
+        </component>
+        <component id="X-spaceship-gun">
+            <transformation>
+                <translate x="0" y="-3" z="0" />
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="laser-gun" />
+            </children>
+        </component>
+        <component id="X-spaceship">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="X_spaceship_hull" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship-arm-left" />
+                <componentref id="X-spaceship-body" />
+                <componentref id="X-spaceship-arm-right" />
+                <componentref id="X-spaceship-ring-1" />
+                <componentref id="X-spaceship-ring-2" />
+                <componentref id="X-spaceship-gun" />
+            </children>
+        </component>
+        <!-- X SPACESHIP END -->
+
+        <!-- Y SPACESHIP START -->
+        <component id="Y-spaceship-arm-connector">
+            <transformation>
+                <scale x="5" y="0.3" z="0.3" />
+                <translate x="-0.5" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>
+        <component id="Y-spaceship-arm-sphere">
+            <transformation>
+                <scale x="0.8" y="0.8" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="futuristic_blue" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+        <component id="Y-spaceship-arm-sphere-right">
+            <transformation>
+                <translate x="-3" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship-arm-sphere" />
+            </children>
+        </component>
+        <component id="Y-spaceship-arm-sphere-left">
+            <transformation>
+                <translate x="3" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship-arm-sphere" />
+            </children>
+        </component>    
+        <component id="Y-spaceship-arm">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship-arm-connector" />
+                <componentref id="Y-spaceship-arm-sphere-right" />
+                <componentref id="Y-spaceship-arm-sphere-left" />
+            </children>
+        </component>    
+        <component id="Y-spaceship-arm-1">
+            <transformation>
+                <rotate axis="x" angle="-50" />
+                <translate x="0" y="0" z="4.25" /> <!-- 0.85 * 5 -->
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship-arm" />
+            </children>
+        </component>    
+        <component id="Y-spaceship-arm-2">
+            <transformation>
+                <rotate axis="x" angle="-130" />
+                <translate x="0" y="0" z="4.25" /> <!-- 0.85 * 5 -->
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship-arm" />
+            </children>
+        </component>     
+        <component id="Y-spaceship-arm-3">
+            <transformation>
+                <rotate axis="x" angle="90" />
+                <translate x="0" y="0" z="4.25" /> <!-- 0.85 * 5 -->
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship-arm" />
+            </children>
+        </component>   
+        <component id="Y-spaceship-Y-1">
+            <transformation>
+                <rotate axis="x" angle="-50" />
+                <scale x="0.2" y="0.2" z="4.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>    
+        <component id="Y-spaceship-Y-2">
+            <transformation>
+                <rotate axis="x" angle="-130" />
+                <scale x="0.2" y="0.2" z="4.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>    
+        <component id="Y-spaceship-Y-3">
+            <transformation>
+                <rotate axis="x" angle="90" />
+                <scale x="0.2" y="0.2" z="4.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="cylinder" />
+            </children>
+        </component>      
+        <component id="Y-spaceship-Y">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="futuristic_blue" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship-Y-1" />
+                <componentref id="Y-spaceship-Y-2" />
+                <componentref id="Y-spaceship-Y-3" />
+            </children>
+        </component>     
+        <component id="Y-spaceship-gun-ring">
+            <transformation>
+                <scale x="2" y="5.1" z="5.1" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="futuristic_blue" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Y-spaceship-torus" />
+            </children>
+        </component>        
+        <component id="Y-spaceship-ring">
+            <transformation>
+                <scale x="6" y="5" z="5" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Y-spaceship-torus" />
+            </children>
+        </component>      
+        <component id="Y-spaceship-gun">
+            <transformation>
+                <rotate axis="x" angle="45" />
+                <translate x="0" y="0" z="5" />
+                <rotate axis="x" angle="-45" />
+                <scale x="0.8" y="0.8" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ion-cannon" />
+            </children>
+        </component>          
+        <component id="Y-spaceship">
+            <transformation>
+
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="Y_spaceship_hull" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship-ring" />
+                <componentref id="Y-spaceship-arm-1" />
+                <componentref id="Y-spaceship-arm-2" />
+                <componentref id="Y-spaceship-arm-3" />
+                <componentref id="Y-spaceship-Y" />
+                <componentref id="Y-spaceship-gun-ring" />
+                <componentref id="Y-spaceship-gun" />
+            </children>
+        </component>        
+        <!-- Y SPACESHIP END -->
+
+        <!-- SKYBOX START -->       
+        <component id="skybox-top">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>   
+        <component id="skybox-bottom">
+            <transformation>
+                <translate x="0" y="-0.5" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>     
+        <component id="skybox-back">
+            <transformation>
+                <translate x="0" y="0" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>   
+        <component id="skybox-front">
+            <transformation>
+                <translate x="0" y="0" z="0.5" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>    
+        <component id="skybox-right">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>   
+        <component id="skybox-left">
+            <transformation>
+                <translate x="0.5" y="0" z="0" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>            
+        <component id="skybox">
+            <transformation>
+                <scale x="1000" y="1000" z="1000" /> 
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="starfield" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="skybox-top" />
+                <componentref id="skybox-bottom" />
+                <componentref id="skybox-back" />
+                <componentref id="skybox-front" />
+                <componentref id="skybox-right" />
+                <componentref id="skybox-left" />
+            </children>
+        </component>
+        <!-- SKYBOX END -->
+                  
+        <!-- X FLEET START -->
+        <component id="X-laser">
+            <transformation>
+                <translate x="0" y="-4.1" z="0" />
+                <scale x="2" y="2" z="4" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="space-laser" />
+            </children>
+        </component>
+        <component id="X-laser-leaving">
+            <transformation>
+                <translate x="0" y="0" z="2" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-laser" />
+            </children>
+        </component>
+        <component id="X-laser-near">
+            <transformation>
+                <translate x="0" y="0" z="10" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-laser" />
+            </children>
+        </component>
+        <component id="X-laser-medium">
+            <transformation>
+                <translate x="0" y="0" z="25" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-laser" />
+            </children>
+        </component>
+        <component id="X-laser-far">
+            <transformation>
+                <translate x="0" y="0" z="40" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-laser" />
+            </children>
+        </component>  
+        <component id="X-planet-position">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-planet" />
+            </children>
+        </component>
+        <component id="X-spaceship-1">
+            <transformation>
+                <translate x="-10" y="0" z="30" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship" />
+                <componentref id="X-laser-leaving" />
+                <componentref id="X-laser-medium" />
+                <componentref id="X-laser-far" />
+            </children>
+        </component>  
+        <component id="X-spaceship-2">
+            <transformation>
+                <translate x="-10" y="-15" z="25" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship" />
+                <componentref id="X-laser-near" />
+                <componentref id="X-laser-medium" />
+                <componentref id="X-laser-far" />
+            </children>
+        </component>    
+        <component id="X-spaceship-3">
+            <transformation>
+                <translate x="15" y="10" z="35" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship" />
+                <componentref id="X-laser-leaving" />
+                <componentref id="X-laser-far" />
+            </children>
+        </component>    
+        <component id="X-spaceship-4">
+            <transformation>
+                <translate x="8" y="-5" z="38" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship" />
+                <componentref id="X-laser-leaving" />
+                <componentref id="X-laser-near" />
+                <componentref id="X-laser-far" />
+            </children>
+        </component>    
+        <component id="X-spaceship-5">
+            <transformation>
+                <translate x="-2" y="15" z="15" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-spaceship" />
+                <componentref id="X-laser-far" />
+                <componentref id="X-laser-near" />
+                <componentref id="X-laser-far" />
+            </children>
+        </component>                     
+        <component id="X-fleet">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-planet-position" />
+                <componentref id="X-spaceship-1" />
+                <componentref id="X-spaceship-2" />
+                <componentref id="X-spaceship-3" />
+                <componentref id="X-spaceship-4" />
+                <componentref id="X-spaceship-5" />
+            </children>
+        </component>   
+        <!-- X FLEET END -->
+
+        <!-- Y FLEET START -->  
+        <component id="Y-blast">
+            <transformation>
+                <translate x="0" y="-4.65" z="0" />
+                <scale x="1" y="1" z="50" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ion-blast" />
+            </children>
+        </component>
+        <component id="Y-blast-leaving">
+            <transformation>
+                <translate x="0" y="0" z="9" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-blast" />
+            </children>
+        </component>
+        <component id="Y-blast-near">
+            <transformation>
+                <translate x="0" y="0" z="15" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-blast" />
+            </children>
+        </component>
+        <component id="Y-blast-medium">
+            <transformation>
+                <translate x="0" y="0" z="25" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-blast" />
+            </children>
+        </component>
+        <component id="Y-blast-far">
+            <transformation>
+                <translate x="0" y="0" z="40" />
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-blast" />
+            </children>
+        </component>  
+        <component id="Y-planet-position">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-planet" />
+            </children>
+        </component>  
+        <component id="Y-spaceship-1">
+            <transformation>
+                <translate x="5" y="0" z="30" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship" />
+                <componentref id="Y-blast-leaving" />
+                <componentref id="Y-blast-far" />
+            </children>
+        </component>  
+        <component id="Y-spaceship-2">
+            <transformation>
+                <translate x="-10" y="15" z="25" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship" />
+                <componentref id="Y-blast-leaving" />
+                <componentref id="Y-blast-medium" />
+                <componentref id="Y-blast-far" />
+            </children>
+        </component>    
+        <component id="Y-spaceship-3">
+            <transformation>
+                <translate x="15" y="-10" z="35" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship" />
+                <componentref id="Y-blast-near" />
+                <componentref id="Y-blast-far" />
+            </children>
+        </component>    
+        <component id="Y-spaceship-4">
+            <transformation>
+                <translate x="-8" y="-5" z="38" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship" />
+                <componentref id="Y-blast-near" />
+                <componentref id="Y-blast-medium" />
+                <componentref id="Y-blast-far" />
+            </children>
+        </component>    
+        <component id="Y-spaceship-5">
+            <transformation>
+                <translate x="6" y="15" z="15" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-spaceship" />
+                <componentref id="Y-blast-near" />
+                <componentref id="Y-blast-far" />
+            </children>
+        </component>                      
+        <component id="Y-fleet">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-planet-position" />
+                <componentref id="Y-spaceship-1" />
+                <componentref id="Y-spaceship-2" />
+                <componentref id="Y-spaceship-3" />
+                <componentref id="Y-spaceship-4" />
+                <componentref id="Y-spaceship-5" />
+            </children>
+        </component> 
+        <!-- Y FLEET END -->     
+
+        <!-- SCENE START -->                   
+        <component id="X-fleet-position">
+            <transformation>
+                <translate x="-80" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="X-fleet" />
+            </children>
+        </component>                     
+        <component id="Y-fleet-position">
+            <transformation>
+                <transformationref id="Y-fleet-transform"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Y-fleet" />
+            </children>
+        </component>                           
+        <component id="scene">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="starfield" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="skybox" />
+                <componentref id="background-planets" />
+                <componentref id="X-fleet-position" />
+                <componentref id="Y-fleet-position" />
+                <componentref id="space_station"/>
+            </children>
+        </component>
+        <!-- SCENE END -->
+    </components>
+</lxs>

@@ -13,7 +13,8 @@ class MyComponent extends CGFobject {
         this.material_number=0;
     }
     incrementMaterialNumber(){
-        this.material_number=(this.material_number++)%this.materials.length;
+        this.material_number=this.material_number+1;
+        this.material_number=this.material_number%(this.materials.length);
     }
 
     getCurrentMaterial(){

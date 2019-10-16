@@ -115,6 +115,10 @@ class XMLscene extends CGFscene {
         this.initCameras();
     }
 
+    update(t) {
+        this.graph.checkKeys(this.gui);
+    }
+
     /**
      * Displays the scene.
      */

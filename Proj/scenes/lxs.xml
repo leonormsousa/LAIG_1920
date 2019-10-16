@@ -34,6 +34,7 @@
     <textures>
         <texture id="donutTexture" file="scenes/images/donut.jpg" />
         <texture id="paintingTexture" file="scenes/images/painting.png" />
+        <texture id="skyTexture" file="scenes/images/sky.png" />
     </textures>
 
     <materials>
@@ -277,7 +278,7 @@
             <materials>
                 <material id="shirtMaterial" />
             </materials>
-            <texture id="paintingTexture" length_s="0.2" length_t="0.2"/>
+            <texture id="paintingTexture" length_s="1" length_t="1"/>
             <children>
                 <componentref id="frame"/>
                 <componentref id="boat"/>
@@ -1030,6 +1031,19 @@
                 <componentref id="shoes"/>
             </children>
         </component>
+        <component id="background">
+            <transformation>
+                <translate x="0" y="20" z="-0.1" />
+                <scale x="20" y="40" z="20"/>
+            </transformation>
+            <materials>
+                <material id="shirtMaterial" />
+            </materials>
+            <texture id="skyTexture" length_s="0.05" length_t="0.1"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
         <component id="root">
             <transformation>
                 <scale x="0.1" y="0.1" z="0.1" />
@@ -1039,6 +1053,7 @@
             </materials>
             <texture id="none"/>
             <children>
+                <componentref id="background"/>
                 <componentref id="painting"/>
                 <componentref id="homer"/>
             </children>

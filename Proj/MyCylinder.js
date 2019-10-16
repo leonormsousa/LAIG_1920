@@ -53,5 +53,7 @@ class MyCylinder extends CGFobject {
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	}
+
+	changeTexCoords(length_s, length_t){};
 }
 

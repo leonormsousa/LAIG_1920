@@ -924,6 +924,8 @@ class MySceneGraph {
 
             // Texture
             var texture=this.reader.getString(children[i].children[textureIndex], 'id');
+            var length_s=this.reader.getString(children[i].children[textureIndex], 'length_s');
+            var length_t=this.reader.getString(children[i].children[textureIndex], 'length_t');
             if (texture!="inherit" && texture!="none" && this.textures[texture]==undefined)
             {
                 this.onXMLMinorError("the texture with the id " + texture + " in the component " + componentID + " is not referenced. The texture will be replaced by none.");
@@ -946,7 +948,7 @@ class MySceneGraph {
                 }
             }
 
-            this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, childrenPrimitives, childrenComponents);
+            this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, length_s, length_t, childrenPrimitives, childrenComponents);
         }
         for (var key in this.components){
             for (let j=0; j<this.components[key].childrenComponents.length; j++)
@@ -1078,7 +1080,7 @@ class MySceneGraph {
         }
     }
 
-    processNode(id, transformation_matrix, material, texture){
+    processNode(id, transformation_matrix, material, texture, length_s, length_t){
         if (this.primitives[id] != null)
         {;
             var mat = new CGFappearance(this.scene);

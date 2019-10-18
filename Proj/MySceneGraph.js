@@ -508,8 +508,7 @@ class MySceneGraph {
             if (this.textures[textureID] != null)
                 return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
             
-                        
-                var texture = new CGFtexture(this.scene, textureURL);
+            var texture = new CGFtexture(this.scene, textureURL);
 
             this.textures[textureID] = texture;
         }

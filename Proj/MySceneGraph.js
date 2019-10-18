@@ -938,7 +938,17 @@ class MySceneGraph {
             }
             else if (texture!="inherit" && texture!="none"){
                 length_s=this.reader.getFloat(children[i].children[textureIndex], 'length_s');
+                if (length_s==undefined)
+                {
+                    this.onXMLMinorError("length_s in texture " + texture + " in the component " + componentID + " is not referenced. length_s will have default value of 1.");
+                    length_s=1;
+                }
                 length_t=this.reader.getFloat(children[i].children[textureIndex], 'length_t');
+                if (length_t==undefined)
+                {
+                    this.onXMLMinorError("length_t in texture " + texture + " in the component " + componentID + " is not referenced. length_s will have default value of 1.");
+                    length_t=1;
+                }
             }
 
             // Children

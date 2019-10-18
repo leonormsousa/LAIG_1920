@@ -78,6 +78,7 @@ class MyTriangle extends CGFobject {
 			v1/length_s, 0,
 			(v3*cosac)/length_s, (v3*sinac)/length_t
 		]
+		this.updateTexCoords(this.texCoords);
 	}
 }
 

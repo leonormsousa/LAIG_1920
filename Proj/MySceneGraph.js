@@ -1134,6 +1134,9 @@ class MySceneGraph {
             }            
             mat.apply();
 
+            if (id=="rectangle" && texture=="skyTexture")
+            console.log(this.primitives[id].texCoords);
+
             this.scene.pushMatrix();
             this.scene.multMatrix(transformation_matrix);
             this.primitives[id].display();

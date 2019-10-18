@@ -1143,7 +1143,7 @@
             <materials>
                 <material id="shirtMaterial" />
             </materials>
-            <texture id="skyTexture" length_s="0.05" length_t="0.1"/>
+            <texture id="skyTexture" length_s="0.05" length_t="0.025"/>
             <children>
                 <componentref id="square_sky_back"/>
                 <componentref id="square_sky_left"/>

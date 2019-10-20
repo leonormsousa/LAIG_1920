@@ -503,8 +503,7 @@ class MySceneGraph {
             if (this.textures[textureID] != null)
                 return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
             
-                        
-                var texture = new CGFtexture(this.scene, textureURL);
+            var texture = new CGFtexture(this.scene, textureURL);
 
             this.textures[textureID] = texture;
         }
@@ -550,7 +549,6 @@ class MySceneGraph {
             var materialSpecularIndex = nodeNames.indexOf("specular");
 
             var material = new CGFappearance(this.scene);
-            material.setTextureWrap('REPEAT', 'REPEAT');
 
             material.setAmbient(this.reader.getFloat(grandChildren[materialAmbientIndex],'r'), this.reader.getFloat(grandChildren[materialAmbientIndex],'g'), this.reader.getFloat(grandChildren[materialAmbientIndex],'b'), this.reader.getFloat(grandChildren[materialAmbientIndex],'a'));
             material.setDiffuse(this.reader.getFloat(grandChildren[materialDiffuseIndex],'r'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'g'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'b'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'a'));
@@ -926,10 +924,26 @@ class MySceneGraph {
 
             // Texture
             var texture=this.reader.getString(children[i].children[textureIndex], 'id');
+            var length_s=1;
+            var length_t=1;
             if (texture!="inherit" && texture!="none" && this.textures[texture]==undefined)
             {
                 this.onXMLMinorError("the texture with the id " + texture + " in the component " + componentID + " is not referenced. The texture will be replaced by none.");
                 texture="none";
+            }
+            else if (texture!="inherit" && texture!="none"){
+                length_s=this.reader.getFloat(children[i].children[textureIndex], 'length_s');
+                if (length_s==undefined)
+                {
+                    this.onXMLMinorError("length_s in texture " + texture + " in the component " + componentID + " is not referenced. length_s will have default value of 1.");
+                    length_s=1;
+                }
+                length_t=this.reader.getFloat(children[i].children[textureIndex], 'length_t');
+                if (length_t==undefined)
+                {
+                    this.onXMLMinorError("length_t in texture " + texture + " in the component " + componentID + " is not referenced. length_s will have default value of 1.");
+                    length_t=1;
+                }
             }
 
               
@@ -955,7 +969,7 @@ class MySceneGraph {
                 }
             }
 
-            this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, childrenPrimitives, childrenComponents);
+            this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, length_s, length_t, childrenPrimitives, childrenComponents);
         }
         for (var key in this.components){
             for (let j=0; j<this.components[key].childrenComponents.length; j++)
@@ -1115,41 +1129,57 @@ class MySceneGraph {
         }
     }
 
-    processNode(id, transformation_matrix, material, texture){
+    processNode(id, transformation_matrix, material, texture, length_s, length_t){
         if (this.primitives[id] != null)
-        {;
-
+        {   
             var mat = new CGFappearance(this.scene);
             mat=this.materials[material];
+
+            var old_texCoords=this.primitives[id].texCoords;
             if (texture=="none")
                 mat.setTexture(null);
-            else
+            else{
+                this.primitives[id].changeTexCoords(length_s, length_t);
                 mat.setTexture(this.textures[texture]);
+                mat.setTextureWrap('REPEAT', 'REPEAT');
+            }            
             mat.apply();
+
             this.scene.pushMatrix();
             this.scene.multMatrix(transformation_matrix);
             this.primitives[id].display();
             this.scene.popMatrix();
+            
+            this.primitives[id].texCoords=old_texCoords; 
         }
         else
         {
             var component=this.components[id];
+
             var material_c=component.getCurrentMaterial();
             if (material_c=='inherit')
                 material_c=material;
+
             var texture_c = component.texture;
             if (texture_c=="inherit")
                 texture_c=texture;
+            else{
+                length_s=component.length_s;
+                length_t=component.length_t;
+            }
+
             var mult = mat4.create();
             mat4.multiply(mult, transformation_matrix, component.transformation_matrix);
+
             for (let i=0; i<component.childrenComponents.length; i++)
             {
                 var childIndex = component.childrenComponents[i];
                 var child = this.components[childIndex];
-                this.processNode(child.id, mult, material_c, texture_c);
+                this.processNode(child.id, mult, material_c, texture_c, length_s, length_t);
             }    
+
             for (let i=0; i<component.childrenPrimitives.length; i++){
-                this.processNode(component.childrenPrimitives[i], mult, material_c, texture_c);
+                this.processNode(component.childrenPrimitives[i], mult, material_c, texture_c, length_s, length_t);
             }
         }
     }

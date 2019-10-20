@@ -151,7 +151,6 @@ class XMLscene extends CGFscene {
         this.displayLights[6]=this.displayLight6;
         this.displayLights[7]=this.displayLight7;
 
-        console.log(this.displayLights[0]);
     }
 
     /**

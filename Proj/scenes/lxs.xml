@@ -34,6 +34,9 @@
     <textures>
         <texture id="donutTexture" file="scenes/images/donut.jpg" />
         <texture id="paintingTexture" file="scenes/images/painting.png" />
+        <texture id="skyTexture" file="scenes/images/sky.png" />
+        <texture id="roadTexture" file="scenes/images/road.jpg" />
+        <texture id="houseTexture" file="scenes/images/house2.png" />
     </textures>
 
     <materials>
@@ -269,6 +272,33 @@
                 <componentref id="sail"/>
             </children>
         </component>
+        <component id="stick">
+            <transformation>
+                <translate x="0" y="-13" z="-0.5" />
+                <scale x="0.1" y="13" z="0.1" />
+                <transformationref id="vertical_cylinder"/>
+            </transformation>
+            <materials>
+                <material id="blackMaterial" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="straightCylinder"/>
+            </children>
+        </component>
+        <component id="back_frame">
+            <transformation>
+                <scale x="2" y="3" z="1" />
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="blackMaterial" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
         <component id="painting">
             <transformation>
                 <translate x="8" y="26" z="0" />
@@ -277,10 +307,12 @@
             <materials>
                 <material id="shirtMaterial" />
             </materials>
-            <texture id="paintingTexture"/>
+            <texture id="paintingTexture" length_s="1" length_t="1"/>
             <children>
                 <componentref id="frame"/>
                 <componentref id="boat"/>
+                <componentref id="stick"/>
+                <componentref id="back_frame"/>
             </children>
         </component>
         <component id="outer_eye">
@@ -645,7 +677,7 @@
             <materials>
                 <material id="donutMaterial" />
             </materials>
-            <texture id="donutTexture"/>
+            <texture id="donutTexture" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="torus"/>
             </children>
@@ -1030,6 +1062,114 @@
                 <componentref id="shoes"/>
             </children>
         </component>
+        <component id="house_back">
+            <transformation>
+                <translate x="0" y="50" z="-100"/>
+                <scale x="100" y="100" z="1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="houseTexture" length_s="2" length_t="1"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+        <component id="sky_back">
+            <transformation>
+                <translate x="0" y="150" z="-100"/>
+                <scale x="100" y="100" z="1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="skyTexture" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+        <component id="square_sky_left">
+            <transformation>
+                <translate x="-100" y="100" z="0" />
+                <rotate axis="y" angle="90"/>
+                <scale x="100" y="200" z="1"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+        <component id="square_sky_right">
+            <transformation>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="square_sky_left"/>
+            </children>
+        </component>
+        <component id="square_sky_front">
+            <transformation>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="square_sky_left"/>
+            </children>
+        </component>
+        <component id="square_sky_top">
+            <transformation>
+                <translate x="0" y="100" z="100"/>
+                <rotate axis="x" angle="-90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="square_sky_front"/>
+            </children>
+        </component>
+        <component id="square_sky_down">
+            <transformation>
+                <translate x="0" y="100" z="-100"/>
+                <rotate axis="x" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="roadTexture" length_s="1" length_t="0.5"/>
+            <children>
+                <componentref id="square_sky_front"/>
+            </children>
+        </component>
+        <component id="box">
+            <transformation>
+                <rotate axis="y" angle="0"/>
+            </transformation>
+            <materials>
+                <material id="shirtMaterial" />
+            </materials>
+            <texture id="skyTexture" length_s="1" length_t="0.5"/>
+            <children>
+                <componentref id="house_back"/>
+                <componentref id="sky_back"/>
+                <componentref id="square_sky_left"/>
+                <componentref id="square_sky_right"/>
+                <componentref id="square_sky_front"/>
+                <componentref id="square_sky_top"/>
+                <componentref id="square_sky_down"/>
+            </children>
+        </component>
         <component id="root">
             <transformation>
                 <scale x="0.1" y="0.1" z="0.1" />
@@ -1039,6 +1179,7 @@
             </materials>
             <texture id="none"/>
             <children>
+                <componentref id="box"/>
                 <componentref id="painting"/>
                 <componentref id="homer"/>
             </children>

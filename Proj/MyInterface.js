@@ -86,9 +86,9 @@ class MyInterface extends CGFinterface {
         return this.activeKeys[keyCode] || false;
     }
 
-    addLights(lights){
-         for(let i=0; i<this.scene.numLights;i++)        
-            this.gui.add(this.scene, 'displayLight'+i).name("Display light "+i);
+    addLights(){
+         for(let i=0; i<this.scene.numLights;i++)
+            this.gui.add(this.scene, 'displayLight'+i).name("Display "+i);       
     }
 
     addCameras(cameras){

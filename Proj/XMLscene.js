@@ -117,7 +117,7 @@ class XMLscene extends CGFscene {
                 i++;
             }
         }
-        this.numLights=i;
+        this.numLights=i;          
     }
 
     setDefaultAppearance() {
@@ -136,7 +136,7 @@ class XMLscene extends CGFscene {
         this.initLights();
         this.sceneInited = true;
         this.initCameras();
-        this.interface.addLights(this.lights);
+        this.interface.addLights();
         this.interface.addCameras(this.camerasID);
     }
 
@@ -150,7 +150,6 @@ class XMLscene extends CGFscene {
         this.displayLights[5]=this.displayLight5;
         this.displayLights[6]=this.displayLight6;
         this.displayLights[7]=this.displayLight7;
-
     }
 
     /**
@@ -181,8 +180,8 @@ class XMLscene extends CGFscene {
             else{
                 this.lights[i].setVisible(false);
                 this.lights[i].disable();
-
             }
+            this.lights[i].update();
         }
 
         // Draw axis

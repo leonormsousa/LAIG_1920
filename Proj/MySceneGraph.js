@@ -234,7 +234,7 @@ class MySceneGraph {
 
         var grandChildren = [];
         var nodeNames = [];
-
+        this.defaultCam = this.reader.getString(viewsNode, 'default');
         // Any number of views.
         for (var i = 0; i < children.length; i++) {
 
@@ -299,15 +299,13 @@ class MySceneGraph {
 
                     upView = aux;
                 }
-                else
-                    return "up for ortho undefined for ID = " + viewID;
+                //else
+                   // return "up for ortho undefined for ID = " + viewID;
 
                 global.push(...[upView]);
             }
 
-            console.log(global[0]);
             var camera = new CGFcamera(this.reader.getFloat(children[i],'angle'), this.reader.getFloat(children[i],'near'), this.reader.getFloat(children[i],'far'), global[0], global[1]);
-            console.log(camera);
             this.views[viewID] = camera;
             numViews++;
         }
@@ -414,10 +412,8 @@ class MySceneGraph {
             for (var j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
-            console.log("nodeNames");
-            console.log(nodeNames);
+  
             for (var j = 0; j < attributeNames.length; j++) {
-                console.log(attributeNames[j]);
                 var attributeIndex = nodeNames.indexOf(attributeNames[j]);
 
                 if (attributeIndex != -1) {
@@ -474,8 +470,7 @@ class MySceneGraph {
             this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
 
         this.log("Parsed lights");
-        console.log(this.lights);
-        return null;
+            return null;
     }
 
     /**
@@ -937,6 +932,7 @@ class MySceneGraph {
                 texture="none";
             }
 
+              
             // Children
             var childrens=children[i].children[childrenIndex].children;
             var childrenPrimitives = [];
@@ -944,6 +940,12 @@ class MySceneGraph {
             for(let j=0; j<childrens.length;j++){
                 if(childrens[j].nodeName=="primitiveref"){
                     var primref=this.reader.getString(childrens[j], 'id');
+                    if (texture!="inherit" && texture!="none" && (primref === 'triangle' || primref === 'rectangle') ){
+                        var length_s = this.reader.getFloat(children[i].children[textureIndex], 'length_s');
+                        var length_t = this.reader.getFloat(children[i].children[textureIndex], 'length_t');
+                        if(length_s ==null || length_t==null)        
+                            return "Please define length_s and length_t for texture" + texture;
+                    }
                     if (this.primitives[primref]==undefined)
                         return "primitive with id " + primref + " in component " + componentID + " is not referenced.";
                     childrenPrimitives.push(primref);
@@ -1116,6 +1118,7 @@ class MySceneGraph {
     processNode(id, transformation_matrix, material, texture){
         if (this.primitives[id] != null)
         {;
+
             var mat = new CGFappearance(this.scene);
             mat=this.materials[material];
             if (texture=="none")

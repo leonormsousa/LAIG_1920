@@ -2,9 +2,9 @@
     <scene root="root" axis_length="5"/>
 
     <views default="homerCamera">
-        <perspective id="homerCamera" near="0.1" far="500" angle="0">
-            <from x="0" y="40" z="30" />
-            <to x="0" y="20" z="5" />
+        <perspective id="homerCamera" near="0.1" far="500" angle="45">
+               <from x="0" y="3" z="8" />
+            <to x="0" y="0" z="2" />
         </perspective>
     </views>
 
@@ -21,14 +21,14 @@
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="0" linear="1" quadratic="0" />
         </omni>
-        <!-- <spot id="spotlight" enabled="1" angle="20" exponent="10">
+        <spot id="spotlight" enabled="1" angle="20" exponent="10">
             <location x="0" y="40" z="-10" w="1.0" />
             <target x="0" y="20" z="5" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="0" linear="1" quadratic="0" />
-        </spot> -->
+        </spot>
     </lights>
 
     <textures>

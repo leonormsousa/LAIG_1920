@@ -308,7 +308,7 @@
             <materials>
                 <material id="shirtMaterial" />
             </materials>
-            <texture id="paintingTexture" length_s="1" length_t="1"/>
+            <texture id="paintingTexture" length_s="2" length_t="1"/>
             <children>
                 <componentref id="frame"/>
                 <componentref id="boat"/>
@@ -1148,7 +1148,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="roadTexture" length_s="1" length_t="0.5"/>
+            <texture id="roadTexture" length_s="2" length_t="0.5"/>
             <children>
                 <componentref id="square_sky_front"/>
             </children>

@@ -46,18 +46,8 @@ class MyTriangle extends CGFobject {
 			nx, ny, nz
 		];
 
-		var v1=Math.sqrt(Math.pow(this.x2-this.x1,2)+Math.pow(this.y2-this.y1,2)+Math.pow(this.z2-this.z1,2));
-		var v2=Math.sqrt(Math.pow(this.x3-this.x2,2)+Math.pow(this.y3-this.y2,2)+Math.pow(this.z3-this.z2,2));
-		var v3=Math.sqrt(Math.pow(this.x1-this.x3,2)+Math.pow(this.y1-this.y3,2)+Math.pow(this.z1-this.z3,2));
-
-		var cosac=(v1*v1-v2*v2+v3*v3)/(2*v1*v2);
-		var sinac= Math.sqrt(1-Math.pow(cosac,2));
-
-		this.texCoords = [
-			0, 0,
-			v1, 0,
-			(v3*cosac), (v3*sinac)
-		]
+		this.changeTexCoords(1,1);
+		
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	}
@@ -73,6 +63,13 @@ class MyTriangle extends CGFobject {
 	}
 
 	changeTexCoords(length_s, length_t){
+		var v1=Math.sqrt(Math.pow(this.x2-this.x1,2)+Math.pow(this.y2-this.y1,2)+Math.pow(this.z2-this.z1,2));
+		var v2=Math.sqrt(Math.pow(this.x3-this.x2,2)+Math.pow(this.y3-this.y2,2)+Math.pow(this.z3-this.z2,2));
+		var v3=Math.sqrt(Math.pow(this.x1-this.x3,2)+Math.pow(this.y1-this.y3,2)+Math.pow(this.z1-this.z3,2));
+
+		var cosac=(v1*v1-v2*v2+v3*v3)/(2*v1*v2);
+		var sinac= Math.sqrt(1-Math.pow(cosac,2));
+
 		this.texCoords = [
 			0, 0,
 			v1/length_s, 0,
@@ -81,4 +78,3 @@ class MyTriangle extends CGFobject {
 		this.updateTexCoords(this.texCoords);
 	}
 }
-

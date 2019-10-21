@@ -112,7 +112,7 @@ class XMLscene extends CGFscene {
                     this.lights[i].disable();
                     this.displayLights[i]=false;
                 }
-                   
+ 
                 this.lights[i].update();
                 i++;
             }

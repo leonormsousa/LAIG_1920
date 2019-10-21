@@ -304,8 +304,15 @@ class MySceneGraph {
 
                 global.push(...[upView]);
             }
+            if(children[i].nodeName === "ortho"){
+                if(upView.length==0)
+                    var camera = new CGFcameraOrtho(this.reader.getFloat(children[i],'left'), this.reader.getFloat(children[i],'right'), this.reader.getFloat(children[i],'bottom'), this.reader.getFloat(children[i],'top'), this.reader.getFloat(children[i],'near'), this.reader.getFloat(children[i],'far'),global[0], global[1], [0,1,0]);
+                else
+                    var camera = new CGFcameraOrtho(this.reader.getFloat(children[i],'left'), this.reader.getFloat(children[i],'right'), this.reader.getFloat(children[i],'bottom'), this.reader.getFloat(children[i],'top'), this.reader.getFloat(children[i],'near'), this.reader.getFloat(children[i],'far'),global[0], global[1], global[2]);
+            }
 
-            var camera = new CGFcamera(this.reader.getFloat(children[i],'angle'), this.reader.getFloat(children[i],'near'), this.reader.getFloat(children[i],'far'), global[0], global[1]);
+            else
+                var camera = new CGFcamera(this.reader.getFloat(children[i],'angle'), this.reader.getFloat(children[i],'near'), this.reader.getFloat(children[i],'far'), global[0], global[1]);
             this.views[viewID] = camera;
             numViews++;
         }
@@ -396,8 +403,6 @@ class MySceneGraph {
             // Light enable/disable
             var enableLight = true;
             var aux = this.reader.getBoolean(children[i], 'enabled');
-            console.log("enabled");
-            console.log(aux);
             if (!(aux != null && !isNaN(aux) && (aux == true || aux == false)))
                 this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'");
 
@@ -463,7 +468,6 @@ class MySceneGraph {
             }
 
             this.lights[lightId] = global;
-            console.log(global);
             numLights++;
         }
 
@@ -879,6 +883,8 @@ class MySceneGraph {
             for (let j=0; j<transChildren.length; j++){
                 switch (transChildren[j].nodeName) {
                     case 'transformationref':
+                        if(transChildren.length>1)
+                            onXMLMinorError("A transformation ref should not be used at the same time as other transformations.")
                         var transref=this.reader.getString(transChildren[j],'id');
                         if (this.transformations[transref]==undefined)
                             return "the transformation with the id " + transref + " is not referenced.";

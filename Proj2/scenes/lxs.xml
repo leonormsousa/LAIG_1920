@@ -104,16 +104,16 @@
     <animations>
         <animation id="animation1" >
             <keyframe instant="0">
-                <translate x="0" y="0" z="2" />
+                <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
-            <keyframe instant="0">
+            <keyframe instant="10">
                 <translate x="2" y="0" z="2" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
-            <keyframe instant="0">
+            <keyframe instant="20">
                 <translate x="4" y="0" z="2" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />

@@ -150,6 +150,7 @@ class XMLscene extends CGFscene {
         this.displayLights[5]=this.displayLight5;
         this.displayLights[6]=this.displayLight6;
         this.displayLights[7]=this.displayLight7;
+        this.graph.update(t);
     }
 
     /**

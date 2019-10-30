@@ -730,7 +730,7 @@ class MySceneGraph {
                 keyframes.push(keyframe);
 
             }
-            var animation= new Animation(this.scene, animationID, keyframes);
+            var animation= new KeyframeAnimation(this.scene, animationID, keyframes);
             this.animations[animationID] = animation;
         }
 
@@ -972,6 +972,7 @@ class MySceneGraph {
             var materialsIndex = nodeNames.indexOf("materials");
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
+            var animationIndex = nodeNames.indexOf("animationref");
 
             // Transformations
             var transfMatrix = mat4.create();
@@ -1014,6 +1015,17 @@ class MySceneGraph {
                 }
             }
 
+            //animations
+            var animationID = null;
+            if (animationIndex!=-1){
+                animationID=this.reader.getString(children[i].children[animationIndex], 'id');
+                if (this.animations[animationID]==undefined)
+                {
+                    this.onXMLMinorError("The animation with the id " + animationID + " in the component " + componentID + " is not referenced. The animation will be ignored.");
+                    animationID=null;
+                }
+            }
+
             // Materials
             var materials=[];
             var childrens=children[i].children[materialsIndex].children;
@@ -1022,7 +1034,7 @@ class MySceneGraph {
                 var matref=this.reader.getString(childrens[j], 'id');
                 if (matref!="inherit" && this.materials[matref]==undefined)
                 {
-                    this.onXMLMinorError("the material with the id " + matref + " in the component " + componentID + " is not referenced. The material will be replaced by inherit.");
+                    this.onXMLMinorError("The material with the id " + matref + " in the component " + componentID + " is not referenced. The material will be replaced by inherit.");
                     matref="inherit";
                 }
                 materials.push(matref);
@@ -1075,7 +1087,7 @@ class MySceneGraph {
                 }
             }
 
-            this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, length_s, length_t, childrenPrimitives, childrenComponents);
+            this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, length_s, length_t, childrenPrimitives, childrenComponents, animationID);
         }
         for (var key in this.components){
             for (let j=0; j<this.components[key].childrenComponents.length; j++)
@@ -1227,6 +1239,12 @@ class MySceneGraph {
         console.log("   " + message);
     }
 
+    update(t){
+        for (var key in this.animations){
+            this.animations[key].update(t/1000);
+        }
+    }
+
     checkKeys(gui) {
         if (gui.isKeyPressed("KeyM")) {
             for (var key in this.components){
@@ -1275,7 +1293,15 @@ class MySceneGraph {
             }
 
             var mult = mat4.create();
-            mat4.multiply(mult, transformation_matrix, component.transformation_matrix);
+
+            var animationID = component.animation;
+            if (animationID!=null){
+                var animation=this.animations[animationID];
+                animation.apply(mult);
+            }
+
+            mat4.multiply(mult, mult, transformation_matrix);
+            mat4.multiply(mult, mult, component.transformation_matrix);
 
             for (let i=0; i<component.childrenComponents.length; i++)
             {

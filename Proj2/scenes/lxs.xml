@@ -109,7 +109,7 @@
                 <scale x="1" y="1" z="1" />
             </keyframe>
             <keyframe instant="5">
-                <translate x="2" y="0" z="2" />
+                <translate x="0" y="0" z="2" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
@@ -153,7 +153,22 @@
             <cylinder base="8" top="3" height="9" slices="100" stacks="50"/>
         </primitive>
         <primitive id="cylinder_stomach">
-            <cylinder base="5" top="6.8" height="3" slices="100" stacks="50"/>
+            <cylinder2 base="5" top="6.8" height="3" slices="100" stacks="50"/>
+        </primitive>
+        <primitive id="plane">
+            <plane npartsU="4" npartsV="5"/>
+        </primitive>
+        <primitive id="patch">
+            <patch npointsU="4" npointsV="2" npartsU="20" npartsV="20">
+                <controlpoint xx="-1" yy="0" zz="1"/>
+                <controlpoint xx="-1" yy="0" zz="0"/>
+                <controlpoint xx="-1" yy="1.33" zz="1"/>
+                <controlpoint xx="-1" yy="1.33" zz="0"/>
+                <controlpoint xx="1" yy="1.33" zz="1"/>
+                <controlpoint xx="1" yy="1.33" zz="0"/>
+                <controlpoint xx="1" yy="0" zz="1"/>
+                <controlpoint xx="1" yy="0" zz="0"/>
+            </patch>
         </primitive>
     </primitives>
 
@@ -1100,7 +1115,7 @@
         <component id="sky_back">
             <transformation>
                 <translate x="0" y="150" z="-100"/>
-                <scale x="100" y="100" z="1"/>
+                <scale x="100" y="100" z="100"/>
             </transformation>
             <materials>
                 <material id="inherit" />

@@ -23,6 +23,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
         this.selectedCamera = 0;
+        this.securityCameraInterface = 0;
         this.displayLight0 = false;
         this.displayLight1 = false;
         this.displayLight2 = false;
@@ -47,6 +48,14 @@ class XMLscene extends CGFscene {
         this.camerasID = {};
         this.cameraArray = [];
         this.initCameras();
+
+        //create Shader
+        this.shader = new CGFshader(this.gl, "shader.vert", "shader.frag");
+        this.shader.setUniformsValues({uSampler: 0});
+
+        this.securityCameraTexture = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.heigth);
+
+        this.mySecurityCamera = new MySecurityCamera(this, this.securityCameraTexture);
     }
 
     /**
@@ -57,6 +66,7 @@ class XMLscene extends CGFscene {
             // cameras index.
             if(this.sceneInited){
                 // Reads the cameras from the scene graph.
+                this.securityCamerasArray=[];
                 for (var key in this.graph.views) {
                     var view = this.graph.views[key];
                     this.cameraArray[i] = view;
@@ -65,15 +75,27 @@ class XMLscene extends CGFscene {
                 }
                 this.camera = this.cameraArray[this.camerasID[this.graph.defaultCam]];
                 this.interface.setActiveCamera(this.camera);
+                    
+                this.securityCamera = this.cameraArray[this.camerasID[this.graph.defaultCam]]
             }            
-            else
+            else{
                 this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15,15, 15), vec3.fromValues(0, 0, 0));
-    }
+                this.securityCamera=new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15,15, 15), vec3.fromValues(0, 0, 0));
+            }
+        }
 
     updateCamera() {
         this.camera = this.cameraArray[this.selectedCamera];
         this.interface.setActiveCamera(this.camera);
     }
+
+    updateSecurityCamera() {
+        //this.securityCamera = this.securityCamerasArray[this.securityCameraInterface];
+        this.securityCamera = this.cameraArray[this.securityCameraInterface];
+        console.log(this.securityCamera)
+    }
+
+
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -156,7 +178,8 @@ class XMLscene extends CGFscene {
     /**
      * Displays the scene.
      */
-    display() {
+    render(camera) {
+        this.camera=camera;
         // ---- BEGIN Background, camera and axis setup
         if(this.sceneInited){
 
@@ -194,5 +217,20 @@ class XMLscene extends CGFscene {
         this.popMatrix();
         // ---- END Background, camera and axis setup
         }
+    }
+
+    display(){
+        this.securityCameraTexture.attachToFrameBuffer();
+        var aux=this.camera;
+        this.render(this.securityCamera);
+        this.camera=aux;
+        this.securityCameraTexture.detachFromFrameBuffer();
+        this.render(this.camera);
+
+        this.setActiveShader(this.shader);
+        this.gl.disable(this.gl.DEPTH_TEST)
+        this.mySecurityCamera.display();
+        this.gl.enable(this.gl.DEPTH_TEST)
+        this.setActiveShader(this.defaultShader);
     }
 }

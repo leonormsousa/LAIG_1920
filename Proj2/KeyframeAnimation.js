@@ -47,11 +47,41 @@ class KeyframeAnimation extends CGFobject {
         var ty=keyframe1.ty + (keyframe2.ty - keyframe1.ty)*(delta-keyframe1.instant)/(keyframe2.instant-keyframe1.instant);
         var tz=keyframe1.tz + (keyframe2.tz - keyframe1.tz)*(delta-keyframe1.instant)/(keyframe2.instant-keyframe1.instant);
         
-        var sx=keyframe1.sx*Math.pow(Math.pow(keyframe2.sx/keyframe1.sx, 1/n), current_n);
-        var sy=keyframe1.sy*Math.pow(Math.pow(keyframe2.sy/keyframe1.sy, 1/n), current_n);
-        var sz=keyframe1.sz*Math.pow(Math.pow(keyframe2.sz/keyframe1.sz, 1/n), current_n);
+        var sx, sy, sz;
 
-        //scale só funciona para scales positivos!!!
+        //scale sx
+        if ((keyframe2.sx*keyframe1.sx) <= 0)
+        {
+            var d = 1 - Math.min(keyframe2.sx, keyframe1.sx);
+            var sx1 = keyframe1.sx + d;
+            var sx2 = keyframe2.sx + d;
+            sx = sx1 * Math.pow(Math.pow(sx2/sx1, 1/n), current_n) - d;
+        }
+        else
+            sx=keyframe1.sx*Math.pow(Math.pow(keyframe2.sx/keyframe1.sx, 1/n), current_n);
+
+        //scale sy
+        if ((keyframe2.sy*keyframe1.sy) <= 0)
+        {
+            var d = 1 - Math.min(keyframe2.sy, keyframe1.sy);
+            var sy1 = keyframe1.sy + d;
+            var sy2 = keyframe2.sy + d;
+            sy = sy1 * Math.pow(Math.pow(sy2/sy1, 1/n), current_n) - d;
+        }
+        else
+            sy=keyframe1.sy*Math.pow(Math.pow(keyframe2.sy/keyframe1.sy, 1/n), current_n);
+
+        //scale sz
+        if ((keyframe2.sz*keyframe1.sz) <= 0)
+        {
+            var d = 1 - Math.min(keyframe2.sz, keyframe1.sz);
+            var sx1 = keyframe1.sz + d;
+            var sx2 = keyframe2.sz + d;
+            sx = sz1 * Math.pow(Math.pow(sz2/sz1, 1/n), current_n) - d;
+        }
+        else
+            sz=keyframe1.sz*Math.pow(Math.pow(keyframe2.sz/keyframe1.sz, 1/n), current_n);
+
         this.matrix=mat4.create();
         mat4.translate(this.matrix, this.matrix, [tx, ty, tz]);
         mat4.scale(this.matrix, this.matrix, [sx, sy, sz]);   

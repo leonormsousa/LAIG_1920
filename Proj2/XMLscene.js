@@ -53,7 +53,7 @@ class XMLscene extends CGFscene {
         this.shader = new CGFshader(this.gl, "shader.vert", "shader.frag");
         this.shader.setUniformsValues({uSampler: 0});
 
-        this.securityCameraTexture = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.heigth);
+        this.securityCameraTexture = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
 
         this.mySecurityCamera = new MySecurityCamera(this, this.securityCameraTexture);
     }

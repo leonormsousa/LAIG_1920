@@ -41,6 +41,7 @@
         <texture id="skyTexture" file="scenes/images/sky.png" />
         <texture id="roadTexture" file="scenes/images/road.jpg" />
         <texture id="houseTexture" file="scenes/images/house2.png" />
+        <texture id="dohTexture" file="scenes/images/doh.png" />
     </textures>
 
     <materials>
@@ -102,20 +103,128 @@
     </transformations>
 
     <animations>
-        <animation id="animation1" >
+        <animation id="body" >
             <keyframe instant="0">
                 <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
-            <keyframe instant="5">
+            <keyframe instant="8">
+                <translate x="0" y="0" z="50" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="8.5">
+                <translate x="0" y="-10" z="50" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+        <animation id="left_leg" >
+            <keyframe instant="0">
                 <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="1" y="-1" z="1" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="1">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="30" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="3">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="-30" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="5">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="30" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="7">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="-30" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="8">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="8.5">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="-90" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+        <animation id="right_leg" >
+            <keyframe instant="0">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="1">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="-30" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="3">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="30" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="5">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="-30" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="7">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="30" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="8">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="8.5">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="-90" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+        <animation id="doh" >
+            <keyframe instant="0">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="8">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="9">
+                <translate x="0" y="27" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+        <animation id="arm" >
+            <keyframe instant="0">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
             </keyframe>
             <keyframe instant="10">
                 <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="12">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="45" angle_y="0" angle_z="-60" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
@@ -671,7 +780,7 @@
         <component id="right_forearm">
             <transformation>
                 <translate x="-8" y="18" z="0" />
-                <scale x="1" y="4" z="1" />
+                <scale x="1" y="5" z="1" />
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
@@ -684,7 +793,7 @@
         </component>
         <component id="right_hand">
             <transformation>
-                <translate x="-8" y="22" z="0" />
+                <translate x="-8" y="23" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -708,7 +817,7 @@
         </component>
         <component id="donut">
             <transformation>
-                <translate x="-8" y="24" z="0" />
+                <translate x="-8" y="25" z="0" />
             </transformation>
             <materials>
                 <material id="donutMaterial" />
@@ -716,6 +825,33 @@
             <texture id="donutTexture" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="torus"/>
+            </children>
+        </component>
+        <component id="moving_right_arm">
+            <transformation>
+                <translate x="8" y="-18" z="0" />
+            </transformation>
+            <animationref id="arm"/>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="right_forearm"/>
+                <componentref id="right_hand"/>
+                <componentref id="donut"/>
+            </children>
+        </component>
+        <component id="moving_right_arm1">
+            <transformation>
+                <translate x="-8" y="18" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="moving_right_arm"/>
             </children>
         </component>
         <component id="right_arm">
@@ -727,11 +863,9 @@
             </materials>
             <texture id="none"/>
             <children>
-                <componentref id="right_forearm"/>
                 <componentref id="right_elbow"/>
                 <componentref id="right_lowarm"/>
-                <componentref id="right_hand"/>
-                <componentref id="donut"/>
+                <componentref id="moving_right_arm1"/>
             </children>
         </component>
         <component id="arm_cylinder">
@@ -972,9 +1106,9 @@
                 <primitiveref id="sphere"/>            
             </children>
         </component>
-        <component id="leftleg">
+        <component id="leg">
             <transformation>
-                <translate x="2" y="0" z="0" />
+                <translate x="0" y="-12" z="0" />
                 <scale x="1.75" y="12" z="1.75"/>
                 <rotate axis="x" angle="-90" />
             </transformation>
@@ -986,18 +1120,54 @@
                 <primitiveref id="straightCylinder"/>            
             </children>
         </component>
-        <component id="rightleg">
+        <component id="leftleg">
             <transformation>
-                <translate x="-2" y="0" z="-1" />
-                <scale x="1.75" y="12" z="1.75"/>
-                <rotate axis="x" angle="-90" />
+                <translate x="2" y="0" z="0" />
+            </transformation>
+            <animationref id="left_leg"/>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="leg"/>            
+            </children>
+        </component>
+        <component id="leftleg1">
+            <transformation>
+                <translate x="0" y="12" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="straightCylinder"/>            
+                <componentref id="leftleg"/>            
+            </children>
+        </component>
+        <component id="rightleg">
+            <transformation>
+                <translate x="-2" y="0" z="0" />
+            </transformation>
+                <animationref id="right_leg"/>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="leg"/>            
+            </children>
+        </component>
+        <component id="rightleg1">
+            <transformation>
+                <translate x="0" y="12" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="rightleg"/>            
             </children>
         </component>
         <component id="pants">
@@ -1012,8 +1182,8 @@
             <texture id="none"/>
             <children>
                 <componentref id="pelvis"/>
-                <componentref id="leftleg"/>
-                <componentref id="rightleg"/>
+                <componentref id="leftleg1"/>
+                <componentref id="rightleg1"/>
             </children>
         </component>
         <component id="leftfoot">
@@ -1043,9 +1213,9 @@
                 <primitiveref id="straightCylinder"/>            
             </children>
         </component>
-        <component id="leftshoe">
+        <component id="shoe">
             <transformation>
-                <translate x="-2" y="-1.5" z="-1" />
+                <translate x="0" y="-13.5" z="-1" />
                 <scale x="2" y="1.3" z="1.3"/>
                 <rotate axis="y" angle="90" />
             </transformation>
@@ -1058,16 +1228,54 @@
                 <componentref id="leftheel"/>                  
             </children>
         </component>
-        <component id="rightshoe">
+        <component id="leftshoe">
             <transformation>
-                <translate x="4" y="0" z="0"/>
+                <translate x="2" y="0" z="0" />
+            </transformation>
+            <animationref id="left_leg" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="shoe"/>                       
+            </children>
+        </component>
+        <component id="leftshoe1">
+            <transformation>
+                <translate x="0" y="12" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="none"/>
             <children>
-                <componentref id="leftshoe"/>            
+                <componentref id="leftshoe"/>                       
+            </children>
+        </component>
+        <component id="rightshoe">
+            <transformation>
+                <translate x="-2" y="0" z="0"/>
+            </transformation>
+            <animationref id="right_leg" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="shoe"/>            
+            </children>
+        </component>
+        <component id="rightshoe1">
+            <transformation>
+                <translate x="0" y="12" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="rightshoe"/>            
             </children>
         </component>
         <component id="shoes">
@@ -1079,15 +1287,15 @@
             </materials>
             <texture id="none"/>
             <children>
-                <componentref id="leftshoe"/>  
-                <componentref id="rightshoe"/>                      
+                <componentref id="leftshoe1"/>  
+                <componentref id="rightshoe1"/>                      
             </children>
         </component>
         <component id="homer">
             <transformation>
-                <translate x="0" y="1.5" z="1" />
+                <translate x="5" y="1.5" z="-53" />
             </transformation>
-            <animationref id="animation1" />
+            <animationref id="body" />
             <materials>
                 <material id="inherit" />
             </materials>
@@ -1207,6 +1415,47 @@
                 <componentref id="square_sky_down"/>
             </children>
         </component>
+        <component id="square_doh">
+            <transformation>
+                <scale x="6" y="3" z="3" />
+                <rotate axis="x" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="dohTexture"/>
+            <children>
+                <primitiveref id="plane"/>
+            </children>
+        </component>
+        <component id="triangle_doh">
+            <transformation>
+                <translate x="3" y="-1.5" z="0" />
+                <scale x="2" y="1" z="2" />
+                <rotate axis="z" angle="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="triangle"/>
+            </children>
+        </component>
+        <component id="doh">
+            <transformation>
+                <translate x="-3" y="-5" z="0" />
+            </transformation> 
+            <animationref id="doh"/>
+            <materials>
+                <material id="shirtMaterial" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="square_doh"/>
+                <componentref id="triangle_doh"/>
+            </children>
+        </component>
         <component id="root">
             <transformation>
                 <scale x="0.1" y="0.1" z="0.1" />
@@ -1219,6 +1468,7 @@
                 <componentref id="box"/>
                 <componentref id="painting"/>
                 <componentref id="homer"/>
+                <componentref id="doh"/>
             </children>
         </component>
     </components>

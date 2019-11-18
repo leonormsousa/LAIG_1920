@@ -52,6 +52,7 @@ class XMLscene extends CGFscene {
         //create Shader
         this.shader = new CGFshader(this.gl, "shader.vert", "shader.frag");
         this.shader.setUniformsValues({uSampler: 0});
+        this.shader.setUniformsValues({timeFactor: 0});
 
         this.securityCameraTexture = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
 
@@ -163,6 +164,7 @@ class XMLscene extends CGFscene {
     }
 
     update(t) {
+        this.shader.setUniformsValues({timeFactor: (t/2500)%1000});
         this.graph.checkKeys(this.gui);
         this.displayLights[0]=this.displayLight0;
         this.displayLights[1]=this.displayLight1;
@@ -195,7 +197,7 @@ class XMLscene extends CGFscene {
         this.applyViewMatrix();
 
         this.pushMatrix();
-        this.axis.display();
+        //this.axis.display();
         for (var i = 0; i < this.lights.length; i++) {
             if(this.displayLights[i]){
                 this.lights[i].setVisible(true);

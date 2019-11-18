@@ -1382,13 +1382,14 @@ class MySceneGraph {
 
             var mult = mat4.create();
 
+            mat4.multiply(mult, mult, transformation_matrix);
+
             var animationID = component.animation;
             if (animationID!=null){
                 var animation=this.animations[animationID];
                 animation.apply(mult);
             }
 
-            mat4.multiply(mult, mult, transformation_matrix);
             mat4.multiply(mult, mult, component.transformation_matrix);
 
             for (let i=0; i<component.childrenComponents.length; i++)

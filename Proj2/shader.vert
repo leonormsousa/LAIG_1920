@@ -9,5 +9,6 @@ out vec2 vTextureCoord;
 
 void main() {
     vTextureCoord=aTextureCoord;
+    vTextureCoord.y=1.0-vTextureCoord.y;
 	gl_Position = vec4(aVertexPosition, 1.0);
 }

@@ -7,6 +7,12 @@ class KeyframeAnimation extends CGFobject {
         this.id=id;
         this.keyframes=keyframes;
         this.keyframes.sort((a, b) => (a.instant > b.instant) ? 1 : -1);
+        if(this.keyframes[0].instant != 0)
+        {
+           this.keyframes.push(new Keyframe(scene, 0, 0,0,0,0,0,0,1,1,1)); 
+           this.keyframes.sort((a, b) => (a.instant > b.instant) ? 1 : -1);
+        } 
+    
         this.initial_time=0;
         this.previous_t=0;
         this.matrix=mat4.create();

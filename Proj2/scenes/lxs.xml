@@ -75,6 +75,12 @@
             <diffuse r="0.82" g="0.7" b="0.44" a="1.0" />
             <specular r="0.7" g="0.25" b="0.1" a="1.0" />
         </material>
+        <material id="bumpMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="1" g="0.4" b="0.4" a="1.0" />
+            <diffuse r="1" g="0.4" b="0.4" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+        </material>
         <material id="shoesMaterial" shininess="10">
             <emission r="0" g="0" b="0" a="1.0" />
             <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
@@ -110,12 +116,12 @@
                 <scale x="1" y="1" z="1" />
             </keyframe>
             <keyframe instant="8">
-                <translate x="0" y="0" z="50" />
+                <translate x="0" y="0" z="77" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
             <keyframe instant="8.5">
-                <translate x="0" y="-10" z="50" />
+                <translate x="0" y="-10" z="77" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
@@ -205,18 +211,25 @@
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
-            <keyframe instant="9">
+            <keyframe instant="8.4">
                 <translate x="0" y="27" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
-        <animation id="arm" >
-            <keyframe instant="0">
+        <animation id="bump" >
+            <keyframe instant="8">
                 <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
+            <keyframe instant="8.4">
+                <translate x="0" y="1.5" z="1.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1.5" />
+            </keyframe>
+        </animation>
+        <animation id="arm" >
             <keyframe instant="10">
                 <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
@@ -738,6 +751,20 @@
                 <componentref id="hair_left"/>
             </children>
         </component>
+        <component id="bump">
+            <transformation>
+                <scale x="0.6" y="0.6" z="1" />
+                <translate x="0" y="3" z="0" />
+            </transformation>
+            <animationref id="bump"/>
+            <materials>
+                <material id="bumpMaterial" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
         <component id="head_components">
             <transformation>
                 <translate x="0" y="23" z="0" />
@@ -761,6 +788,7 @@
                 <componentref id="hair_right"/>
                 <componentref id="nose_cylinder"/>
                 <componentref id="nose_sphere"/>
+                <componentref id="bump"/>
             </children>
         </component>
         <component id="right_lowarm">
@@ -1293,7 +1321,7 @@
         </component>
         <component id="homer">
             <transformation>
-                <translate x="5" y="1.5" z="-53" />
+                <translate x="5" y="1.5" z="-80" />
             </transformation>
             <animationref id="body" />
             <materials>

@@ -32,6 +32,12 @@ class MyCircle extends CGFobject {
 		this.initGLBuffers();
 	}
 
-	changeTexCoords(length_s, length_t){};
+	changeTexCoords(length_s, length_t){
+		this.texCoords = [];
+		var delta = 2*Math.PI/this.slices;
+		this.texCoords.push(0.5/length_s, 0.5/length_t);
+		for (let i=0; i<=this.slices; i++)
+			this.texCoords.push((Math.cos(delta*i)/2*this.radius+0.5)/length_s, ((-Math.sin(delta*i))*this.radius/2+0.5)/length_t);
+	};
 }
 

@@ -36,13 +36,6 @@
     </lights>
 
     <textures>
-        <texture id="red" file="scenes/images/red.png" />
-        <texture id="orange" file="scenes/images/orange.png" />
-        <texture id="yellow" file="scenes/images/yellow.png" />
-        <texture id="green" file="scenes/images/green.png" />
-        <texture id="blue" file="scenes/images/blue.png" />
-        <texture id="darkBlue" file="scenes/images/darkBlue.png" />
-        <texture id="violet" file="scenes/images/violet.png" />
         <texture id="grey" file="scenes/images/grey.png" />
     </textures>
 
@@ -427,7 +420,7 @@
             <materials>
                 <material id="blue" />
             </materials>
-            <texture id="donut" length_s="1" length_t="1"/>
+            <texture id="none"/>
             <children>
                 <componentref id="skybox_back"/>
                 <componentref id="skybox_left"/>

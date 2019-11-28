@@ -33,6 +33,5 @@ class Board extends CGFobject {
                 this.scene.popMatrix();
             }
         }
-        console.log(this.scene.graph.primitives['hexagon']);
     }
 }

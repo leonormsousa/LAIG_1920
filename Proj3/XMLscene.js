@@ -131,6 +131,7 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+        this.board = new Board(this, this.graph.components['piece']);
         this.axis = new CGFaxis(this, this.graph.referenceLength);
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
@@ -190,6 +191,7 @@ class XMLscene extends CGFscene {
 
         // Displays the scene (MySceneGraph function).
         this.graph.displayScene();
+        this.board.display(this.graph.materials['red'], this.graph.materials['orange'], this.graph.materials['yellow'], this.graph.materials['green'], this.graph.materials['blue'], this.graph.materials['darkBlue'], this.graph.materials['violet'], this.graph.materials['grey']);
 
         this.popMatrix();
         // ---- END Background, camera and axis setup

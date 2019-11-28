@@ -357,6 +357,7 @@ class MySceneGraph {
         var backgroundIndex = nodeNames.indexOf("background");
 
         var color = this.parseColor(children[ambientIndex], "ambient");
+
         if (!Array.isArray(color))
             return color;
         else
@@ -775,8 +776,10 @@ class MySceneGraph {
                     grandChildren[0].nodeName != 'torus' &&
                     grandChildren[0].nodeName != 'plane' &&
                     grandChildren[0].nodeName != 'patch' &&
-                    grandChildren[0].nodeName != 'cylinder2')) {
-                return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus, plane, patch or cylinder2)"
+                    grandChildren[0].nodeName != 'cylinder2' &&
+                    grandChildren[0].nodeName != 'hexagon'  &&
+                    grandChildren[0].nodeName != 'circle')) {
+                return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus, plane, patch, hexagon, circle or cylinder2)"
             }
 
             // Specifications for the current primitive.
@@ -929,6 +932,31 @@ class MySceneGraph {
                var torus = new MyTorus(this.scene, primitiveId, inner, outer, slices, loops);
                
                this.primitives[primitiveId] = torus;
+            }
+            else if(primitiveType == 'hexagon') {
+                // radius
+                var radius = this.reader.getFloat(grandChildren[0], 'radius');
+                if (!(radius != null && !isNaN(radius)))
+                    return "unable to parse radius of the primitive coordinates for ID = " + primitiveId;
+
+               var hexagon = new MyHexagon(this.scene, primitiveId, radius);
+               
+               this.primitives[primitiveId] = hexagon;
+            }
+            else if(primitiveType == 'circle') {
+                // radius
+                var radius = this.reader.getFloat(grandChildren[0], 'radius');
+                if (!(radius != null && !isNaN(radius)))
+                    return "unable to parse radius of the primitive coordinates for ID = " + primitiveId;
+                
+                // slices
+                var slices = this.reader.getFloat(grandChildren[0], 'slices');
+                if (!(slices != null && !isNaN(slices)))
+                    return "unable to parse slices of the primitive coordinates for ID = " + primitiveId;
+
+               var circle = new MyCircle(this.scene, primitiveId, radius, slices);
+               
+               this.primitives[primitiveId] = circle;
             }
             else if(primitiveType == 'plane') {
                 // npartsU

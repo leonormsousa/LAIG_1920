@@ -252,7 +252,7 @@
         </component>
         <component id="board">
             <transformation>
-                <translate x="0" y="10" z="0"/>
+                <translate x="0" y="0" z="0"/>
                 <scale x="13.3" y="2" z="13.3" />
                 <rotate axis="y" angle="90"/>
             </transformation>
@@ -271,15 +271,15 @@
                 <componentref id="hexagon_side6"/>
             </children>
         </component>
-        <component id="board_cell">
+        <component id="tile">
             <transformation>
-                <translate x="0" y="11.05" z="0"/>
+                <translate x="0" y="1.1" z="0"/>
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit"/>
+            <texture id="grey" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="hexagon"/>     
             </children>
@@ -323,10 +323,10 @@
         </component>
         <component id="piece">
             <transformation>
-                <translate x="0" y="0" z="0" />
+                <scale x="0.5" y="1" z="0.5" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="inherit"/>
             </materials>
             <texture id="none"/>
             <children>

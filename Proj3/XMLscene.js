@@ -122,16 +122,16 @@ class XMLscene extends CGFscene {
     }
 
     setDefaultAppearance() {
-        this.setAmbient(0.2, 0.4, 0.8, 1.0);
-        this.setDiffuse(0.2, 0.4, 0.8, 1.0);
-        this.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.setAmbient(0.2, 0.2, 0.2, 1.0);
+        this.setDiffuse(0.2, 0.2, 0.2, 1.0);
+        this.setSpecular(0.2, 0.2, 0.2, 1.0);
         this.setShininess(10.0);
     }
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        this.board = new Board(this, this.graph.components['piece']);
+        this.board = new Gameboard(this);
         this.axis = new CGFaxis(this, this.graph.referenceLength);
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
@@ -191,7 +191,7 @@ class XMLscene extends CGFscene {
 
         // Displays the scene (MySceneGraph function).
         this.graph.displayScene();
-        this.board.display(this.graph.materials['red'], this.graph.materials['orange'], this.graph.materials['yellow'], this.graph.materials['green'], this.graph.materials['blue'], this.graph.materials['darkBlue'], this.graph.materials['violet'], this.graph.materials['grey']);
+        this.board.display();
 
         this.popMatrix();
         // ---- END Background, camera and axis setup

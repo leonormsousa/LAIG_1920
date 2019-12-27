@@ -1,7 +1,7 @@
 /**
- * Gameboard
+ * MyGameboard
  */
-class Gameboard extends CGFobject {
+class MyGameboard extends CGFobject {
 	constructor(scene) {
         super(scene);
         //tiles creation

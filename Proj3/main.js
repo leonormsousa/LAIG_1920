@@ -11,7 +11,7 @@ function getUrlVars() {
     return vars;
 }	 
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', 'Primitives/MyRectangle.js', 'Primitives/MyCylinder.js', 'Primitives/MyTriangle.js', 'Primitives/MySphere.js', 'Primitives/MyTorus.js', 'MyComponent.js', 'Animation.js', 'KeyframeAnimation.js', 'Keyframe.js', 'Primitives/Plane.js', 'Primitives/MyCylinder2.js', 'Primitives/Patch.js', 'Primitives/MyHexagon.js', 'Primitives/MyCircle.js', 'Gameboard.js', 'MyPiece.js', 'MyTile.js', 'MyGameMove.js',
+serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', 'Primitives/MyRectangle.js', 'Primitives/MyCylinder.js', 'Primitives/MyTriangle.js', 'Primitives/MySphere.js', 'Primitives/MyTorus.js', 'MyComponent.js', 'Animation.js', 'KeyframeAnimation.js', 'Keyframe.js', 'Primitives/Plane.js', 'Primitives/MyCylinder2.js', 'Primitives/Patch.js', 'Primitives/MyHexagon.js', 'Primitives/MyCircle.js', 'MyGameboard.js', 'MyPiece.js', 'MyTile.js', 'MyGameMove.js', 'MyGameSequence.js', 'MyAnimator.js', 'MyGameOrchestrator.js', 'MyPrologInterface.js', 'ProceduralAnimation.js',
 
 main=function()
 {
@@ -26,15 +26,6 @@ main=function()
     app.setInterface(myInterface);
 
     myInterface.setActiveCamera(myScene.camera);
-
-	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
-	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
-	
-    var filename=getUrlVars()['file'] || "lxs.xml";
-
-	// create and load graph, and associate it to scene. 
-	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
 	
 	// start
     app.run();

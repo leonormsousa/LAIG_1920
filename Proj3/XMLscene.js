@@ -21,6 +21,9 @@ class XMLscene extends CGFscene {
     init(application) {
         super.init(application);
 
+        this.gameOrchestrator = new MyGameOrchestrator(this);
+        console.log(this.gameOrchestrator);
+
         this.sceneInited = false;
         this.selectedCamera = 0;
         this.displayLight0 = false;
@@ -57,13 +60,13 @@ class XMLscene extends CGFscene {
             // cameras index.
             if(this.sceneInited){
                 // Reads the cameras from the scene graph.
-                for (var key in this.graph.views) {
-                    var view = this.graph.views[key];
+                for (var key in this.gameOrchestrator.theme.views) {
+                    var view = this.gameOrchestrator.theme.views[key];
                     this.cameraArray[i] = view;
                     this.camerasID[key] = i;
                     i++;
                 }
-                this.camera = this.cameraArray[this.camerasID[this.graph.defaultCam]];
+                this.camera = this.cameraArray[this.camerasID[this.gameOrchestrator.theme.defaultCam]];
                 this.interface.setActiveCamera(this.camera);
            }            
             else
@@ -83,11 +86,11 @@ class XMLscene extends CGFscene {
         // Lights index.
 
         // Reads the lights from the scene graph.
-        for (var key in this.graph.lights) {
+        for (var key in this.gameOrchestrator.theme.lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebGL.
-            if (this.graph.lights.hasOwnProperty(key)) {
-                var light = this.graph.lights[key];
+            if (this.gameOrchestrator.theme.lights.hasOwnProperty(key)) {
+                var light = this.gameOrchestrator.theme.lights[key];
                 
                 this.lights[i].setPosition(light[2][0], light[2][1], light[2][2], light[2][3]);
                 this.lights[i].setAmbient(light[3][0], light[3][1], light[3][2], light[3][3]);
@@ -122,19 +125,18 @@ class XMLscene extends CGFscene {
     }
 
     setDefaultAppearance() {
-        this.setAmbient(0.2, 0.4, 0.8, 1.0);
-        this.setDiffuse(0.2, 0.4, 0.8, 1.0);
-        this.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.setAmbient(0.2, 0.2, 0.2, 1.0);
+        this.setDiffuse(0.2, 0.2, 0.2, 1.0);
+        this.setSpecular(0.2, 0.2, 0.2, 1.0);
         this.setShininess(10.0);
     }
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        this.board = new Board(this, this.graph.components['piece']);
-        this.axis = new CGFaxis(this, this.graph.referenceLength);
-        this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
-        this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
+        this.axis = new CGFaxis(this, this.gameOrchestrator.theme.referenceLength);
+        this.gl.clearColor(this.gameOrchestrator.theme.background[0], this.gameOrchestrator.theme.background[1], this.gameOrchestrator.theme.background[2], this.gameOrchestrator.theme.background[3]);
+        this.setGlobalAmbientLight(this.gameOrchestrator.theme.ambient[0], this.gameOrchestrator.theme.ambient[1], this.gameOrchestrator.theme.ambient[2], this.gameOrchestrator.theme.ambient[3]);
         this.initLights();
         this.sceneInited = true;
         this.initCameras();
@@ -143,7 +145,7 @@ class XMLscene extends CGFscene {
     }
 
     update(t) {
-        this.graph.checkKeys(this.gui);
+        this.gameOrchestrator.update(t);
         this.displayLights[0]=this.displayLight0;
         this.displayLights[1]=this.displayLight1;
         this.displayLights[2]=this.displayLight2;
@@ -158,6 +160,7 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      */
     display() {
+        this.gameOrchestrator.orchestrate();
         // ---- BEGIN Background, camera and axis setup
         if(this.sceneInited){
 
@@ -190,8 +193,7 @@ class XMLscene extends CGFscene {
         this.setDefaultAppearance();
 
         // Displays the scene (MySceneGraph function).
-        this.graph.displayScene();
-        this.board.display(this.graph.materials['red'], this.graph.materials['orange'], this.graph.materials['yellow'], this.graph.materials['green'], this.graph.materials['blue'], this.graph.materials['darkBlue'], this.graph.materials['violet'], this.graph.materials['grey']);
+        this.gameOrchestrator.display();
 
         this.popMatrix();
         // ---- END Background, camera and axis setup

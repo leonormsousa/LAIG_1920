@@ -1,7 +1,7 @@
 /**
  * Animation
  */
-class KeyframeAnimation extends CGFobject {
+class KeyframeAnimation extends Animation {
 	constructor(scene, id, keyframes){
         super(scene);
         this.id=id;

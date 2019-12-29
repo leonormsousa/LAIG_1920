@@ -1436,7 +1436,7 @@ class MySceneGraph {
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
-    displayScene() {
+    display() {
         var transMatrix = mat4.create();
         this.processNode(this.idRoot, transMatrix, null, 'none');
         //this.primitives['patch'].display();

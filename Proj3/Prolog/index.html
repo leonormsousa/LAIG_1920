@@ -29,8 +29,11 @@
 				request.send();
 			}
 		
-			function makeRequest( requestString)
+			function makeRequest(requestString)
 			{		
+				// Get Parameter Values
+				var requestString = document.querySelector("#query_field").value;				
+				console.log(typeof(requestString));
 				// Make Request
 				getPrologRequest(requestString, handleReply);
 			}

@@ -52,16 +52,16 @@ server_loop(Socket) :-
 	
 		% write('Finnished Connection'),nl,nl,
 		close_stream(Stream),
-	(Request = quit), !.
+	(Request = [quit]), !.
 	
 close_stream(Stream) :- flush_output(Stream), close(Stream).
 
 % Handles parsed HTTP requests
 % Returns 200 OK on successful aplication of parse_input on request
 % Returns 400 Bad Request on syntax error (received from parser) or on failure of parse_input
-handle_request(Request, MyReply, '200 OK') :- catch(parse_input(Request, MyReply), error(_,_),fail), !.
-handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- !.
-handle_request(_, 'Bad Request', '400 Bad Request').
+handle_request(Request, MyReply, '200 OK') :- write('!'), write(Request), write('!'), catch(parse_input(Request, MyReply), error(_,_),fail), !.
+handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- write('ola'), !.
+handle_request(_, 'Bad Request', '400 Bad Request') :-  write('ola1').
 
 % Reads first Line of HTTP Header and parses request
 % Returns term parsed from Request-URI
@@ -118,6 +118,6 @@ parse_input([4, Board, Player], [0, Points]):- calculatePoints(Board, Player, Po
 parse_input([5, PointsP1, PointsP2], [Code, Winner]):- calculateWinner(PointsP1, PointsP2, Winner), (Winner = 3 -> Code = 3; Code = 0).
 parse_input([6, Board, Level, Player], [0, Move]):- choose_move(Board, Level, Player, Move).
 
-
+parse_input([ola1], [ola2]):-write('ola3').
 parse_input(handshake, ola).
-parse_input(quit, goodbye).
+parse_input([quit], goodbye).

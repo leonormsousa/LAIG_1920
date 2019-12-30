@@ -16,6 +16,7 @@ class MyGameOrchestrator extends CGFobject {
         this.theme = new MySceneGraph(filename, scene);
 
         this.prolog = new MyPrologInterface(scene);
+        this.prolog.sendPrologRequest(['quit'], this.prolog.handleReply);
         
         this.state = "menu";
     }

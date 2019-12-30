@@ -39,10 +39,11 @@ class MyGameOrchestrator extends CGFobject {
                 break;
             case "loading":
                 this.pickingEnabled=false;
+
                 break;
             case "pick first tile human":
                 this.pickingEnabled=true;
-                //picking tile
+                //picking tile and having button for move with no tiles
                 //let tile = 
                 this.moveToExecute= [this.currentPlayer, tile.x, tile.y];
                 this.state="pick second tile human";
@@ -117,7 +118,15 @@ class MyGameOrchestrator extends CGFobject {
                 break;
             case "undo":
                 this.pickingEnabled=false;
-
+                this.gameboard = this.gameSequence.undoGameMove();
+                this.currentPlayer = (this.currentPlayer % 2) + 1;
+                if (this.number_passes>0)
+                    this.number_passes--;
+                //wait for animation to end yey;
+                if (this.player[this.currentPlayer-1])
+                    this.state="pick tiles pc";
+                else
+                    this.state="pick first tile human"; 
                 break;
             case "movie":
                 this.pickingEnabled=false;

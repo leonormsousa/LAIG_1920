@@ -16,7 +16,7 @@ class MyGameSequence extends CGFobject {
         let reverseMove = new gameMove(this.scene, lastMove.movedPiece, lastMove.destinationTile, lastMove.originTile, null);
         reverseMove.animate();
         this.gameMoves.pop();
-        this.gameBoards.pop();
+        return lastMove.beforeGameBoard;
     }
 
     moveReplay(){

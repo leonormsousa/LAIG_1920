@@ -4,17 +4,24 @@
 class MyPrologInterface{
 	constructor() {}
 
+    toStringObject(listArgs){
+        let str="";
+        for (let i=0; i<listArgs.length; i++){
+            if (Array.isArray(listArgs[i]))
+                str+='[' + this.toStringObject(listArgs[i]) +']';
+            else
+                str += listArgs[i];
+            if (i<listArgs.length-1)
+                str += ',';
+        }
+        return str;
+    }
+
     sendPrologRequest(listArgs, onSuccess, onError, port){
         let requestPort = port || 8081;
 
         //building a string containing list of arguments;
-        let requestString = '[';
-        for (let i=0; i<listArgs.length; i++){
-            requestString += listArgs[i].toString();
-            if (i<listArgs.length-1)
-                requestString += ',';
-        }
-        requestString+=']';
+        let requestString = '[' + this.toStringObject(listArgs) + ']';
 
         let request = new XMLHttpRequest();
         request.addEventListener("load", onSuccess);

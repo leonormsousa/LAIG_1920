@@ -22,6 +22,9 @@ class MyGameOrchestrator extends CGFobject {
         this.pickingEnabled=false;
         this.currentPlayer=1;
         this.level=1;
+        this.number_passes=0;
+        // index 0 for player1 and index1 for player 2. false is human, true is pc
+        this.player=[false, false];
     }
 
     update(time) {
@@ -31,6 +34,7 @@ class MyGameOrchestrator extends CGFobject {
     orchestrate(){
         switch(this.state){
             case "menu":
+                this.pickingEnabled=true;
 
                 break;
             case "loading":
@@ -66,36 +70,57 @@ class MyGameOrchestrator extends CGFobject {
                     this.state="pick first tile human";
                     break;
                 }
-                let pieceToMove1=this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
-                let originTile1 = this.gameboard.getTileHoldingPiece(pieceToMove1);
-                let destinationTile1 = this.gameboard.getTileByCoordinates(this.moveToExecute[1], this.moveToExecute[2]);
-                if (this.moveToExecute[3] = [])
-                    this.gameSequence.addGameMove(new MyGameMove(this.scene, pieceToMove1, originTile1, destinationTile1, null, null, null, this.gameboard));
+                if(this.moveToExecute[1]=[]){
+                    this.gameSequence.addGameMove(new MyGameMove(this.scene, this.moveToExecute[0], null, null, null, null, null, null, this.gameboard));
+                    this.number_passes++;
+                }
                 else{
-                    let pieceToMove2 = this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
-                    let originTile2 = this.gameboard.getTileHoldingPiece(pieceToMove2);
-                    let destinationTile2 = this.gameboard.getTileByCoordinates(this.moveToExecute[3], this.moveToExecute[4]);
-                    this.gameSequence.addGameMove(new MyGameMove(this.scene, pieceToMove1, originTile1, destinationTile1, pieceToMove2, originTile2, destinationTile2, this.gameboard));
+                    this.number_passes=0;
+                    let pieceToMove1=this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
+                    let originTile1 = this.gameboard.getTileHoldingPiece(pieceToMove1);
+                    let destinationTile1 = this.gameboard.getTileByCoordinates(this.moveToExecute[1], this.moveToExecute[2]);
+                    if (this.moveToExecute[3] = [])
+                        this.gameSequence.addGameMove(new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, null, null, null, this.gameboard));
+                    else{
+                        let pieceToMove2 = this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
+                        let originTile2 = this.gameboard.getTileHoldingPiece(pieceToMove2);
+                        let destinationTile2 = this.gameboard.getTileByCoordinates(this.moveToExecute[3], this.moveToExecute[4]);
+                        this.gameSequence.addGameMove(new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, pieceToMove2, originTile2, destinationTile2, this.gameboard));
+                    }
                 }
                 this.currentPlayer = (this.currentPlayer % 2) + 1;
                 this.state = "animation";
                 break;
             case "animation":
+                this.pickingEnabled=false;
                 //dont understant how its going to work
+                this.state = "game end evaluation";
                 break;
             case "game end evaluation":
-
+                this.pickingEnabled=false;
+                let resp = this.prolog.gameOverRequest(this.gameboard.convertToPrologBoard()) || this.number_passes>=2;
+                if (resp)
+                    this.state="end game";
+                else if (this.player[this.currentPlayer-1])
+                    this.state="pick tiles pc";
+                else
+                    this.state="pick first tile human";   
                 break;
             case "end game":
-
+                let points1 = this.prolog.calculatePointsRequest(this.gameboard.convertToPrologBoard(), 1);
+                let points2 = this.prolog.calculatePointsRequest(this.gameboard.convertToPrologBoard(), 2);
+                let winner = this.prolog.calculateWinnerRequest(points1, points2);
+                //show winner and points of both players
+                this.pickingEnabled=true;
+                //wait for click on button
+                this.state="menu";
                 break;
             case "undo":
+                this.pickingEnabled=false;
 
                 break;
             case "movie":
-
-                break;
-            case "undo":
+                this.pickingEnabled=false;
 
                 break;
         }

@@ -53,6 +53,8 @@ class MyGameboard extends CGFobject {
         }
 
         //putting the pieces in the right place according to the prologBoard
+        if (prologBoard==undefined)
+            return;
         for (let i =0; i<prologBoard.length; i++){
             let line=prologBoard[i][0];
             for (let j=1; j<prologBoard[i].length; j++){
@@ -62,7 +64,6 @@ class MyGameboard extends CGFobject {
                     let originTile = getFirstTileWithPiece(this.auxiliaryTilesPlayer1);
                     let piece = getPieceOnTile(originTile);
                     let destinationTile = this.getTileByCoordinates(line, column);
-                    this.removePieceFromTile(originTile);
                     this.addPieceToTile(piece, destinationTile);
                 }
             }
@@ -71,9 +72,18 @@ class MyGameboard extends CGFobject {
     
     getFirstTileWithPiece(auxiliaryTiles){
         for (let i=0; i<this.auxiliaryTiles.length; i++){
-            if (this.getPieceOnTile(this.auxiliaryTiles[i]) != null)
+            if (this.getPieceOnTile(this.auxiliaryTiles[i]) != null){
+                this.removePieceFromTile(this.auxiliaryTiles[i])
                 return this.auxiliaryTiles[i];
+            }
         }
+    }
+
+    getFirtsPieceFreeToMove(player){
+        if (player == 1)
+            return this.getPieceOnTile(getFirstTileWithPiece(this.auxiliaryTilesPlayer1));
+        else
+            return this.getPieceOnTile(getFirstTileWithPiece(this.auxiliaryTilesPlayer2));
     }
 
     addPieceToTile(piece, tile){

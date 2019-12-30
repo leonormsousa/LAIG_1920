@@ -30,8 +30,8 @@ class MyPrologInterface{
         this.sendPrologRequest([this.ValidMoves, board, player], this.validMovesReply);
     }
 
-    movePieceRequest(player, line1, column1, line2, column2, board){
-        this.sendPrologRequest([this.MovePiece, [player, line1, column1, line2, column2], board], this.movePieceReply);
+    movePieceRequest(move){
+        this.sendPrologRequest([this.MovePiece, move, board], this.movePieceReply);
     }
 
     gameOverRequest(board){

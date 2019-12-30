@@ -22,7 +22,6 @@ class XMLscene extends CGFscene {
         super.init(application);
 
         this.gameOrchestrator = new MyGameOrchestrator(this);
-        console.log(this.gameOrchestrator);
 
         this.sceneInited = false;
         this.selectedCamera = 0;

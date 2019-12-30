@@ -19,6 +19,9 @@ class MyGameOrchestrator extends CGFobject {
         this.prolog.sendPrologRequest(['quit'], this.prolog.handleReply);
         
         this.state = "menu";
+        this.pickingEnabled=false;
+        this.currentPlayer=1;
+        this.level=1;
     }
 
     update(time) {
@@ -31,28 +34,54 @@ class MyGameOrchestrator extends CGFobject {
 
                 break;
             case "loading":
-
+                this.pickingEnabled=false;
                 break;
-            case "next turn human":
-
+            case "pick first tile human":
+                this.pickingEnabled=true;
+                //picking tile
+                //let tile = 
+                this.moveToExecute= [this.currentPlayer, tile.x, tile.y];
+                this.state="pick second tile human";
                 break;
-            case "next turn pc":
-
+            case "pick second tile human":
+                this.pickingEnabled=true;
+                //picking and having button for move with only one tile
+                if (tile==null)
+                    this.moveToExecute.push([], []);
+                else
+                    this.moveToExecute.push(tile.x, tile.y);
+                this.state="render move human"
                 break;
-            case "render move human":
-
+            case "pick tiles pc":
+                this.pickingEnabled=false;
+                this.moveToExecute=this.prolog.chooseMoveRequest(this.gameboard.convertToPrologBoard(), this.level, this.currentPlayer);
+                this.state="render move pc";
+                sleep(3);
                 break;
-            case "render move pc":
-
-                break;
-            case "piece selection human":
-
-                break;
-            case "piece selection pc":
-
+            case "render move":
+                this.pickingEnabled=false;
+                moveReply = this.prolog.movePieceRequest(this.moveToExecute);
+                if (moveReply == null){
+                    //show warning saying the move it's not possible
+                    this.state="pick first tile human";
+                    break;
+                }
+                let pieceToMove1=this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
+                let originTile1 = this.gameboard.getTileHoldingPiece(pieceToMove1);
+                let destinationTile1 = this.gameboard.getTileByCoordinates(this.moveToExecute[1], this.moveToExecute[2]);
+                if (this.moveToExecute[3] = [])
+                    this.gameSequence.addGameMove(new MyGameMove(this.scene, pieceToMove1, originTile1, destinationTile1, null, null, null, this.gameboard));
+                else{
+                    let pieceToMove2 = this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
+                    let originTile2 = this.gameboard.getTileHoldingPiece(pieceToMove2);
+                    let destinationTile2 = this.gameboard.getTileByCoordinates(this.moveToExecute[3], this.moveToExecute[4]);
+                    this.gameSequence.addGameMove(new MyGameMove(this.scene, pieceToMove1, originTile1, destinationTile1, pieceToMove2, originTile2, destinationTile2, this.gameboard));
+                }
+                this.currentPlayer = (this.currentPlayer % 2) + 1;
+                this.state = "animation";
                 break;
             case "animation":
-
+                //dont understant how its going to work
                 break;
             case "game end evaluation":
 
@@ -107,6 +136,9 @@ class MyGameOrchestrator extends CGFobject {
             // error ?
         }
     }
-        
-        
+               
+}
+
+const sleep = (seconds) => {
+    return new Promise(resolve => setTimeout(resolve, seconds*1000));
 }

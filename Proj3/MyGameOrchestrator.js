@@ -23,7 +23,7 @@ class MyGameOrchestrator extends CGFobject {
         this.currentPlayer=1;
         this.level=1;
         this.number_passes=0;
-        // index 0 for player1 and index1 for player 2. false is human, true is pc
+        // index 0 for player1 and index 1 for player 2. false is human, true is pc
         this.player=[false, false];
     }
 
@@ -80,12 +80,14 @@ class MyGameOrchestrator extends CGFobject {
                     let pieceToMove1=this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
                     let originTile1 = this.gameboard.getTileHoldingPiece(pieceToMove1);
                     let destinationTile1 = this.gameboard.getTileByCoordinates(this.moveToExecute[1], this.moveToExecute[2]);
+                    this.gameboard.movePiece(pieceToMove1, this.moveToExecute[1], this.moveToExecute[2]);
                     if (this.moveToExecute[3] = [])
                         this.gameSequence.addGameMove(new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, null, null, null, this.gameboard));
                     else{
                         let pieceToMove2 = this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
                         let originTile2 = this.gameboard.getTileHoldingPiece(pieceToMove2);
                         let destinationTile2 = this.gameboard.getTileByCoordinates(this.moveToExecute[3], this.moveToExecute[4]);
+                        this.gameboard.movePiece(pieceToMove2, this.moveToExecute[3], this.moveToExecute[4]);
                         this.gameSequence.addGameMove(new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, pieceToMove2, originTile2, destinationTile2, this.gameboard));
                     }
                 }
@@ -160,10 +162,7 @@ class MyGameOrchestrator extends CGFobject {
     }
      
     onObjectSelected(obj, id) {
-        if(obj instanceof MyPiece){
-            // do something with id knowing it is a piece
-        }
-        else if(obj instanceof MyTile){
+        if(obj instanceof MyTile){
             // do something with id knowing it is a tile
         }
         else {

@@ -61,21 +61,21 @@ class MyGameboard extends CGFobject {
                 let column=prologBoard[i][j][0];
                 let value = prologBoard[i][j][1];
                 if (value == 1){
-                    let originTile = getFirstTileWithPiece(this.auxiliaryTilesPlayer1);
-                    let piece = getPieceOnTile(originTile);
-                    let destinationTile = this.getTileByCoordinates(line, column);
-                    this.addPieceToTile(piece, destinationTile);
+                    let piece = getFirtsPieceFreeToMove(1);
+                    this.movePiece(piece, line, column)
+                }
+                if (value == 2){
+                    let piece = getFirtsPieceFreeToMove(1);
+                    this.movePiece(piece, line, column)
                 }
             }
         }
     }
     
     getFirstTileWithPiece(auxiliaryTiles){
-        for (let i=0; i<this.auxiliaryTiles.length; i++){
-            if (this.getPieceOnTile(this.auxiliaryTiles[i]) != null){
-                this.removePieceFromTile(this.auxiliaryTiles[i])
-                return this.auxiliaryTiles[i];
-            }
+        for (let i=0; i<auxiliaryTiles.length; i++){
+            if (this.getPieceOnTile(auxiliaryTiles[i]) != null)
+                return auxiliaryTiles[i];
         }
     }
 

@@ -18,18 +18,28 @@ class MyPrologInterface{
     }
 
     sendPrologRequest(listArgs, onSuccess, onError, port){
-        let requestPort = port || 8081;
 
         //building a string containing list of arguments;
-        let requestString = '[' + this.toStringObject(listArgs) + ']';
+        let requestString = '[quit]';
 
-        let request = new XMLHttpRequest();
-        request.addEventListener("load", onSuccess);
-        request.addEventListener("error", onError); 
+            var requestPort = port || 8081
+            var request = new XMLHttpRequest();
+            request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
 
-        request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
-        request.setRequestHeader("Content-type", "application/x-www-formurlencoded; charset=UTF-8");
-        request.send();
+            request.onload = onSuccess || function(data){console.log("Request successful. Reply: " + data.target.response);};
+            request.onerror = onError || function(){console.log("Error waiting for response");};
+
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            request.send();
+        
+
+        // let request = new XMLHttpRequest();
+        // request.addEventListener("load", onSuccess);
+        // request.addEventListener("error", onError); 
+        // console.log(requestString);
+        // request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
+        // request.setRequestHeader("Content-type", "application/x-www-formurlencoded; charset=UTF-8");
+        // request.send();
     }
 
     //  ----------------------  request handlers  ----------------------------

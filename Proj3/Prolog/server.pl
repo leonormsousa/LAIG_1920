@@ -8,7 +8,7 @@
 
 % To run, enter 'server.' on sicstus command line after consulting this file.
 % You can test requests to this server by going to http://localhost:8081/<request>.
-% Go to http://localhost:8081/quit to close server.
+% Go to http://localhost:8081/[quit] to close server.
 
 % Made by Luis Reis (ei12085@fe.up.pt) for LAIG course at FEUP.
 
@@ -39,6 +39,7 @@ server_loop(Socket) :-
 			fail
 		)),
 		
+		write(Request),
 		% Generate Response
 		handle_request(Request, MyReply, Status),
 		format('Request: ~q~n',[Request]),
@@ -59,9 +60,9 @@ close_stream(Stream) :- flush_output(Stream), close(Stream).
 % Handles parsed HTTP requests
 % Returns 200 OK on successful aplication of parse_input on request
 % Returns 400 Bad Request on syntax error (received from parser) or on failure of parse_input
-handle_request(Request, MyReply, '200 OK') :- write('!'), write(Request), write('!'), catch(parse_input(Request, MyReply), error(_,_),fail), !.
-handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- write('ola'), !.
-handle_request(_, 'Bad Request', '400 Bad Request') :-  write('ola1').
+handle_request(Request, MyReply, '200 OK') :- catch(parse_input(Request, MyReply),error(_,_),fail), !.
+handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- !.
+handle_request(_, 'Bad Request', '400 Bad Request').
 
 % Reads first Line of HTTP Header and parses request
 % Returns term parsed from Request-URI

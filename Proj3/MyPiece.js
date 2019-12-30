@@ -18,6 +18,10 @@ class MyPiece extends CGFobject {
         return this.holdingTile;
     }
 
+    getPlayer(){
+        return this.player;
+    }
+
     display(){
         this.scene.pushMatrix();
         this.scene.translate(this.holdingTile.x, this.holdingTile.z, this.holdingTile.y);

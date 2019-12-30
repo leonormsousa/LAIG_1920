@@ -107,6 +107,27 @@ class MyGameboard extends CGFobject {
         this.addPieceToTile(piece, destinationTile);
     }
 
+    convertToPrologBoard(){
+        let board=[];
+        for (let line=-7; line<=7; line++){
+            let line_array=[line];
+            for (let column=-(14 - Math.abs(line)); column<=(14 - Math.abs(line)); column+=2){
+                let cell_array=[column];
+                let tile = this.getTileByCoordinates(line, column);
+                let piece = this.getPieceOnTile(tile);
+                if (piece == null)
+                    cell_array.push(0);
+                else if (piece.getPlayer()==1)
+                    cell_array.push(1);
+                else
+                    cell_array.push(2);
+                line_array.push(cell_array);
+            }
+            board.push(line_array);
+        }
+        return board;
+    }
+
     display(){
         for(let i=0; i<this.tiles.length; i++)
             this.tiles[i].display();

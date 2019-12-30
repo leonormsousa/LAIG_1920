@@ -67,7 +67,7 @@ class MyGameOrchestrator extends CGFobject {
                 this.pickingEnabled=false;
                 moveReply = this.prolog.movePieceRequest(this.moveToExecute);
                 if (moveReply == null){
-                    //show warning saying the move it's not possible
+                    alert("Move Not Possible!");
                     this.state="pick first tile human";
                     break;
                 }
@@ -113,9 +113,13 @@ class MyGameOrchestrator extends CGFobject {
                 let points1 = this.prolog.calculatePointsRequest(this.gameboard.convertToPrologBoard(), 1);
                 let points2 = this.prolog.calculatePointsRequest(this.gameboard.convertToPrologBoard(), 2);
                 let winner = this.prolog.calculateWinnerRequest(points1, points2);
-                //show winner and points of both players
-                this.pickingEnabled=true;
-                //wait for click on button
+                let msg;
+                if (winner == null)
+                    msg="It's a Tie";
+                else
+                    msg = "The winner is Player " + winner;
+                msg += "!\n" + "Group points by Player 1: " + points1 + "\nGroup points by Player 2: " + points2;
+                alert(msg);
                 this.state="menu";
                 break;
             case "undo":

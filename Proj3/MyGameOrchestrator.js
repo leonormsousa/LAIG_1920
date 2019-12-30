@@ -17,13 +17,59 @@ class MyGameOrchestrator extends CGFobject {
 
         this.prolog = new MyPrologInterface(scene);
         
+        this.state = "menu";
     }
 
     update(time) {
         this.animator.update(time);
     }
 
-    orchestrate(){}
+    orchestrate(){
+        switch(this.state){
+            case "menu":
+
+                break;
+            case "loading":
+
+                break;
+            case "next turn human":
+
+                break;
+            case "next turn pc":
+
+                break;
+            case "render move human":
+
+                break;
+            case "render move pc":
+
+                break;
+            case "piece selection human":
+
+                break;
+            case "piece selection pc":
+
+                break;
+            case "animation":
+
+                break;
+            case "game end evaluation":
+
+                break;
+            case "end game":
+
+                break;
+            case "undo":
+
+                break;
+            case "movie":
+
+                break;
+            case "undo":
+
+                break;
+        }
+    }
 
     display() {
     //...

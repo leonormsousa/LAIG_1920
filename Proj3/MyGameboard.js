@@ -2,8 +2,9 @@
  * MyGameboard
  */
 class MyGameboard extends CGFobject {
-	constructor(scene) {
+	constructor(scene, prologBoard) {
         super(scene);
+
         //tiles creation
         this.tiles=[];
         for (let line=-7; line<=7; line++){
@@ -26,6 +27,7 @@ class MyGameboard extends CGFobject {
                 this.tiles.push(new MyTile(scene, "tile", material, column*Math.sqrt(3)/2, line*1.5, 0));
             }
         }
+
         //auxiliaryTiles creation -> tiles that are not par of the boardGame, are just for holding pieces that are yet not on the board
         this.auxiliaryTilesPlayer1=[];
         this.auxiliaryTilesPlayer2=[];
@@ -35,7 +37,8 @@ class MyGameboard extends CGFobject {
                 this.auxiliaryTilesPlayer2.push(new MyTile(scene, 'tile', 'grey', -20, i-8.5, j));
             }
         }
-        //pieces creation - 169 pieces fit in the board -> 169 pieces per player
+
+        //pieces creation - 169 pieces fit in the board -> 170 pieces per player
         this.pieces=[];
         for (let i=0; i<170; i++){
             let piece1 = new MyPiece(scene, 1, 'piece', 'black');
@@ -48,8 +51,31 @@ class MyGameboard extends CGFobject {
             this.auxiliaryTilesPlayer2[i].setPiece(piece2);
             piece2.setHoldingTile(this.auxiliaryTilesPlayer2[i]);
         }
+
+        //putting the pieces in the right place according to the prologBoard
+        for (let i =0; i<prologBoard.length; i++){
+            let line=prologBoard[i][0];
+            for (let j=1; j<prologBoard[i].length; j++){
+                let column=prologBoard[i][j][0];
+                let value = prologBoard[i][j][1];
+                if (value == 1){
+                    let originTile = getFirstTileWithPiece(this.auxiliaryTilesPlayer1);
+                    let piece = getPieceOnTile(originTile);
+                    let destinationTile = this.getTileByCoordinates(line, column);
+                    this.removePieceFromTile(originTile);
+                    this.addPieceToTile(piece, destinationTile);
+                }
+            }
+        }
     }
     
+    getFirstTileWithPiece(auxiliaryTiles){
+        for (let i=0; i<this.auxiliaryTiles.length; i++){
+            if (this.getPieceOnTile(this.auxiliaryTiles[i]) != null)
+                return this.auxiliaryTiles[i];
+        }
+    }
+
     addPieceToTile(piece, tile){
         tile.setPiece(piece);
         piece.setHoldingTile(tile);

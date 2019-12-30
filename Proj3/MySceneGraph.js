@@ -571,10 +571,10 @@ class MySceneGraph {
 
             var material = new CGFappearance(this.scene);
 
-            material.setAmbient(this.reader.getFloat(grandChildren[materialAmbientIndex],'r'), this.reader.getFloat(grandChildren[materialAmbientIndex],'g'), this.reader.getFloat(grandChildren[materialAmbientIndex],'b'), this.reader.getFloat(grandChildren[materialAmbientIndex],'a'));
-            material.setDiffuse(this.reader.getFloat(grandChildren[materialDiffuseIndex],'r'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'g'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'b'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'a'));
-            material.setSpecular(this.reader.getFloat(grandChildren[materialSpecularIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],'b'), this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
-            material.setEmission(this.reader.getFloat(grandChildren[materialEmissionIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],'b'),this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
+            material.setAmbient(this.reader.getFloat(grandChildren[materialAmbientIndex],'r'), this.reader.getFloat(grandChildren[materialAmbientIndex],'g'), this.reader.getFloat(grandChildren[materialAmbientIndex],0), this.reader.getFloat(grandChildren[materialAmbientIndex],'a'));
+            material.setDiffuse(this.reader.getFloat(grandChildren[materialDiffuseIndex],'r'), this.reader.getFloat(grandChildren[materialDiffuseIndex],'g'), this.reader.getFloat(grandChildren[materialDiffuseIndex],0), this.reader.getFloat(grandChildren[materialDiffuseIndex],'a'));
+            material.setSpecular(this.reader.getFloat(grandChildren[materialSpecularIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],0), this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
+            material.setEmission(this.reader.getFloat(grandChildren[materialEmissionIndex],'r'), this.reader.getFloat(grandChildren[materialSpecularIndex],'g'), this.reader.getFloat(grandChildren[materialSpecularIndex],0),this.reader.getFloat(grandChildren[materialSpecularIndex],'a'));
             material.setShininess(this.reader.getFloat(children[i],'shininess'));
 
             this.materials[materialID] = material;
@@ -1288,7 +1288,7 @@ class MySceneGraph {
             return "unable to parse G component of the " + messageError;
 
         // B
-        var b = this.reader.getFloat(node, 'b');
+        var b = this.reader.getFloat(node, 0);
         if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
             return "unable to parse B component of the " + messageError;
 

@@ -1,5 +1,5 @@
 cellValue([[L|[[C, P]|T1]]|T], Line, Column, Value) :- (L=Line -> (C=Column -> Value=P; cellValue([[L|T1]|T], Line, Column, Value)); cellValue(T, Line, Column, Value)).
-cellEmpty(Board, Line, Column) :- cellValue(Board, Line, Column, Value), Value='B'.
+cellEmpty(Board, Line, Column) :- cellValue(Board, Line, Column, Value), Value=0.
 
 adjacentPieces(Line1, Column1, Line2, Column2) :- Line1 =:= Line2, Column1 =:= Column2 + 2.
 adjacentPieces(Line1, Column1, Line2, Column2) :- Line1 =:= Line2, Column1 =:= Column2 - 2.
@@ -70,7 +70,7 @@ calculateGroups(PlayerCells, [[Line, Column]|T], Igroups, Fgroups, IusedCells, F
                                 calculateGroups(PlayerCells, T, Group2, Fgroups, UsedCells2, FusedCells)).
 
 lineFull([]).
-lineFull([[_,Value] | T]) :- Value \= 'B', lineFull(T). 
+lineFull([[_,Value] | T]) :- Value \= 0, lineFull(T). 
 
 boardFull([]).
 boardFull([[_|TLine]|T]):- lineFull(TLine), boardFull(T).

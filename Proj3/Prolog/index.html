@@ -38,15 +38,8 @@
 				getPrologRequest(requestString, handleReply);
 			}
 			
-			function responseStringToArray(response){
-				return JSON.parse(response);
-			}
-
 			//Handle the Reply
 			function handleReply(data){
-				console.log(data.target.response);
-				let arrayr=responseStringToArray(data.target.response);
-				console.log(arrayr);
 				document.querySelector("#query_result").innerHTML=data.target.response;
 			}
 		

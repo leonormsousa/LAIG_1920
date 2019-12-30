@@ -50,6 +50,10 @@ class MyPrologInterface{
         this.sendPrologRequest([this.ChooseMove, board, lever, player], this.chooseMoveReply);
     }
 
+    startRequest(){
+        this.sendPrologRequest([this.Start], this.startReply);
+    }
+
 
     responseStringToArray(response){
         return JSON.parse(response);
@@ -100,6 +104,12 @@ class MyPrologInterface{
         let response_array = responseStringToArray(data.target.response);
         return response_array[1];
     }
+
+    //returns the initial Board
+    startReply(data){
+        let response_array = responseStringToArray(data.target.response);
+        return response_array[1];
+    }
 }
 
 //defining constants to be easier to work with the code
@@ -109,6 +119,7 @@ MyPrologInterface.prototype.GameOver = 3;
 MyPrologInterface.prototype.CalculatePoints = 4;
 MyPrologInterface.prototype.CalculateWinner = 5;
 MyPrologInterface.prototype.ChooseMove = 6;
+MyPrologInterface.prototype.Start = 7;
 MyPrologInterface.prototype.OK = 0;
 MyPrologInterface.prototype.Failed = 1;
 MyPrologInterface.prototype.Full = 2;

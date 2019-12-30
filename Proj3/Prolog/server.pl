@@ -117,6 +117,7 @@ parse_input([3, Board], Code) :- (boardFull(Board) -> Code = 0; Code = 2).
 parse_input([4, Board, Player], [0, Points]):- calculatePoints(Board, Player, Points).
 parse_input([5, PointsP1, PointsP2], [Code, Winner]):- calculateWinner(PointsP1, PointsP2, Winner), (Winner = 3 -> Code = 3; Code = 0).
 parse_input([6, Board, Level, Player], [0, Move]):- choose_move(Board, Level, Player, Move).
+parse_input([1, 2, 3], [4, 5, [1, 2, 3]]).
 
 parse_input([ola1], [ola2]):-write('ola3').
 parse_input(handshake, ola).

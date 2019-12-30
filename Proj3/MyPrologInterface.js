@@ -12,35 +12,94 @@ class MyPrologInterface{
         for (let i=0; i<listArgs.length; i++){
             requestString += listArgs[i].toString();
             if (i<listArgs.length-1)
-                requestString += ', ';
+                requestString += ',';
         }
         requestString+=']';
 
         let request = new XMLHttpRequest();
-        request.onload = onSuccess || function(data){console.log("Request successful. Reply: " + data.target.response);};
-        request.onerror = onError || function(){console.log("Error waiting for response");};
+        request.addEventListener("load", onSuccess);
+        request.addEventListener("error", onError); 
 
         request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
         request.setRequestHeader("Content-type", "application/x-www-formurlencoded; charset=UTF-8");
         request.send();
     }
 
-    textStringToArray(){}
+    //  ----------------------  request handlers  ----------------------------
+    validMovesRequest(board, player){
+        this.sendPrologRequest([this.ValidMoves, board, player], this.validMovesReply);
+    }
 
-    handleReply(data) {
-        if (this.status === 400) {
-            console.log("ERROR");
-            return;
-        }
-        // the answer here is: [Board,CurrentPlayer,WhiteScore,BlackScore]
-        console.log(this.responseText)
-        let responseArray = textStringToArray(this.responseText,true);
-        // do something with responseArray[0];
-        // do something with responseArray[1];
-        // do something with responseArray[2];
-        // do something with responseArray[3];
+    movePieceRequest(player, line1, column1, line2, column2, board){
+        this.sendPrologRequest([this.MovePiece, [player, line1, column1, line2, column2], board], this.movePieceReply);
+    }
+
+    gameOverRequest(board){
+        this.sendPrologRequest([this.GameOver, board], this.gameOverReply);
+    }
+
+    calculatePointsRequest(board, player){
+        this.sendPrologRequest([this.CalculatePoints, board, player], this.calculatePointsReply);
+    }
+
+    calculateWinnerRequest(points1, points2){
+        this.sendPrologRequest([this.CalculateWinner, points1, points2], this.calculateWinnerReply);
+    }
+
+    chooseMoveRequest(board, level, player){
+        this.sendPrologRequest([this.ChooseMove, board, lever, player], this.chooseMoveReply);
+    }
+
+
+    responseStringToArray(response){
+        return JSON.parse(response);
+    }
+
+    //  ----------------------  responses handlers  ----------------------------
+    //returns validMoves array in the form [player, line1, column1, line2, column2]
+    validMovesReply(data) {
+        let response_array = responseStringToArray(data.target.response);
+        return response_array[1];
+    }
+
+    //if move was possible returns the new board, otherwise returns null
+    movePieceReply(data){
+        let response_array = responseStringToArray(data.target.response);
+        if (response_array[0] == this.OK)
+            return response_array[1];
+        else
+            return null;
+    }
+
+    //returns true if game is over or false otherwise
+    gameOverReply(data){
+        let response_array = responseStringToArray(data.target.response);
+        if (response_array[0] == this.Full)
+            return true;
+        else
+            return false;
     }
         
+    //returns number of points
+    calculatePointsReply(data){
+        let response_array = responseStringToArray(data.target.response);
+        return response_array[1];
+    }   
+    
+    //return number of player who won (1 or 2); if it was a tie returns null
+    calculateWinnerReply(data){
+        let response_array = responseStringToArray(data.target.response);
+        if (response_array[0] == this.Tie)
+            return null;
+        else
+            return response_array[1];
+    }
+
+    //returns move chosen
+    chooseMoveReply(data){
+        let response_array = responseStringToArray(data.target.response);
+        return response_array[1];
+    }
 }
 
 //defining constants to be easier to work with the code

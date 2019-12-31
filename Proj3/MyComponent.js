@@ -2,7 +2,7 @@
  * MyComponent
  */
 class MyComponent extends CGFobject {
-	constructor(scene, id, transformation_matrix, materials, texture, length_s, length_t, childrenPrimitives, childrenComponents, animation) {
+	constructor(scene, id, transformation_matrix, materials, texture, length_s, length_t, childrenPrimitives, childrenComponents, animation, selectable, visible) {
         super(scene);
         this.id=id;
         this.transformation_matrix = transformation_matrix;
@@ -14,6 +14,8 @@ class MyComponent extends CGFobject {
         this.childrenComponents = childrenComponents;
         this.animation = animation;
         this.material_number=0;
+        this.selectable = selectable;
+        this.visible = visible;
     }
     incrementMaterialNumber(){
         this.material_number=this.material_number+1;

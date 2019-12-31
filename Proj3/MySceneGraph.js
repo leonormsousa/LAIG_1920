@@ -1077,6 +1077,30 @@ class MySceneGraph {
             if (this.components[componentID] != null)
                 return "ID must be unique for each component (conflict: ID = " + componentID + ")";
 
+            // Get selectable property of the current component.
+            var selectableYN = this.reader.getString(children[i], 'selectable');
+            let selectable;
+            if (selectableYN == null || selectableYN == "inherit")
+                selectable="inherit";
+            else if (selectableYN == "y")
+                selectable = true;
+            else if (selectableYN == "n")
+                selectable = false;
+            else
+                return "selectable in component with id " + componentID + " must be y or n.";
+
+            // Get visible property of the current component.
+            var visibleYN = this.reader.getString(children[i], 'visible');
+            let visible;
+            if (visibleYN == null || visibleYN == "inherit")
+                visible="inherit";
+            else if (visibleYN == "y")
+                visible = true;
+            else if (visibleYN == "n")
+                visible = false;
+            else
+                return "visible in component with id " + componentID + " must be y or n.";
+
             grandChildren = children[i].children;
 
             nodeNames = [];
@@ -1203,7 +1227,7 @@ class MySceneGraph {
                 }
             }
 
-            this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, length_s, length_t, childrenPrimitives, childrenComponents, animationID);
+            this.components[componentID] = new MyComponent(this.scene, componentID, transfMatrix, materials, texture, length_s, length_t, childrenPrimitives, childrenComponents, animationID, selectable, visible);
         }
         for (var key in this.components){
             for (let j=0; j<this.components[key].childrenComponents.length; j++)
@@ -1369,38 +1393,40 @@ class MySceneGraph {
         }
     }
 
-    processNode(id, transformation_matrix, material, texture, length_s, length_t){
+    processNode(id, transformation_matrix, material, texture, length_s, length_t, selectable, visible, renderMode){
         if (this.primitives[id] != null)
         {   
-            var mat = new CGFappearance(this.scene);
-            mat=this.materials[material];
+            if ((renderMode && visible) || (!renderMode && selectable)){
+                var mat = new CGFappearance(this.scene);
+                mat = this.materials[material];
 
-            var old_texCoords=this.primitives[id].texCoords;
-            if (texture=="none")
-                mat.setTexture(null);
-            else{
-                this.primitives[id].changeTexCoords(length_s, length_t);
-                mat.setTexture(this.textures[texture]);
-                mat.setTextureWrap('REPEAT', 'REPEAT');
-            }            
-            mat.apply();
+                var old_texCoords = this.primitives[id].texCoords;
+                if (texture == "none")
+                    mat.setTexture(null);
+                else{
+                    this.primitives[id].changeTexCoords(length_s, length_t);
+                    mat.setTexture(this.textures[texture]);
+                    mat.setTextureWrap('REPEAT', 'REPEAT');
+                }            
+                mat.apply();
 
-            this.scene.pushMatrix();
-            this.scene.multMatrix(transformation_matrix);
-            this.primitives[id].display();
-            this.scene.popMatrix();
-            
-            this.primitives[id].texCoords=old_texCoords; 
+                this.scene.pushMatrix();
+                this.scene.multMatrix(transformation_matrix);
+                this.primitives[id].display();
+                this.scene.popMatrix();
+                
+                this.primitives[id].texCoords = old_texCoords; 
+            }
         }
         else
         {
-            var component=this.components[id];
+            let component = this.components[id];
 
-            var material_c=component.getCurrentMaterial();
-            if (material_c=='inherit')
-                material_c=material;
+            let material_c = component.getCurrentMaterial();
+            if (material_c == 'inherit')
+                material_c = material;
 
-            var texture_c = component.texture;
+            let texture_c = component.texture;
             if (texture_c=="inherit")
                 texture_c=texture;
             else{
@@ -1408,13 +1434,20 @@ class MySceneGraph {
                 length_t=component.length_t;
             }
 
-            var mult = mat4.create();
+            let selectable_c = component.selectable;
+            if (selectable_c == "inherit")
+                selectable_c = selectable;
+            let visible_c = component.visible;
+                if (visible_c == "inherit")
+                visible_c = visible;
+
+            let mult = mat4.create();
 
             mat4.multiply(mult, mult, transformation_matrix);
 
-            var animationID = component.animation;
+            let animationID = component.animation;
             if (animationID!=null){
-                var animation=this.animations[animationID];
+                let animation=this.animations[animationID];
                 animation.apply(mult);
             }
 
@@ -1422,8 +1455,8 @@ class MySceneGraph {
 
             for (let i=0; i<component.childrenComponents.length; i++)
             {
-                var childIndex = component.childrenComponents[i];
-                var child = this.components[childIndex];
+                let childIndex = component.childrenComponents[i];
+                let child = this.components[childIndex];
                 this.processNode(child.id, mult, material_c, texture_c, length_s, length_t);
             }    
 
@@ -1438,7 +1471,7 @@ class MySceneGraph {
      */
     display() {
         var transMatrix = mat4.create();
-        this.processNode(this.idRoot, transMatrix, null, 'none');
+        this.processNode(this.idRoot, transMatrix, null, 'none', 1, 1, false, true, display);
         //this.primitives['patch'].display();
     }
 }

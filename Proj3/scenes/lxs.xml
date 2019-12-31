@@ -139,6 +139,11 @@
         </primitive>
     </primitives>
 
+    <!-- selectable and invisible components must have that indication following the id -->
+    <!--                       selectable="y/n" or visible="y/n"                        -->
+    <!--    if nothing is said components visibility and selectability are inherited    -->
+    <!--                by default, root is non selectable and visible                  -->
+
     <components>
         <component id="hexagon_side1">
             <transformation>

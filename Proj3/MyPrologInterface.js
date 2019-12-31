@@ -75,18 +75,17 @@ class MyPrologInterface{
 
     //if move was possible returns the new board, otherwise returns null
     movePieceReply(data){
-        console.log(data.target.response);
         let response_array = JSON.parse(data.target.response);
-        if (response_array[0] == this.OK)
+        if (response_array[0] == self.Ok)
             self.response=response_array[1];
         else
-            self.response=null;
+            self.response=false;
     }
 
     //returns true if game is over or false otherwise
     gameOverReply(data){
         let response_array = JSON.parse(data.target.response);
-        if (response_array[0] == this.Full)
+        if (response_array[0] == self.Full)
             self.response= true;
         else
             self.response= false;
@@ -101,7 +100,7 @@ class MyPrologInterface{
     //return number of player who won (1 or 2); if it was a tie returns null
     calculateWinnerReply(data){
         let response_array = JSON.parse(data.target.response);
-        if (response_array[0] == this.Tie)
+        if (response_array[0] == self.Tie)
             self.response= null;
         else
             self.response= response_array[1];
@@ -132,7 +131,7 @@ MyPrologInterface.prototype.CalculatePoints = 4;
 MyPrologInterface.prototype.CalculateWinner = 5;
 MyPrologInterface.prototype.ChooseMove = 6;
 MyPrologInterface.prototype.Start = 7;
-MyPrologInterface.prototype.OK = 0;
+MyPrologInterface.prototype.Ok = 0;
 MyPrologInterface.prototype.Failed = 1;
 MyPrologInterface.prototype.Full = 2;
 MyPrologInterface.prototype.Tie = 3;

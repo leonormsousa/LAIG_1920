@@ -15,6 +15,7 @@ class MyTile extends CGFobject {
             this.selectable=false;
         else
             this.selectable=true;
+        this.selected=false;
     }
 
     setPiece(piece){
@@ -34,8 +35,11 @@ class MyTile extends CGFobject {
 
     display(){
         this.scene.pushMatrix();
-        this.scene.translate(this.x*Math.sqrt(3)/2, this.z, this.y*1.5);
-        this.scene.graph.processNode(this.componentId, mat4.create(), this.materialId, 'none', 1, 1, true, true, true);
+        this.scene.translate(this.x*Math.sqrt(3)/2, this.z, -this.y*1.5);
+        if (this.selected)
+            this.scene.graph.processNode(this.componentId, mat4.create(), "black", 'seleted', 1, 1, true, true, true);
+        else
+            this.scene.graph.processNode(this.componentId, mat4.create(), this.materialId, 'tile', 1, 1, true, true, true);
         this.scene.popMatrix();
     }
 }

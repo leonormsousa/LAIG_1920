@@ -33,8 +33,8 @@ class MyGameboard extends CGFobject {
         this.auxiliaryTilesPlayer2=[];
         for (let i=0; i<17; i++){
             for (let j=0; j<10; j++){
-                this.auxiliaryTilesPlayer1.push(new MyTile(scene, 'tile', 'grey', 20, i-8.5, j, true));
-                this.auxiliaryTilesPlayer2.push(new MyTile(scene, 'tile', 'grey', -20, i-8.5, j, true));
+                this.auxiliaryTilesPlayer1.push(new MyTile(scene, 'tile', 'grey', 20, i-8.5, 10-j, true));
+                this.auxiliaryTilesPlayer2.push(new MyTile(scene, 'tile', 'grey', -20, i-8.5, 10-j, true));
             }
         }
 
@@ -81,9 +81,9 @@ class MyGameboard extends CGFobject {
 
     getFirtsPieceFreeToMove(player){
         if (player == 1)
-            return this.getPieceOnTile(getFirstTileWithPiece(this.auxiliaryTilesPlayer1));
+            return this.getPieceOnTile(this.getFirstTileWithPiece(this.auxiliaryTilesPlayer1));
         else
-            return this.getPieceOnTile(getFirstTileWithPiece(this.auxiliaryTilesPlayer2));
+            return this.getPieceOnTile(this.getFirstTileWithPiece(this.auxiliaryTilesPlayer2));
     }
 
     addPieceToTile(piece, tile){
@@ -111,8 +111,8 @@ class MyGameboard extends CGFobject {
     }
 
     movePiece(piece, x, y){
-        destinationTile = this.getTileByCoordinates(x, y);
-        fromTile = this.getTileHoldingPiece(piece);
+        let destinationTile = this.getTileByCoordinates(x, y);
+        let fromTile = this.getTileHoldingPiece(piece);
         this.removePieceFromTile(fromTile);
         this.addPieceToTile(piece, destinationTile);
     }
@@ -141,12 +141,14 @@ class MyGameboard extends CGFobject {
     display(){
         let numberRegistered=1;
         for(let i=0; i<this.tiles.length; i++){
-            if (this.tiles[i].selectable){
+            if (this.tiles[i].selectable && !this.tiles[i].selected){
                 this.scene.registerForPick(numberRegistered + 1, this.tiles[i]);
                 this.tiles[i].display();
                 this.scene.clearPickRegistration();
                 numberRegistered++;
             }
+            else
+                this.tiles[i].display();
         }
         for(let i=0; i<this.pieces.length; i++)
             this.pieces[i].display();

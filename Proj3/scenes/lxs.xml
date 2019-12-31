@@ -36,7 +36,8 @@
     </lights>
 
     <textures>
-        <texture id="grey" file="scenes/images/grey.png" />
+        <texture id="tile" file="scenes/images/grey.png" />
+        <texture id="selected" file="scenes/images/selected.jpg" />
     </textures>
 
     <materials>
@@ -284,7 +285,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="grey" length_s="1" length_t="1"/>
+            <texture id="inherit"/>
             <children>
                 <primitiveref id="hexagon"/>     
             </children>

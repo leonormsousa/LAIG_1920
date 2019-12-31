@@ -113,8 +113,8 @@ print_header_line(_).
 % [ValidMoves, MovePiece, GameOver, CalculatePoints, CalculateWinner, ChooseMove, Start] = [1, 2, 3, 4, 5, 6, 1].
 
 parse_input([1, Board, Player], [0, Response]) :- valid_moves(Board, Player, Response).
-parse_input([2, Move, Board], [Code, Response]) :- ( move(Move, Board, Response) -> Code = 0; Code = 1).
-parse_input([3, Board], Code) :- (boardFull(Board) -> Code = 0; Code = 2).
+parse_input([2, Move, Board], [Code, Response]) :- ( move(Move, Board, ResponseAux) -> Code = 0, Response=ResponseAux; Code = 1, Response=[]).
+parse_input([3, Board], Code) :- (boardFull(Board) -> Code = 2; Code = 0).
 parse_input([4, Board, Player], [0, Points]):- calculatePoints(Board, Player, Points).
 parse_input([5, PointsP1, PointsP2], [Code, Winner]):- calculateWinner(PointsP1, PointsP2, Winner), (Winner = 3 -> Code = 3; Code = 0).
 parse_input([6, Board, Level, Player], [0, Move]):- choose_move(Board, Level, Player, Move).

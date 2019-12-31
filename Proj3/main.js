@@ -11,7 +11,7 @@ function getUrlVars() {
     return vars;
 }	 
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', 'Primitives/MyRectangle.js', 'Primitives/MyCylinder.js', 'Primitives/MyTriangle.js', 'Primitives/MySphere.js', 'Primitives/MyTorus.js', 'MyComponent.js', 'Animation.js', 'KeyframeAnimation.js', 'Keyframe.js', 'Primitives/Plane.js', 'Primitives/MyCylinder2.js', 'Primitives/Patch.js', 'Primitives/MyHexagon.js', 'Primitives/MyCircle.js', 'MyGameboard.js', 'MyPiece.js', 'MyTile.js', 'MyGameMove.js', 'MyGameSequence.js', 'MyAnimator.js', 'MyGameOrchestrator.js', 'MyPrologInterface.js', 'ProceduralAnimation.js',
+serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', 'Primitives/MyRectangle.js', 'Primitives/MyCylinder.js', 'Primitives/MyTriangle.js', 'Primitives/MySphere.js', 'Primitives/MyTorus.js', 'MyComponent.js', 'Animations/Animation.js', 'Animations/KeyframeAnimation.js', 'Animations/Keyframe.js', 'Primitives/Plane.js', 'Primitives/MyCylinder2.js', 'Primitives/Patch.js', 'Primitives/MyHexagon.js', 'Primitives/MyCircle.js', 'Game/MyGameboard.js', 'Game/MyPiece.js', 'Game/MyTile.js', 'Game/MyGameMove.js', 'Game/MyGameSequence.js', 'Game/MyAnimator.js', 'Game/MyGameOrchestrator.js', 'MyPrologInterface.js', 'Animations/PolynomialProceduralAnimation.js', 'Animations/TrigonometricProceduralAnimation.js',
 
 main=function()
 {

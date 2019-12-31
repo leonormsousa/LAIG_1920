@@ -1078,7 +1078,7 @@ class MySceneGraph {
                 return "ID must be unique for each component (conflict: ID = " + componentID + ")";
 
             // Get selectable property of the current component.
-            var selectableYN = this.reader.getString(children[i], 'selectable');
+            var selectableYN = this.reader.getString(children[i], 'selectable', false);
             let selectable;
             if (selectableYN == null || selectableYN == "inherit")
                 selectable="inherit";
@@ -1090,7 +1090,7 @@ class MySceneGraph {
                 return "selectable in component with id " + componentID + " must be y or n.";
 
             // Get visible property of the current component.
-            var visibleYN = this.reader.getString(children[i], 'visible');
+            var visibleYN = this.reader.getString(children[i], 'visible', false);
             let visible;
             if (visibleYN == null || visibleYN == "inherit")
                 visible="inherit";
@@ -1393,10 +1393,10 @@ class MySceneGraph {
         }
     }
 
-    processNode(id, transformation_matrix, material, texture, length_s, length_t, selectable, visible, renderMode){
+    processNode(id, transformation_matrix, material, texture, length_s, length_t, selectable, visible){
         if (this.primitives[id] != null)
         {   
-            if ((renderMode && visible) || (!renderMode && selectable)){
+            if (visible){
                 var mat = new CGFappearance(this.scene);
                 mat = this.materials[material];
 
@@ -1457,21 +1457,21 @@ class MySceneGraph {
             {
                 let childIndex = component.childrenComponents[i];
                 let child = this.components[childIndex];
-                this.processNode(child.id, mult, material_c, texture_c, length_s, length_t);
+                this.processNode(child.id, mult, material_c, texture_c, length_s, length_t, selectable_c, visible_c);
             }    
 
             for (let i=0; i<component.childrenPrimitives.length; i++){
-                this.processNode(component.childrenPrimitives[i], mult, material_c, texture_c, length_s, length_t);
+                this.processNode(component.childrenPrimitives[i], mult, material_c, texture_c, length_s, length_t, selectable_c, visible_c);
             }
         }
     }
 
     /**
-     * Displays the scene, processing each node, starting in the root node.
+     * Renders the scene, processing each node, starting in the root node.
+     * renderMode is true in case of display mode and false in case of picking mode
      */
-    display() {
+    render() {
         var transMatrix = mat4.create();
-        this.processNode(this.idRoot, transMatrix, null, 'none', 1, 1, false, true, display);
-        //this.primitives['patch'].display();
+        this.processNode(this.idRoot, transMatrix, null, 'none', 1, 1, false, true);
     }
 }

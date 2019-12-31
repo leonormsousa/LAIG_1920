@@ -22,6 +22,7 @@ class MyPrologInterface{
     sendPrologRequest(listArgs, onSuccess, onError, port){
         //building a string containing list of arguments;
         let requestString = '[' + this.toStringObject(listArgs) + ']';
+        console.log(requestString)
 
         self=this;
 
@@ -41,7 +42,7 @@ class MyPrologInterface{
         this.sendPrologRequest([this.ValidMoves, board, player], this.validMovesReply);
     }
 
-    movePieceRequest(move){
+    movePieceRequest(move, board){
         this.sendPrologRequest([this.MovePiece, move, board], this.movePieceReply);
     }
 
@@ -74,6 +75,7 @@ class MyPrologInterface{
 
     //if move was possible returns the new board, otherwise returns null
     movePieceReply(data){
+        console.log(data.target.response);
         let response_array = JSON.parse(data.target.response);
         if (response_array[0] == this.OK)
             self.response=response_array[1];

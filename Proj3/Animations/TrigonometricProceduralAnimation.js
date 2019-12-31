@@ -1,7 +1,8 @@
 /**
- * ProceduralAnimation
+ * TrigonometricProceduralAnimation
  */
-class ProceduralAnimation extends Animation {
+class TrigonometricProceduralAnimation extends Animation {
+    //translation/scaling/rotating = [[sinx, cosx, tanx, constx], [siny, cosy, tany, consty], [sinz, cosz, tanz, constz]]
 	constructor(scene, id, translation, scaling, rotating, stoping_time){
         super(scene);
         this.id=id;
@@ -24,22 +25,19 @@ class ProceduralAnimation extends Animation {
 
         //delta is the time since t0
         var delta=t-this.initial_time;
-        if (delta>this.stoping_time)
+        if (this.stoping_time!= null && delta>this.stoping_time)
             delta=this.stoping_time;
         
         //calculations of translation, scaling and rotation
         var t=[0, 0, 0], s=[0, 0, 0], r=[0, 0, 0];
         for (let j=0; j<3; j++){
-            for (let i=0; i<this.translation[j].length; i++)
-                t[j] += this.translation[j][i] * Math.pow(delta, i);
+            t[j] = this.translation[j][0]*Math.sin(delta) + this.translation[j][1]*Math.cos(delta) + this.translation[j][2]*Math.tan(delta) + this.translation[j][3];
         }
         for (let j=0; j<3; j++){
-            for (let i=0; i<this.scaling[j].length; i++)
-                s[j] += this.scaling[j][i] * Math.pow(delta, i);
+            s[j] = this.scaling[j][0]*Math.sin(delta) + this.scaling[j][1]*Math.cos(delta) + this.scaling[j][2]*Math.tan(delta) + this.scaling[j][3];
         }
         for (let j=0; j<3; j++){
-            for (let i=0; i<this.rotation[j].length; i++)
-                r[j] += this.rotation[j][i] * Math.pow(delta, i);
+            r[j] = this.rotating[j][0]*Math.sin(delta) + this.rotating[j][1]*Math.cos(delta) + this.rotating[j][2]*Math.tan(delta) + this.rotating[j][3];
         }
 
         //applying animation

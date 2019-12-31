@@ -24,7 +24,7 @@ class MyGameboard extends CGFobject {
                     material="green";
                 else if((Math.abs(line)==3 && Math.abs(column)==11) || (Math.abs(line)==7 && Math.abs(column)==1) || (Math.abs(line)==4 && Math.abs(column)==10))
                     material="blue";
-                this.tiles.push(new MyTile(scene, "tile", material, column*Math.sqrt(3)/2, line*1.5, 0));
+                this.tiles.push(new MyTile(scene, "tile", material, column, line, 0, false));
             }
         }
 
@@ -33,8 +33,8 @@ class MyGameboard extends CGFobject {
         this.auxiliaryTilesPlayer2=[];
         for (let i=0; i<17; i++){
             for (let j=0; j<10; j++){
-                this.auxiliaryTilesPlayer1.push(new MyTile(scene, 'tile', 'grey', 20, i-8.5, j));
-                this.auxiliaryTilesPlayer2.push(new MyTile(scene, 'tile', 'grey', -20, i-8.5, j));
+                this.auxiliaryTilesPlayer1.push(new MyTile(scene, 'tile', 'grey', 20, i-8.5, j, true));
+                this.auxiliaryTilesPlayer2.push(new MyTile(scene, 'tile', 'grey', -20, i-8.5, j, true));
             }
         }
 
@@ -105,7 +105,7 @@ class MyGameboard extends CGFobject {
 
     getTileByCoordinates(x, y){
         for (let i=0; i<this.tiles.length; i++){
-            if ((this.tiles[i].x = x) && (this.tiles[i].y = y))
+            if ((this.tiles[i].x == x) && (this.tiles[i].y == y))
                 return this.tiles[i];
         }
     }
@@ -123,7 +123,7 @@ class MyGameboard extends CGFobject {
             let line_array=[line];
             for (let column=-(14 - Math.abs(line)); column<=(14 - Math.abs(line)); column+=2){
                 let cell_array=[column];
-                let tile = this.getTileByCoordinates(line, column);
+                let tile = this.getTileByCoordinates(column, line);
                 let piece = this.getPieceOnTile(tile);
                 if (piece == null)
                     cell_array.push(0);
@@ -139,9 +139,17 @@ class MyGameboard extends CGFobject {
     }
 
     display(){
-        for(let i=0; i<this.tiles.length; i++)
-            this.tiles[i].display();
+        let numberRegistered=1;
+        for(let i=0; i<this.tiles.length; i++){
+            if (this.tiles[i].selectable){
+                this.scene.registerForPick(numberRegistered + 1, this.tiles[i]);
+                this.tiles[i].display();
+                this.scene.clearPickRegistration();
+                numberRegistered++;
+            }
+        }
         for(let i=0; i<this.pieces.length; i++)
             this.pieces[i].display();
+        return numberRegistered;
     }
 }

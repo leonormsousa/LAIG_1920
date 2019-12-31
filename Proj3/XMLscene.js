@@ -159,7 +159,6 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      */
     display() {
-        this.gameOrchestrator.orchestrate();
         // ---- BEGIN Background, camera and axis setup
         if(this.sceneInited){
 

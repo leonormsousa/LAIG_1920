@@ -17,6 +17,9 @@ class MyGameOrchestrator extends CGFobject {
 
         this.prolog = new MyPrologInterface(scene);
         this.prolog.sendPrologRequest(['quit'], this.prolog.handleReply);
+        //wait for eventListener to end work
+        let response = this.prolog.response;
+        console.log('!!!' + response + '!!!');
         
         this.state = "menu";
         this.pickingEnabled=false;
@@ -59,13 +62,17 @@ class MyGameOrchestrator extends CGFobject {
                 break;
             case "pick tiles pc":
                 this.pickingEnabled=false;
-                this.moveToExecute=this.prolog.chooseMoveRequest(this.gameboard.convertToPrologBoard(), this.level, this.currentPlayer);
+                this.prolog.chooseMoveRequest(this.gameboard.convertToPrologBoard(), this.level, this.currentPlayer);
+                //wait for eventListener to end work
+                this.moveToExecute = this.prolog.response;
                 this.state="render move pc";
                 sleep(3);
                 break;
             case "render move":
                 this.pickingEnabled=false;
-                moveReply = this.prolog.movePieceRequest(this.moveToExecute);
+                this.prolog.movePieceRequest(this.moveToExecute);
+                //wait for eventListener to end work
+                moveReply =  this.prolog.response;
                 if (moveReply == null){
                     alert("Move Not Possible!");
                     this.state="pick first tile human";
@@ -101,7 +108,9 @@ class MyGameOrchestrator extends CGFobject {
                 break;
             case "game end evaluation":
                 this.pickingEnabled=false;
-                let resp = this.prolog.gameOverRequest(this.gameboard.convertToPrologBoard()) || this.number_passes>=2;
+                this.prolog.gameOverRequest(this.gameboard.convertToPrologBoard()) || this.number_passes>=2;
+                //wait for eventListener to end work
+                let resp = this.prolog.response;
                 if (resp)
                     this.state="end game";
                 else if (this.player[this.currentPlayer-1])
@@ -110,9 +119,15 @@ class MyGameOrchestrator extends CGFobject {
                     this.state="pick first tile human";   
                 break;
             case "end game":
-                let points1 = this.prolog.calculatePointsRequest(this.gameboard.convertToPrologBoard(), 1);
-                let points2 = this.prolog.calculatePointsRequest(this.gameboard.convertToPrologBoard(), 2);
-                let winner = this.prolog.calculateWinnerRequest(points1, points2);
+                this.prolog.calculatePointsRequest(this.gameboard.convertToPrologBoard(), 1);
+                //wait for eventListener to end work
+                let points1 = this.prolog.response;
+                this.prolog.calculatePointsRequest(this.gameboard.convertToPrologBoard(), 2);
+                //wait for eventListener to end work
+                let points2 = this.prolog.response;
+                this.prolog.calculateWinnerRequest(points1, points2);
+                //wait for eventListener to end work
+                let winner = this.prolog.response;
                 let msg;
                 if (winner == null)
                     msg="It's a Tie";

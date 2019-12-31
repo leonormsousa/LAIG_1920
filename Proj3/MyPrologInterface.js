@@ -2,7 +2,9 @@
  * MyPrologInterface
  */
 class MyPrologInterface{
-	constructor() {}
+	constructor() {
+        this.request = null;
+    }
 
     toStringObject(listArgs){
         let str="";
@@ -18,28 +20,20 @@ class MyPrologInterface{
     }
 
     sendPrologRequest(listArgs, onSuccess, onError, port){
-
         //building a string containing list of arguments;
-        let requestString = '[quit]';
+        let requestString = '[' + this.toStringObject(listArgs) + ']';
 
-            var requestPort = port || 8081
-            var request = new XMLHttpRequest();
-            request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
+        self=this;
 
-            request.onload = onSuccess || function(data){console.log("Request successful. Reply: " + data.target.response);};
-            request.onerror = onError || function(){console.log("Error waiting for response");};
+        var requestPort = port || 8081
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
 
-            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-            request.send();
-        
+        request.onload = onSuccess || function(data){console.log("Request successful. Reply: " + data.target.response);};
+        request.onerror = onError || function(){console.log("Error waiting for response");};
 
-        // let request = new XMLHttpRequest();
-        // request.addEventListener("load", onSuccess);
-        // request.addEventListener("error", onError); 
-        // console.log(requestString);
-        // request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
-        // request.setRequestHeader("Content-type", "application/x-www-formurlencoded; charset=UTF-8");
-        // request.send();
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.send();
     }
 
     //  ----------------------  request handlers  ----------------------------
@@ -71,61 +65,60 @@ class MyPrologInterface{
         this.sendPrologRequest([this.Start], this.startReply);
     }
 
-
-    responseStringToArray(response){
-        return JSON.parse(response);
-    }
-
     //  ----------------------  responses handlers  ----------------------------
     //returns validMoves array in the form [player, line1, column1, line2, column2]
     validMovesReply(data) {
-        let response_array = responseStringToArray(data.target.response);
-        return response_array[1];
+        let response_array = JSON.parse(data.target.response);
+        self.response=response_array[1];
     }
 
     //if move was possible returns the new board, otherwise returns null
     movePieceReply(data){
-        let response_array = responseStringToArray(data.target.response);
+        let response_array = JSON.parse(data.target.response);
         if (response_array[0] == this.OK)
-            return response_array[1];
+            self.response=response_array[1];
         else
-            return null;
+            self.response=null;
     }
 
     //returns true if game is over or false otherwise
     gameOverReply(data){
-        let response_array = responseStringToArray(data.target.response);
+        let response_array = JSON.parse(data.target.response);
         if (response_array[0] == this.Full)
-            return true;
+            self.response= true;
         else
-            return false;
+            self.response= false;
     }
         
     //returns number of points
     calculatePointsReply(data){
-        let response_array = responseStringToArray(data.target.response);
-        return response_array[1];
+        let response_array = JSON.parse(data.target.response);
+            self.response= response_array[1];
     }   
     
     //return number of player who won (1 or 2); if it was a tie returns null
     calculateWinnerReply(data){
-        let response_array = responseStringToArray(data.target.response);
+        let response_array = JSON.parse(data.target.response);
         if (response_array[0] == this.Tie)
-            return null;
+            self.response= null;
         else
-            return response_array[1];
+            self.response= response_array[1];
     }
 
     //returns move chosen
     chooseMoveReply(data){
-        let response_array = responseStringToArray(data.target.response);
-        return response_array[1];
+        let response_array = JSON.parse(data.target.response);
+            self.response= response_array[1];
     }
 
     //returns the initial Board
     startReply(data){
-        let response_array = responseStringToArray(data.target.response);
-        return response_array[1];
+        let response_array = JSON.parse(data.target.response);
+            self.response= response_array[1];
+    }
+
+    handleReply(data){
+        self.response= data.target.response;
     }
 }
 

@@ -37,7 +37,15 @@
 
     <textures>
         <texture id="tile" file="scenes/images/grey.png" />
-        <texture id="selected" file="scenes/images/selected.jpg" />
+        <texture id="undo" file="scenes/images/undo.png" />
+        <texture id="movie" file="scenes/images/movie.png" />
+        <texture id="confirm" file="scenes/images/confirm.png" />
+        <texture id="remove" file="scenes/images/remove.png" />
+        <texture id="human" file="scenes/images/human.png" />
+        <texture id="cpu" file="scenes/images/cpu.png" />
+        <texture id="stars" file="scenes/images/stars.png" />
+        <texture id="house" file="scenes/images/house.png" />
+        <texture id="exit" file="scenes/images/exit.png" />
     </textures>
 
     <materials>
@@ -100,6 +108,18 @@
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="0" g="0" b="0" a="1.0" />
             <specular r="0.3" g="0.3" b="0.3" a="1.0" />
+        </material>
+        <material id="button1" shininess="1">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.1" g="0.5" b="1" a="1.0" />
+            <diffuse r="0.1" g="0.5" b="1" a="1.0" />
+            <specular r="0.05" g="0.25" b="0.5" a="1.0" />
+        </material>
+        <material id="button2" shininess="1">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0" g="0" b="0.5" a="1.0" />
+            <diffuse r="0" g="0" b="0.5" a="1.0" />
+            <specular r="0" g="0" b="0.25" a="1.0" />
         </material>
     </materials>
 

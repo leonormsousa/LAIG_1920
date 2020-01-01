@@ -42,9 +42,7 @@ class MyPrologInterface{
     }
 
     movePieceRequest(move, board){
-        if (move[1] == null)
-            this.sendPrologRequest([this.MovePiece, [move[0], [], [], [], []], board], this.movePieceReply);
-        else if (move[3] == null)
+        if (move[3] == null)
             this.sendPrologRequest([this.MovePiece, [move[0], move[1], move[2], [], []], board], this.movePieceReply);
         else
             this.sendPrologRequest([this.MovePiece, move, board], this.movePieceReply);
@@ -105,7 +103,7 @@ class MyPrologInterface{
     calculateWinnerReply(data){
         let response_array = JSON.parse(data.target.response);
         if (response_array[0] == self.Tie)
-            self.response= null;
+            self.response= 0;
         else
             self.response= response_array[1];
     }

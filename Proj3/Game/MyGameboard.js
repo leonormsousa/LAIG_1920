@@ -138,10 +138,10 @@ class MyGameboard extends CGFobject {
         return board;
     }
 
-    display(){
+    display(registerTiles){
         let numberRegistered=1;
         for(let i=0; i<this.tiles.length; i++){
-            if (this.tiles[i].selectable && !this.tiles[i].selected){
+            if (registerTiles && this.tiles[i].selectable && !this.tiles[i].selected){
                 this.scene.registerForPick(numberRegistered + 1, this.tiles[i]);
                 this.tiles[i].display();
                 this.scene.clearPickRegistration();

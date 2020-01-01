@@ -76,6 +76,7 @@ class MyGameOrchestrator extends CGFobject {
         }
 
         this.currentPlayer = (this.currentPlayer % 2) + 1;
+        this.moveToExecute=[];
         this.state = "animation";
     }
 

@@ -29,7 +29,7 @@ class MyGameOrchestrator extends CGFobject {
         //buttons for game
         this.undoButton = new MyButton(scene, "button2", "undo");
         this.exitButton = new MyButton(scene, "button2", "exit");
-        this.movieButton = new MyButton(scene, "button2", "undo");
+        this.movieButton = new MyButton(scene, "button2", "movie");
         this.confirmButton = new MyButton(scene, "button1", "confirm");
         this.removeButton = new MyButton(scene, "button1", "remove");
 
@@ -288,6 +288,17 @@ class MyGameOrchestrator extends CGFobject {
                 this.moveToExecute = [];
                 this.state = "pick first tile human";
             }
+        }
+        else if (obj == this.exitButton){
+            this.gameSequence = new MyGameSequence(this.scene);
+            this.animator = new MyAnimator(this.scene, this);
+            this.gameboard = new MyGameboard(this.scene);
+
+            this.state = "start";
+            this.scene.setPickEnabled(false);
+            this.currentPlayer=1;
+            this.number_passes=0;
+            this.moveToExecute = [];
         }
         else {
             console.log("Error: I can't happen!");

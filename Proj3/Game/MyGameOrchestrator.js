@@ -222,6 +222,7 @@ class MyGameOrchestrator extends CGFobject {
         //still need to work out id numbers and picking objects of the scene
         this.theme.render(numberPickedObjects);
 
+        numberPickedObjects++;
         console.log(this.state);
         //buttons
         this.scene.pushMatrix();

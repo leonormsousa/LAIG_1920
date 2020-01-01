@@ -33,8 +33,8 @@ class MyGameboard extends CGFobject {
         this.auxiliaryTilesPlayer2=[];
         for (let i=0; i<10; i++){
             for (let j=0; j<17; j++){
-                this.auxiliaryTilesPlayer1.push(new MyTile(scene, 'tile', 'grey', i-5, 20, 8.5-j*0.5, true));
-                this.auxiliaryTilesPlayer2.push(new MyTile(scene, 'tile', 'grey', i-5, -20, 8.5-j*0.5, true));
+                this.auxiliaryTilesPlayer1.push(new MyTile(scene, 'tile', 'grey', 20,i-5,  8.5-j*0.5, true));
+                this.auxiliaryTilesPlayer2.push(new MyTile(scene, 'tile', 'grey', -20, i-5, 8.5-j*0.5, true));
             }
         }
 

@@ -24,17 +24,17 @@ class MyGameboard extends CGFobject {
                     material="green";
                 else if((Math.abs(line)==3 && Math.abs(column)==11) || (Math.abs(line)==7 && Math.abs(column)==1) || (Math.abs(line)==4 && Math.abs(column)==10))
                     material="blue";
-                this.tiles.push(new MyTile(scene, "tile", material, column, line, 0, false));
+                this.tiles.push(new MyTile(scene, "tile", material, column, line, 1.1, false));
             }
         }
 
         //auxiliaryTiles creation -> tiles that are not par of the boardGame, are just for holding pieces that are yet not on the board
         this.auxiliaryTilesPlayer1=[];
         this.auxiliaryTilesPlayer2=[];
-        for (let i=0; i<17; i++){
-            for (let j=0; j<10; j++){
-                this.auxiliaryTilesPlayer1.push(new MyTile(scene, 'tile', 'grey', 20, i-8.5, 10-j, true));
-                this.auxiliaryTilesPlayer2.push(new MyTile(scene, 'tile', 'grey', -20, i-8.5, 10-j, true));
+        for (let i=0; i<10; i++){
+            for (let j=0; j<17; j++){
+                this.auxiliaryTilesPlayer1.push(new MyTile(scene, 'tile', 'grey', i-5, 20, 8.5-j*0.5, true));
+                this.auxiliaryTilesPlayer2.push(new MyTile(scene, 'tile', 'grey', i-5, -20, 8.5-j*0.5, true));
             }
         }
 
@@ -62,11 +62,11 @@ class MyGameboard extends CGFobject {
                 let value = prologBoard[i][j][1];
                 if (value == 1){
                     let piece = getFirtsPieceFreeToMove(1);
-                    this.movePiece(piece, line, column)
+                    this.movePiece(piece, column, line)
                 }
                 if (value == 2){
                     let piece = getFirtsPieceFreeToMove(1);
-                    this.movePiece(piece, line, column)
+                    this.movePiece(piece, column, line)
                 }
             }
         }

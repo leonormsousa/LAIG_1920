@@ -40,24 +40,20 @@ class MyGameOrchestrator extends CGFobject {
         this.prolog.response = null
         let destinationTile1;
         let destinationTile2;
-        console.log(this.moveToExecute);
-        if(this.moveToExecute[1] != []){
+        if(this.moveToExecute[1] != null){
             destinationTile1 = this.gameboard.getTileByCoordinates(this.moveToExecute[2], this.moveToExecute[1]);
             destinationTile1.selected=false;
         }
-        if (this.moveToExecute[3] != []){
+        if (this.moveToExecute[3] != null){
             destinationTile2 = this.gameboard.getTileByCoordinates(this.moveToExecute[4], this.moveToExecute[3]);
             destinationTile2.selected=false;
         }
-        console.log(this.gameboard);
-        console.log(destinationTile1);
-        console.log(destinationTile2);
         if (moveReply == false){
             alert("Move Not Possible!");
             this.state="pick first tile human";
             return;
         }
-        if(this.moveToExecute[1] == []){
+        if(this.moveToExecute[1] == null){
             this.gameSequence.addGameMove(new MyGameMove(this.scene, this.moveToExecute[0], null, null, null, null, null, null, this.gameboard));
             this.number_passes++;
         }
@@ -65,13 +61,13 @@ class MyGameOrchestrator extends CGFobject {
             this.number_passes=0;
             let pieceToMove1=this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
             let originTile1 = this.gameboard.getTileHoldingPiece(pieceToMove1);
-            this.gameboard.movePiece(pieceToMove1, this.moveToExecute[1], this.moveToExecute[2]);
-            if (this.moveToExecute[3] == [])
+            this.gameboard.movePiece(pieceToMove1, this.moveToExecute[2], this.moveToExecute[1]);
+            if (this.moveToExecute[3] == null)
                 this.gameSequence.addGameMove(new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, null, null, null, this.gameboard));
             else{
                 let pieceToMove2 = this.gameboard.getFirtsPieceFreeToMove(this.moveToExecute[0]);
                 let originTile2 = this.gameboard.getTileHoldingPiece(pieceToMove2);
-                this.gameboard.movePiece(pieceToMove2, this.moveToExecute[3], this.moveToExecute[4]);
+                this.gameboard.movePiece(pieceToMove2, this.moveToExecute[4], this.moveToExecute[3]);
                 this.gameSequence.addGameMove(new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, pieceToMove2, originTile2, destinationTile2, this.gameboard));
             }
         }
@@ -216,7 +212,6 @@ class MyGameOrchestrator extends CGFobject {
     //add reaction to select buttons like undo (call function undo()), movie (call functionn movie()), exit, etc.
     onObjectSelected(obj, id) {
         if(obj instanceof MyTile){
-            console.log("I'm a tile on coordinates " + obj.x + " " + obj.y + " " + obj.z);
             obj.selected=true;
             if (this.state == "pick first tile human"){
                 this.moveToExecute = [this.currentPlayer, obj.y, obj.x];

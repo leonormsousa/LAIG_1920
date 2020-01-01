@@ -22,7 +22,6 @@ class MyPrologInterface{
     sendPrologRequest(listArgs, onSuccess, onError, port){
         //building a string containing list of arguments;
         let requestString = '[' + this.toStringObject(listArgs) + ']';
-        console.log(requestString)
 
         self=this;
 
@@ -43,7 +42,12 @@ class MyPrologInterface{
     }
 
     movePieceRequest(move, board){
-        this.sendPrologRequest([this.MovePiece, move, board], this.movePieceReply);
+        if (move[1] == null)
+            this.sendPrologRequest([this.MovePiece, [move[0], [], [], [], []], board], this.movePieceReply);
+        else if (move[3] == null)
+            this.sendPrologRequest([this.MovePiece, [move[0], move[1], move[2], [], []], board], this.movePieceReply);
+        else
+            this.sendPrologRequest([this.MovePiece, move, board], this.movePieceReply);
     }
 
     gameOverRequest(board){

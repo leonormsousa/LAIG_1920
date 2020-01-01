@@ -279,7 +279,6 @@
         </component>
         <component id="tile">
             <transformation>
-                <translate x="0" y="1.1" z="0"/>
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
@@ -329,7 +328,7 @@
         </component>
         <component id="piece">
             <transformation>
-                <scale x="0.5" y="1" z="0.5" />
+                <scale x="0.5" y="0.5" z="0.5" />
             </transformation>
             <materials>
                 <material id="inherit"/>

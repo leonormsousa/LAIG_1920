@@ -61,7 +61,7 @@ class MyPrologInterface{
     }
 
     chooseMoveRequest(board, level, player){
-        this.sendPrologRequest([this.ChooseMove, board, lever, player], this.chooseMoveReply);
+        this.sendPrologRequest([this.ChooseMove, board, level, player], this.chooseMoveReply);
     }
 
     startRequest(){
@@ -87,6 +87,7 @@ class MyPrologInterface{
     //returns true if game is over or false otherwise
     gameOverReply(data){
         let response_array = JSON.parse(data.target.response);
+        console.log(response_array);
         if (response_array[0] == self.Full)
             self.response= true;
         else
@@ -96,6 +97,7 @@ class MyPrologInterface{
     //returns number of points
     calculatePointsReply(data){
         let response_array = JSON.parse(data.target.response);
+        console.log(response_array);
             self.response= response_array[1];
     }   
     

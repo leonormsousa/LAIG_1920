@@ -2,14 +2,14 @@
     <scene root="root" axis_length="5"/>
 
     <views default="default">
-        <perspective id="default" near="0.1" far="500" angle="45">
-               <from x="0" y="3" z="8" />
+        <perspective id="default" near="0.1" far="500" angle="20">
+            <from x="0" y="35" z="70" />
             <to x="0" y="0" z="2" />
         </perspective>
-   <ortho id="ortho"  near="0.1" far="500" left="-10" right="10" top="15" bottom="0" >
-            <from x="0" y="0" z="10" />
-            <to x="0" y="0" z="0" />
-        </ortho>
+        <perspective id="second" near="0.1" far="500" angle="45">
+            <from x="0" y="40" z="1" />
+            <to x="0" y="10" z="0" />
+        </perspective>
     </views>
 
     <globals>
@@ -46,6 +46,17 @@
         <texture id="stars" file="scenes/images/stars.png" />
         <texture id="house" file="scenes/images/house.png" />
         <texture id="exit" file="scenes/images/exit.png" />
+        <texture id="playerVSplayer" file="scenes/images/playerVSplayer.png" />
+        <texture id="playerVSpc" file="scenes/images/playerVSpc.png" />
+        <texture id="pcVSpc" file="scenes/images/pcVSpc.png" />
+        <texture id="startGame" file="scenes/images/startGame.png" />
+        <texture id="easy" file="scenes/images/easy.png"/>
+        <texture id="medium" file="scenes/images/medium.png"/>
+        <texture id="hard" file="scenes/images/hard.png"/>
+        <texture id="wallMaterial" file="scenes/images/wallMaterial.png"/>
+        <texture id="woodTexture" file="scenes/images/woodTexture.jpg"/>
+        <texture id="floorTexture" file="scenes/images/floorTexture.jpg"/>
+
     </textures>
 
     <materials>
@@ -125,7 +136,7 @@
 
     <transformations>
         <transformation id="paintingTransf">
-            <translate x="8" y="26" z="0" />   
+            <translate x="8" y="26" z="0" />
             <scale x="2" y="2" z="1" />
         </transformation>
     </transformations>
@@ -161,11 +172,137 @@
     </primitives>
 
     <!-- selectable and invisible components must have that indication following the id -->
-    <!--                       selectable="y/n" or visible="y/n"                        -->
+    <!-- selectable="y/n" or visible="y/n"                        -->
     <!--    if nothing is said components visibility and selectability are inherited    -->
     <!--                by default, root is non selectable and visible                  -->
 
     <components>
+        <component id="table_top">
+            <transformation>
+                <scale x="12" y="5" z="5.5"/>
+            </transformation>
+
+            <materials>
+                <material id="default" />
+            </materials>
+
+            <texture id="inherit" length_s="1" length_t="1" />
+
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="tableLeftFrontLeg">
+            <transformation>
+                <translate x="-5" y="0" z="2"/>
+                <rotate axis="x" angle="-90"/>
+                <scale x="1" y="0.3" z="5" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="inherit" length_s="1" length_t="1" />
+
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="tableRightFrontLeg">
+             <transformation>
+                <translate x="5" y="0" z="2"/>
+                <rotate axis="x" angle="-90"/>
+                <scale x="1" y="0.3" z="5" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="inherit" length_s="1" length_t="1" />
+
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="tableLeftBackLeg">
+             <transformation>
+                <translate x="-5" y="0" z="-2"/>
+                <rotate axis="x" angle="-90"/>
+                <scale x="1" y="0.3" z="5" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="inherit" length_s="1" length_t="1" />
+
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="tableRightBackLeg">
+      <transformation>
+                <translate x="5" y="0" z="-2"/>
+                <rotate axis="x" angle="-90"/>
+                <scale x="1" y="0.3" z="5" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="inherit" length_s="1" length_t="1" />
+
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="tableLegs">
+            <transformation>
+                <rotate axis="x" angle="-90"/>
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="inherit" length_s="1" length_t="1" />
+
+            <children>
+                <componentref id="tableLeftFrontLeg"/>
+                <componentref id="tableLeftBackLeg"/>
+                <componentref id="tableRightFrontLeg"/>
+                <componentref id="tableRightBackLeg"/>
+            </children>
+        </component>
+
+        <component id="table">
+            <transformation>
+                <scale x="5" y="2" z="8"/>
+                <rotate axis="x" angle="-90"/>
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="woodTexture" length_s="1" length_t="1" />
+
+            <children>
+                <componentref id="table_top"/>
+                <componentref id="tableLegs"/>
+            </children>
+        </component>
+
+
         <component id="hexagon_side1">
             <transformation>
                 <translate x="0.866025" y="0.25" z="0"/>
@@ -177,7 +314,7 @@
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="rectangle"/>     
+                <primitiveref id="rectangle"/>
             </children>
         </component>
         <component id="hexagon_side2">
@@ -191,7 +328,7 @@
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="rectangle"/>     
+                <primitiveref id="rectangle"/>
             </children>
         </component>
         <component id="hexagon_side3">
@@ -205,7 +342,7 @@
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="rectangle"/>     
+                <primitiveref id="rectangle"/>
             </children>
         </component>
         <component id="hexagon_side4">
@@ -219,7 +356,7 @@
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="rectangle"/>     
+                <primitiveref id="rectangle"/>
             </children>
         </component>
         <component id="hexagon_side5">
@@ -233,7 +370,7 @@
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="rectangle"/>     
+                <primitiveref id="rectangle"/>
             </children>
         </component>
         <component id="hexagon_side6">
@@ -247,7 +384,7 @@
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="rectangle"/>     
+                <primitiveref id="rectangle"/>
             </children>
         </component>
         <component id="hexagon_bottom">
@@ -260,7 +397,7 @@
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="hexagon"/>     
+                <primitiveref id="hexagon"/>
             </children>
         </component>
         <component id="hexagon_top">
@@ -273,12 +410,11 @@
             </materials>
             <texture id="none"/>
             <children>
-                <primitiveref id="hexagon"/>     
+                <primitiveref id="hexagon"/>
             </children>
         </component>
         <component id="board">
             <transformation>
-                <translate x="0" y="0" z="0"/>
                 <scale x="13.3" y="2" z="13.3" />
                 <rotate axis="y" angle="90"/>
             </transformation>
@@ -306,7 +442,7 @@
             </materials>
             <texture id="inherit"/>
             <children>
-                <primitiveref id="hexagon"/>     
+                <primitiveref id="hexagon"/>
             </children>
         </component>
         <component id="circle_piece1">
@@ -355,9 +491,9 @@
             </materials>
             <texture id="none"/>
             <children>
-                <componentref id="circle_piece1"/>     
-                <componentref id="circle_piece2"/> 
-                <componentref id="cylinder_piece"/> 
+                <componentref id="circle_piece1"/>
+                <componentref id="circle_piece2"/>
+                <componentref id="cylinder_piece"/>
             </children>
         </component>
         <component id="skybox_back">
@@ -367,7 +503,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none"/>
+            <texture id="wallMaterial" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -380,7 +516,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit"/>
+            <texture id="wallMaterial" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -393,7 +529,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit"/>
+            <texture id="wallMaterial" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -432,18 +568,18 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none"/>
+            <texture id="floorTexture" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="rectangle"/>
             </children>
         </component>
         <component id="skybox">
             <transformation>
-                <translate x="0" y="50" z="0"/>
+                <translate x="0" y="40" z="0"/>
                 <scale x="100" y="100" z="100"/>
             </transformation>
             <materials>
-                <material id="blue" />
+                <material id="whiteMaterial" />
             </materials>
             <texture id="none"/>
             <children>
@@ -466,6 +602,7 @@
             <children>
                 <componentref id="board"/>
                 <componentref id="skybox"/>
+                <componentref id="table"/>
             </children>
         </component>
     </components>

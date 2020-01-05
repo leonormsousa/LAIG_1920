@@ -47,7 +47,7 @@ class MyGameboard extends CGFobject {
             piece1.setHoldingTile(this.auxiliaryTilesPlayer1[i]);
 
             let piece2=new MyPiece(scene, 2, 'piece', 'white');
-            this.pieces.push(piece2);;
+            this.pieces.push(piece2);
             this.auxiliaryTilesPlayer2[i].setPiece(piece2);
             piece2.setHoldingTile(this.auxiliaryTilesPlayer2[i]);
         }
@@ -61,11 +61,11 @@ class MyGameboard extends CGFobject {
                 let column=prologBoard[i][j][0];
                 let value = prologBoard[i][j][1];
                 if (value == 1){
-                    let piece = getFirtsPieceFreeToMove(1);
+                    let piece = getFirstPieceFreeToMove(1);
                     this.movePiece(piece, column, line)
                 }
                 if (value == 2){
-                    let piece = getFirtsPieceFreeToMove(1);
+                    let piece = getFirstPieceFreeToMove(1);
                     this.movePiece(piece, column, line)
                 }
             }
@@ -79,7 +79,22 @@ class MyGameboard extends CGFobject {
         }
     }
 
-    getFirtsPieceFreeToMove(player){
+    getIndexFirstTileWithPiece(player){
+        if(player == 1){
+            for (let i=0; i<this.auxiliaryTilesPlayer1.length; i++){
+                if (this.getPieceOnTile(this.auxiliaryTilesPlayer1[i]) != null)
+                    return i;
+            }
+        }
+        else{
+            for (let i=0; i<this.auxiliaryTilesPlayer2.length; i++){
+                if (this.getPieceOnTile(this.auxiliaryTilesPlayer2[i]) != null)
+                    return i;
+            }
+        }
+        
+    }
+    getFirstPieceFreeToMove(player){
         if (player == 1)
             return this.getPieceOnTile(this.getFirstTileWithPiece(this.auxiliaryTilesPlayer1));
         else
@@ -93,6 +108,12 @@ class MyGameboard extends CGFobject {
 
     removePieceFromTile(tile){
         tile.unsetPiece();
+
+    }
+
+    removeTileFromPiece(piece){
+        piece.unsetHoldingTile();
+        
     }
 
     getPieceOnTile(tile){
@@ -107,6 +128,14 @@ class MyGameboard extends CGFobject {
         for (let i=0; i<this.tiles.length; i++){
             if ((this.tiles[i].x == x) && (this.tiles[i].y == y))
                 return this.tiles[i];
+        }
+        for(let i=0; i<this.auxiliaryTilesPlayer1.length;i++){
+            if ((this.auxiliaryTilesPlayer1[i].x == x) && (this.auxiliaryTilesPlayer1[i].y == y))
+            return this.auxiliaryTilesPlayer1[i];
+        }
+        for(let i=0; i<this.auxiliaryTilesPlayer2.length;i++){
+            if ((this.auxiliaryTilesPlayer2[i].x == x) && (this.auxiliaryTilesPlayer2[i].y == y))
+            return this.auxiliaryTilesPlayer2[i];
         }
     }
 

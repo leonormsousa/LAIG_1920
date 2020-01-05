@@ -1,0 +1,90 @@
+<lxs>
+    <scene root="root" axis_length="5"/>
+
+    <views default="default">
+        <perspective id="default" near="0.1" far="500" angle="45">
+               <from x="0" y="3" z="8" />
+            <to x="0" y="0" z="2" />
+        </perspective>
+   <ortho id="ortho"  near="0.1" far="500" left="-10" right="10" top="15" bottom="0" >
+            <from x="0" y="0" z="10" />
+            <to x="0" y="0" z="0" />
+        </ortho>
+    </views>
+
+    <globals>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <background r="0.0" g="0.0" b="0.0" a="1.0" />
+    </globals>
+
+    <lights>
+        <omni id="omniLight" enabled="1">
+            <location x="0" y="25" z="10" w="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </omni>
+        <spot id="spotlight" enabled="0" angle="20" exponent="10">
+            <location x="0" y="5" z="5" w="1.0" />
+            <target x="0" y="10" z="3" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </spot>
+    </lights>
+
+    <textures>
+        <texture id="tile" file="scenes/images/grey.png" />
+        <texture id="undo" file="scenes/images/undo.png" />
+        <texture id="movie" file="scenes/images/movie.png" />
+        <texture id="confirm" file="scenes/images/confirm.png" />
+        <texture id="remove" file="scenes/images/remove.png" />
+        <texture id="human" file="scenes/images/human.png" />
+        <texture id="cpu" file="scenes/images/cpu.png" />
+        <texture id="stars" file="scenes/images/stars.png" />
+        <texture id="house" file="scenes/images/house.png" />
+        <texture id="exit" file="scenes/images/exit.png" />
+    </textures>
+
+    <materials>
+        <material id="button1" shininess="1">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.1" g="0.5" b="1" a="1.0" />
+            <diffuse r="0.1" g="0.5" b="1" a="1.0" />
+            <specular r="0.05" g="0.25" b="0.5" a="1.0" />
+        </material>
+        <material id="button2" shininess="1">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0" g="0" b="0.5" a="1.0" />
+            <diffuse r="0" g="0" b="0.5" a="1.0" />
+            <specular r="0" g="0" b="0.25" a="1.0" />
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="paintingTransf">
+            <translate x="8" y="26" z="0" />   
+            <scale x="2" y="2" z="1" />
+        </transformation>
+    </transformations>
+
+    <animations>
+    </animations>
+
+    <primitives>
+        <primitive id="rectangle">
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
+        </primitive>
+    </primitives>
+
+    <!-- selectable and invisible components must have that indication following the id -->
+    <!--                       selectable="y/n" or visible="y/n"                        -->
+    <!--    if nothing is said components visibility and selectability are inherited    -->
+    <!--                by default, root is non selectable and visible                  -->
+
+    <components>
+      
+    </components>
+</lxs>

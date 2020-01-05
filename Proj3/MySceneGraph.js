@@ -62,6 +62,7 @@ class MySceneGraph {
         }
 
         this.loadedOk = true;
+        this.scene.graphs.push(this);
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
         this.scene.onGraphLoaded();

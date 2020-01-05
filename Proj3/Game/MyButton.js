@@ -8,7 +8,7 @@ class MyButton extends CGFobject {
         this.materialId = materialId;
         this.textureId = textureId;
 
-        this.rectangle = new MyRectangle(scene, 'rectangle1', 0, 3, 0, 1);
+        this.rectangle = new MyRectangle(scene, 'rectangle1', 0, 6, 0, 2);
     }
 
     display(){
@@ -18,7 +18,6 @@ class MyButton extends CGFobject {
         mat.setTexture(this.scene.graph.textures[this.textureId]);
         mat.setTextureWrap('REPEAT', 'REPEAT');          
         mat.apply();
-
         this.rectangle.display();
     }
 }

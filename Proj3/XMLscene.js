@@ -10,7 +10,6 @@ class XMLscene extends CGFscene {
      */
     constructor(myinterface) {
         super();
-
         this.interface = myinterface;
     }
 
@@ -38,6 +37,8 @@ class XMLscene extends CGFscene {
 
 
         this.enableTextures(true);
+
+        this.graphs = [];
 
         this.gl.clearDepth(100.0);
         this.gl.enable(this.gl.DEPTH_TEST);
@@ -141,6 +142,14 @@ class XMLscene extends CGFscene {
         this.initCameras();
         this.interface.addLights();
         this.interface.addCameras(this.camerasID);
+
+        this.graph = this.graphs[0];
+        this.Current_Graph = this.graph.name;
+        this.prev_graph = this.Current_Graph;
+        this.Mode = "Player vs Player";
+        this.Difficulty = 1;
+        this.time_to_play = 450;
+        this.currentBoard = null;
     }
 
     update(t) {

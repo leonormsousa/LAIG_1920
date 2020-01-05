@@ -5,6 +5,7 @@ class MyMoveAnimator extends MyAnimator {
 	constructor(scene, gameMove) {
         super(scene);
         this.gameMove = gameMove; 
+        this.pieces=[];
         this.over=false; 
 
         this.stopingTime=3;
@@ -19,6 +20,7 @@ class MyMoveAnimator extends MyAnimator {
         let z1=-gameMove.originTile1.y*1.5;
         let z2=-gameMove.destinationTile1.y*1.5;
         this.animation1 = new PolynomialProceduralAnimation(scene, "1", [[x1, (x2-x1)/1], [c, b, a], [z1, (z2-z1)/1]], [[1], [1], [1]], [[0], [0], [0]], 1);
+        this.pieces.push(gameMove.movedPiece1);
 
         if (this.gameMove.movedPiece2 != null){
             //y calculations
@@ -32,6 +34,7 @@ class MyMoveAnimator extends MyAnimator {
             z1=-gameMove.originTile2.y*1.5;
             z2=-gameMove.destinationTile2.y*1.5;
             this.animation2 = new PolynomialProceduralAnimation(scene, "2", [[x1, (x2-x1)/1], [c, b, a], [z1, (z2-z1)/1]], [[1], [1], [1]], [[0], [0], [0]], 1);
+            this.pieces.push(gameMove.movedPiece2);
         }
         this.animation1.started=true;
     }

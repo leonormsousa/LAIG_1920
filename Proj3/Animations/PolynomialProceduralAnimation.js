@@ -50,7 +50,7 @@ class PolynomialProceduralAnimation extends Animation {
             for (let i=0; i<this.rotating[j].length; i++)
                 r[j] += this.rotating[j][i] * Math.pow(delta, i);
         }
-console.log(tr);
+
         //applying animation
         this.matrix=mat4.create();
         mat4.translate(this.matrix, this.matrix, [tr[0], tr[1], tr[2]]);

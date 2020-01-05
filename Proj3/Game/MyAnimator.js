@@ -2,9 +2,8 @@
  * MyAnimator
  */
 class MyAnimator extends CGFobject {
-	constructor(scene, gameMove) {
+	constructor(scene) {
         super(scene);
-        this.gameMove = gameMove; 
         this.over=false;
     }
 

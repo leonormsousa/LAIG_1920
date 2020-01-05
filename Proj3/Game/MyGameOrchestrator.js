@@ -93,12 +93,13 @@ class MyGameOrchestrator extends CGFobject {
             this.number_passes--;
         //activate animation 
         this.animator = new MyUndoAnimator(this.scene, reverseMove);
-        console.log(this.animator);
         this.state="animation";
     }
 
     movie(){
         //activate animation
+        console.log(this.gameSequence.getGameMoves());
+        this.animator = new MyMovieAnimator(this.scene, this.gameSequence.getGameMoves());
         this.state="animation";
     }
 
@@ -237,16 +238,9 @@ class MyGameOrchestrator extends CGFobject {
                 break;
             case "undo":
                 this.scene.setPickEnabled(false);
-                if (this.gameSequence.gameMoves.length != 0){
-                    this.undo();
-                }
                 break;
             case "movie":
                 this.scene.setPickEnabled(false);
-
-                //movie
-
-                this.state="game end evaluation";
                 break;
         }
     }
@@ -321,7 +315,7 @@ class MyGameOrchestrator extends CGFobject {
             this.hardButton.display();
         }
         else if(this.state == "animation"){
-            this.gameboard.display(false, [this.animator.gameMove.movedPiece1, this.animator.gameMove.movedPiece2]);
+            this.gameboard.display(false, this.animator.pieces);
             this.animator.display();
             numberPickedObjects++;
             this.displayButtons(numberPickedObjects);
@@ -395,9 +389,34 @@ class MyGameOrchestrator extends CGFobject {
                 this.moveToExecute = [];
             }
             this.state="undo";
+            if (this.gameSequence.gameMoves.length != 0){
+                this.undo();
+            }
+            else{
+                if (this.number_passes<2)
+                    this.prolog.gameOverRequest(this.gameboard.convertToPrologBoard());
+                this.state="game end evaluation";
+            }
         }
         else if(obj == this.movieButton){
+            if (this.state == "waiting confirm" || this.state == "pick second tile human"){
+                let destinationTile1 = this.gameboard.getTileByCoordinates(this.moveToExecute[2], this.moveToExecute[1]);
+                destinationTile1.selected=false;
+                if (this.state == "waiting confirm"){
+                    let destinationTile2 = this.gameboard.getTileByCoordinates(this.moveToExecute[4], this.moveToExecute[3]);
+                    destinationTile2.selected=false;
+                }
+                this.moveToExecute = [];
+            }
             this.state="movie";
+            if (this.gameSequence.gameMoves.length != 0){
+                this.movie();
+            }
+            else{
+                if (this.number_passes<2)
+                    this.prolog.gameOverRequest(this.gameboard.convertToPrologBoard());
+                this.state="game end evaluation";
+            }
         }
         else if(obj == this.startGame){
             this.gameSequence = new MyGameSequence(this.scene);

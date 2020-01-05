@@ -25,9 +25,12 @@ class MyPiece extends CGFobject {
         return this.player;
     }
 
-    display(){
+    display(mat){
         this.scene.pushMatrix();
-        this.scene.translate(this.holdingTile.x*Math.sqrt(3)/2, this.holdingTile.z, -this.holdingTile.y*1.5);
+        if (mat == undefined)
+            this.scene.translate(this.holdingTile.x*Math.sqrt(3)/2, this.holdingTile.z, -this.holdingTile.y*1.5);
+        else
+            this.scene.multMatrix(mat);
         this.scene.graph.processNode(this.componentId, mat4.create(), this.materialId, 'none', 1, 1, false, true, true);
         this.scene.popMatrix();
     }

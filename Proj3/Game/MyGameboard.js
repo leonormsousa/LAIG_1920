@@ -124,23 +124,37 @@ class MyGameboard extends CGFobject {
         return piece.getHoldingTile();
     }
 
-    getTileByCoordinates(x, y){
+    getTileByCoordinates(x, y, z){
+        if (z== undefined){
+            for (let i=0; i<this.tiles.length; i++){
+                if ((this.tiles[i].x == x) && (this.tiles[i].y == y))
+                    return this.tiles[i];
+            }
+            for(let i=0; i<this.auxiliaryTilesPlayer1.length;i++){
+                if ((this.auxiliaryTilesPlayer1[i].x == x) && (this.auxiliaryTilesPlayer1[i].y == y))
+                return this.auxiliaryTilesPlayer1[i];
+            }
+            for(let i=0; i<this.auxiliaryTilesPlayer2.length;i++){
+                if ((this.auxiliaryTilesPlayer2[i].x == x) && (this.auxiliaryTilesPlayer2[i].y == y))
+                return this.auxiliaryTilesPlayer2[i];
+            }
+        }
         for (let i=0; i<this.tiles.length; i++){
-            if ((this.tiles[i].x == x) && (this.tiles[i].y == y))
+            if ((this.tiles[i].x == x) && (this.tiles[i].y == y) && (this.tiles[i].z == z))
                 return this.tiles[i];
         }
         for(let i=0; i<this.auxiliaryTilesPlayer1.length;i++){
-            if ((this.auxiliaryTilesPlayer1[i].x == x) && (this.auxiliaryTilesPlayer1[i].y == y))
+            if ((this.auxiliaryTilesPlayer1[i].x == x) && (this.auxiliaryTilesPlayer1[i].y == y)  && (this.auxiliaryTilesPlayer1[i].z == z))
             return this.auxiliaryTilesPlayer1[i];
         }
         for(let i=0; i<this.auxiliaryTilesPlayer2.length;i++){
-            if ((this.auxiliaryTilesPlayer2[i].x == x) && (this.auxiliaryTilesPlayer2[i].y == y))
+            if ((this.auxiliaryTilesPlayer2[i].x == x) && (this.auxiliaryTilesPlayer2[i].y == y) && (this.auxiliaryTilesPlayer2[i].z == z))
             return this.auxiliaryTilesPlayer2[i];
         }
     }
 
-    movePiece(piece, x, y){
-        let destinationTile = this.getTileByCoordinates(x, y);
+    movePiece(piece, x, y, z){
+        let destinationTile = this.getTileByCoordinates(x, y, z);
         let fromTile = this.getTileHoldingPiece(piece);
         this.removePieceFromTile(fromTile);
         this.addPieceToTile(piece, destinationTile);
@@ -167,7 +181,7 @@ class MyGameboard extends CGFobject {
         return board;
     }
 
-    display(registerTiles){
+    display(registerTiles, animatedPieces){
         let numberRegistered=1;
         for(let i=0; i<this.tiles.length; i++){
             if (registerTiles && this.tiles[i].selectable && !this.tiles[i].selected){
@@ -179,8 +193,10 @@ class MyGameboard extends CGFobject {
             else
                 this.tiles[i].display();
         }
-        for(let i=0; i<this.pieces.length; i++)
-            this.pieces[i].display();
+        for(let i=0; i<this.pieces.length; i++){
+            if ((animatedPieces==undefined) || (!animatedPieces.includes(this.pieces[i])))
+                this.pieces[i].display();
+        }
         return numberRegistered;
     }
 }

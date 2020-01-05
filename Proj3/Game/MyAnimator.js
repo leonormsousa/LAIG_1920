@@ -2,24 +2,15 @@
  * MyAnimator
  */
 class MyAnimator extends CGFobject {
-	constructor(scene, orchestrator) {
+	constructor(scene, gameMove) {
         super(scene);
-        this.orchestrator = orchestrator;  
-    }
-
-    reset(gameSequence){
-
-    }
-
-    start(gameSequence){
-
+        this.gameMove = gameMove; 
+        this.over=false;
     }
 
     update(t){
-
     }
 
     display(){
-        
     }
 }

@@ -5,7 +5,6 @@ class MyGameOrchestrator extends CGFobject {
 	constructor(scene) {
         super(scene);
         this.gameSequence = new MyGameSequence(scene);
-        this.animator = new MyAnimator(scene, this);
         this.gameboard = new MyGameboard(scene);
 
         // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
@@ -42,7 +41,8 @@ class MyGameOrchestrator extends CGFobject {
     }
 
     update(time) {
-        this.animator.update(time);
+        if (this.animator != undefined)
+            this.animator.update(time);
     }
 
     renderMove(){
@@ -67,28 +67,33 @@ class MyGameOrchestrator extends CGFobject {
         let pieceToMove1=this.gameboard.getFirstPieceFreeToMove(this.moveToExecute[0]);
         let originTile1 = this.gameboard.getTileHoldingPiece(pieceToMove1);
         this.gameboard.movePiece(pieceToMove1, this.moveToExecute[2], this.moveToExecute[1]);
-        if (this.moveToExecute[3] == null)
-            this.gameSequence.addGameMove(new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, null, null, null, this.gameboard));
+        let move;
+        if (this.moveToExecute[3] == null){
+            move = new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, null, null, null, this.gameboard);
+            this.gameSequence.addGameMove(move);
+        }
         else{
             let pieceToMove2 = this.gameboard.getFirstPieceFreeToMove(this.moveToExecute[0]);
             let originTile2 = this.gameboard.getTileHoldingPiece(pieceToMove2);
             this.gameboard.movePiece(pieceToMove2, this.moveToExecute[4], this.moveToExecute[3]);
-            let move = new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, pieceToMove2, originTile2, destinationTile2, this.gameboard)
+            move = new MyGameMove(this.scene, this.moveToExecute[0], pieceToMove1, originTile1, destinationTile1, pieceToMove2, originTile2, destinationTile2, this.gameboard)
             this.gameSequence.addGameMove(move);
-           // move.animate();
         }
 
         this.currentPlayer = (this.currentPlayer % 2) + 1;
         this.moveToExecute=[];
+        this.animator = new MyMoveAnimator(this.scene, move);
         this.state = "animation";
     }
 
     undo(){
-        this.gameboard = this.gameSequence.undoGameMove(this.gameboard);
+        let reverseMove = this.gameSequence.undoGameMove(this.gameboard);
         this.currentPlayer = (this.currentPlayer % 2) + 1;
         if (this.number_passes>0)
             this.number_passes--;
-        //activate animation
+        //activate animation 
+        this.animator = new MyUndoAnimator(this.scene, reverseMove);
+        console.log(this.animator);
         this.state="animation";
     }
 
@@ -97,7 +102,7 @@ class MyGameOrchestrator extends CGFobject {
         this.state="animation";
     }
 
-     orchestrate(){
+    orchestrate(){
         switch(this.state){
             case "start":
                 this.scene.setPickEnabled(true);
@@ -156,12 +161,14 @@ class MyGameOrchestrator extends CGFobject {
 
             case "animation":
                 this.scene.setPickEnabled(false);
+                this.prolog.response = null;
                 //verificar se já atingiu stoping_time da animação
-                this.prolog.response = null
-
-                this.state = "game end evaluation";
-               // if (this.number_passes<2)
-                    this.prolog.gameOverRequest(this.gameboard.convertToPrologBoard());
+                if (this.animator.over){
+                    this.animator=null;
+                    this.state = "game end evaluation";
+                    if (this.number_passes<2)
+                        this.prolog.gameOverRequest(this.gameboard.convertToPrologBoard());
+                }
                 break;
 
             case "game end evaluation":
@@ -233,7 +240,6 @@ class MyGameOrchestrator extends CGFobject {
                 if (this.gameSequence.gameMoves.length != 0){
                     this.undo();
                 }
-                this.state="pick first tile human";
                 break;
             case "movie":
                 this.scene.setPickEnabled(false);
@@ -243,6 +249,27 @@ class MyGameOrchestrator extends CGFobject {
                 this.state="game end evaluation";
                 break;
         }
+    }
+
+    displayButtons(numberPickedObjects){
+        //displayButtons
+        this.scene.translate(-3, 0, 0);
+        this.scene.rotate(-Math.PI/2, 1,0,0);
+        this.scene.translate(-20, -15, 0.1);
+        this.scene.registerForPick(numberPickedObjects++, this.undoButton);
+        this.undoButton.display();
+        this.scene.translate(10, 0, 0);
+        this.scene.registerForPick(numberPickedObjects++, this.removeButton);
+        this.removeButton.display();
+        this.scene.translate(10, 0, 0);
+        this.scene.registerForPick(numberPickedObjects++, this.confirmButton);
+        this.confirmButton.display();
+        this.scene.translate(10,0, 0);
+        this.scene.registerForPick(numberPickedObjects++, this.movieButton);
+        this.movieButton.display();
+        this.scene.translate(10, 0, 0);
+        this.scene.registerForPick(numberPickedObjects++, this.exitButton);
+        this.exitButton.display();
     }
 
     display() {
@@ -293,35 +320,23 @@ class MyGameOrchestrator extends CGFobject {
             this.scene.registerForPick(numberPickedObjects++, this.hardButton);
             this.hardButton.display();
         }
+        else if(this.state == "animation"){
+            this.gameboard.display(false, [this.animator.gameMove.movedPiece1, this.animator.gameMove.movedPiece2]);
+            this.animator.display();
+            numberPickedObjects++;
+            this.displayButtons(numberPickedObjects);
+        }
         else{ 
             if (this.state == "pick first tile human" || this.state == "pick second tile human")
                 numberPickedObjects = this.gameboard.display(true);
             else
                 this.gameboard.display(false);
             numberPickedObjects++;
-            //displayButtons
-            this.scene.translate(-3, 0, 0);
-            this.scene.rotate(-Math.PI/2, 1,0,0);
-            this.scene.translate(-20, -15, 0.1);
-            this.scene.registerForPick(numberPickedObjects++, this.undoButton);
-            this.undoButton.display();
-            this.scene.translate(10, 0, 0);
-            this.scene.registerForPick(numberPickedObjects++, this.removeButton);
-            this.removeButton.display();
-            this.scene.translate(10, 0, 0);
-            this.scene.registerForPick(numberPickedObjects++, this.confirmButton);
-            this.confirmButton.display();
-            this.scene.translate(10,0, 0);
-            this.scene.registerForPick(numberPickedObjects++, this.movieButton);
-            this.movieButton.display();
-            this.scene.translate(10, 0, 0);
-            this.scene.registerForPick(numberPickedObjects++, this.exitButton);
-            this.exitButton.display();
+            this.displayButtons(numberPickedObjects);
         }
         this.scene.popMatrix();       
 
         this.scene.clearPickRegistration();
-        this.animator.display();
     }
      
     //add reaction to select buttons like undo (call function undo()), movie (call functionn movie()), exit, etc.
@@ -386,7 +401,6 @@ class MyGameOrchestrator extends CGFobject {
         }
         else if(obj == this.startGame){
             this.gameSequence = new MyGameSequence(this.scene);
-            this.animator = new MyAnimator(this.scene, this);
             /*this.gameboard = new MyGameboard(this.scene, [
                 [7, [-7, 1], [-5, 1], [-3, 1], [-1, 1], [1, 1], [3, 1], [5, 1], [7, 1]],
                 [6, [-8, 1], [-6, 1], [-4, 1], [-2, 1], [0, 0], [2, 1], [4, 1], [6, 1], [8, 1]],

@@ -56,6 +56,8 @@
         <texture id="wallMaterial" file="scenes/images/wallMaterial.png"/>
         <texture id="woodTexture" file="scenes/images/woodTexture.jpg"/>
         <texture id="floorTexture" file="scenes/images/floorTexture.jpg"/>
+        <texture id="player1" file="scenes/images/p1.png"/>
+        <texture id="player2" file="scenes/images/p2.png"/>
 
     </textures>
 
@@ -494,6 +496,18 @@
                 <componentref id="circle_piece1"/>
                 <componentref id="circle_piece2"/>
                 <componentref id="cylinder_piece"/>
+            </children>
+        </component>
+        <component id="player">
+        <transformation>
+            <scale x="1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
         <component id="skybox_back">

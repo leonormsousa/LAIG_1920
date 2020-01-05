@@ -247,6 +247,7 @@ class MyGameOrchestrator extends CGFobject {
 
     displayButtons(numberPickedObjects){
         //displayButtons
+        this.scene.pushMatrix();
         this.scene.translate(-3, 0, 0);
         this.scene.rotate(-Math.PI/2, 1,0,0);
         this.scene.translate(-20, -15, 0.1);
@@ -264,6 +265,7 @@ class MyGameOrchestrator extends CGFobject {
         this.scene.translate(10, 0, 0);
         this.scene.registerForPick(numberPickedObjects++, this.exitButton);
         this.exitButton.display();
+        this.scene.popMatrix();
     }
 
     display() {
@@ -327,6 +329,16 @@ class MyGameOrchestrator extends CGFobject {
                 this.gameboard.display(false);
             numberPickedObjects++;
             this.displayButtons(numberPickedObjects);
+            //player showing
+            this.scene.pushMatrix();
+            this.scene.translate(0, 0.1, -15);
+            this.scene.scale(3, 1, 3);
+            this.scene.rotate(-Math.PI/2, 1,0,0);
+            if (this.currentPlayer==1)
+                this.scene.graph.processNode("player", mat4.create(), "black", "player1", 1, 1, false, true);
+            else
+                this.scene.graph.processNode("player", mat4.create(), "white", "player2", 1, 1, false, true);
+            this.scene.popMatrix();
         }
         this.scene.popMatrix();       
 

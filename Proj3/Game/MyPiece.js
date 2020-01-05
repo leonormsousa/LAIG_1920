@@ -13,6 +13,9 @@ class MyPiece extends CGFobject {
     setHoldingTile(tile){
         this.holdingTile=tile;
     }
+    unsetHoldingTile(){
+        this.holdingTile = null;
+    }
 
     getHoldingTile(){
         return this.holdingTile;

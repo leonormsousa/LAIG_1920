@@ -28,18 +28,15 @@ server :-
 server_loop(Socket) :-
 	repeat,
 	socket_server_accept(Socket, _Client, Stream, [type(text)]),
-		% write('Accepted connection'), nl,
 	    % Parse Request
 		catch((
 			read_request(Stream, Request),
 			read_header(Stream)
 		),_Exception,(
-			% write('Error parsing request.'),nl,
 			close_stream(Stream),
 			fail
 		)),
 		
-		write(Request),
 		% Generate Response
 		handle_request(Request, MyReply, Status),
 		format('Request: ~q~n',[Request]),
@@ -51,7 +48,6 @@ server_loop(Socket) :-
 		format(Stream, 'Content-Type: text/plain~n~n', []),
 		format(Stream, '~p', [MyReply]),
 	
-		% write('Finnished Connection'),nl,nl,
 		close_stream(Stream),
 	(Request = [quit]), !.
 	

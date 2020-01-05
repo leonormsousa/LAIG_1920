@@ -94,7 +94,7 @@ maxlist([Head|Tail],Max) :-
 calculateWinner([], [], 3).
 calculateWinner([], _, 1).
 calculateWinner(_, [], 2).
-calculateWinner(PointsP1, PointsP2, Winner):-  maxlist(PointsP1, MaxP1), maxlist(PointsP2, MaxP2),
+calculateWinner(PointsP1, PointsP2, Winner):-  maxlist(PointsP1, MaxP1), maxlist(PointsP2, MaxP2), 
                         (MaxP1 == MaxP2 -> 
                             deleteElement(PointsP1, MaxP1, [], NewPointsP1), 
                             deleteElement(PointsP2, MaxP2, [], NewPointsP2), 

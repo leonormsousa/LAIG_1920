@@ -119,6 +119,8 @@
             <diffuse r="0" g="0" b="0" a="1.0" />
             <specular r="0.3" g="0.3" b="0.3" a="1.0" />
         </material>
+<<<<<<< HEAD
+=======
         <material id="button1" shininess="1">
             <emission r="0" g="0" b="0" a="1.0" />
             <ambient r="0.1" g="0.5" b="1" a="1.0" />
@@ -185,6 +187,7 @@
             <diffuse r="0.93" g="0.51" b="0.67" a="1.0" />
             <specular r="0.93" g="0.51" b="0.67" a="1.0" />
         </material>
+>>>>>>> 3f6548e1f81bcb68f9d1da653227338f61bd7924
     </materials>
 
     <transformations>

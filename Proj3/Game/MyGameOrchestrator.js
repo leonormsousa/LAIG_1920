@@ -26,19 +26,19 @@ class MyGameOrchestrator extends CGFobject {
         this.player=[false, false];
 
         //buttons for game
-        this.undoButton = new MyButton(scene, "button2", "undo");
-        this.exitButton = new MyButton(scene, "button2", "exit");
-        this.movieButton = new MyButton(scene, "button2", "movie");
-        this.confirmButton = new MyButton(scene, "button1", "confirm");
-        this.removeButton = new MyButton(scene, "button1", "remove");
-        this.playerVsPlayer = new MyButton(scene, "button1","playerVSplayer");
-        this.playerVsPc = new MyButton(scene, "button1", "playerVSpc");
-        this.pcVsPc = new MyButton(scene,"button1", "pcVSpc");
-        this.startGame = new MyButton(scene, "button1", "startGame");
-        this.easyButton = new MyButton(scene, "button1", "easy");
-        this.mediumButton = new MyButton(scene, "button1", "medium");
-        this.hardButton = new MyButton(scene, "button1", "hard");
-        this.cameraButton = new MyButton(scene, "button2", "camera");
+        this.undoButton = new MyButton(scene, "white", "undo");
+        this.exitButton = new MyButton(scene, "white", "exit");
+        this.movieButton = new MyButton(scene, "white", "movie");
+        this.confirmButton = new MyButton(scene, "white", "confirm");
+        this.removeButton = new MyButton(scene, "white", "remove");
+        this.playerVsPlayer = new MyButton(scene, "white","playerVSplayer");
+        this.playerVsPc = new MyButton(scene, "white", "playerVSpc");
+        this.pcVsPc = new MyButton(scene,"white", "pcVSpc");
+        this.startGame = new MyButton(scene, "white", "startGame");
+        this.easyButton = new MyButton(scene, "white", "easy");
+        this.mediumButton = new MyButton(scene, "white", "medium");
+        this.hardButton = new MyButton(scene, "white", "hard");
+        this.cameraButton = new MyButton(scene, "white", "camera");
     }
 
     update(time) {

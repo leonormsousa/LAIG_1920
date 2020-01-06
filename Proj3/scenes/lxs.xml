@@ -122,18 +122,6 @@
             <diffuse r="0" g="0" b="0" a="1.0" />
             <specular r="0.3" g="0.3" b="0.3" a="1.0" />
         </material>
-        <material id="button1" shininess="1">
-            <emission r="0" g="0" b="0" a="1.0" />
-            <ambient r="0.1" g="0.5" b="1" a="1.0" />
-            <diffuse r="0.1" g="0.5" b="1" a="1.0" />
-            <specular r="0.05" g="0.25" b="0.5" a="1.0" />
-        </material>
-        <material id="button2" shininess="1">
-            <emission r="0" g="0" b="0" a="1.0" />
-            <ambient r="0" g="0" b="0.5" a="1.0" />
-            <diffuse r="0" g="0" b="0.5" a="1.0" />
-            <specular r="0" g="0" b="0.25" a="1.0" />
-        </material>
     </materials>
 
     <transformations>

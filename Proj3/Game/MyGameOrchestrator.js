@@ -38,6 +38,7 @@ class MyGameOrchestrator extends CGFobject {
         this.easyButton = new MyButton(scene, "button1", "easy");
         this.mediumButton = new MyButton(scene, "button1", "medium");
         this.hardButton = new MyButton(scene, "button1", "hard");
+        this.cameraButton = new MyButton(scene, "button2", "camera");
     }
 
     update(time) {
@@ -98,9 +99,15 @@ class MyGameOrchestrator extends CGFobject {
 
     movie(){
         //activate animation
-        console.log(this.gameSequence.getGameMoves());
         this.animator = new MyMovieAnimator(this.scene, this.gameSequence.getGameMoves());
         this.state="animation";
+    }
+
+    changeCamera(){
+        let originCamera = this.scene.cameraArray[this.scene.selectedCamera];
+        this.scene.selectedCamera = (this.scene.selectedCamera+1)%this.scene.cameraArray.length;
+        let destination = this.scene.cameraArray[this.scene.selectedCamera];
+        this.animator = new MyCameraAnimator(this.scene, originCamera, destination, 3);
     }
 
     orchestrate(){
@@ -169,6 +176,16 @@ class MyGameOrchestrator extends CGFobject {
                     this.state = "game end evaluation";
                     if (this.number_passes<2)
                         this.prolog.gameOverRequest(this.gameboard.convertToPrologBoard());
+                }
+                break;
+
+            case "camera animation":
+                this.scene.setPickEnabled(false);
+                if (this.animator.over){
+                    this.animator=null;
+                    this.state = this.previousState;
+                    this.scene.camera = this.scene.cameraArray[this.scene.selectedCamera];
+                    this.scene.interface.setActiveCamera(this.scene.camera);
                 }
                 break;
 
@@ -250,7 +267,7 @@ class MyGameOrchestrator extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(-3, 0, 0);
         this.scene.rotate(-Math.PI/2, 1,0,0);
-        this.scene.translate(-20, -15, 0.1);
+        this.scene.translate(-25, -15, 0.1);
         this.scene.registerForPick(numberPickedObjects++, this.undoButton);
         this.undoButton.display();
         this.scene.translate(10, 0, 0);
@@ -265,6 +282,9 @@ class MyGameOrchestrator extends CGFobject {
         this.scene.translate(10, 0, 0);
         this.scene.registerForPick(numberPickedObjects++, this.exitButton);
         this.exitButton.display();
+        this.scene.translate(10, 0, 0);
+        this.scene.registerForPick(numberPickedObjects++, this.cameraButton);
+        this.cameraButton.display();
         this.scene.popMatrix();
     }
 
@@ -497,6 +517,11 @@ class MyGameOrchestrator extends CGFobject {
             }
             else
                 this.state="pick first tile human"
+        }
+        else if(obj == this.cameraButton){
+            this.previousState=this.state;
+            this.state="camera animation";
+            this.changeCamera();
         }
         else {
             console.log("Error: I can't happen!");

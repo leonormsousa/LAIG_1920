@@ -79,6 +79,7 @@ read_request_aux([32|_],[46]) :- !.
 read_request_aux([C|Cs],[C|RCs]) :- read_request_aux(Cs, RCs).
 
 
+
 % Reads and Ignores the rest of the lines of the HTTP Header
 read_header(Stream) :-
 	repeat,

@@ -3,7 +3,7 @@
 
     <views default="default">
         <perspective id="default" near="0.1" far="500" angle="20">
-            <from x="0" y="35" z="70" />
+            <from x="0" y="45" z="80" />
             <to x="0" y="0" z="2" />
         </perspective>
         <perspective id="second" near="0.1" far="500" angle="45">
@@ -178,6 +178,12 @@
             <ambient r="0.7" g="0.3" b="0.2" a="1.0" />
             <diffuse r="0.7" g="0.3" b="0.2" a="1.0" />
             <specular r="0.35" g="0.15" b="0.1" a="1.0" />
+        </material>
+         <material id="donutMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.93" g="0.51" b="0.67" a="1.0" />
+            <diffuse r="0.93" g="0.51" b="0.67" a="1.0" />
+            <specular r="0.93" g="0.51" b="0.67" a="1.0" />
         </material>
     </materials>
 
@@ -1370,7 +1376,7 @@
                 <translate x="0" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="yellow" />
             </materials>
             <texture id="none"/>
             <children>

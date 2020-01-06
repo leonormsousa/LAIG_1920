@@ -105,8 +105,10 @@ class MyGameOrchestrator extends CGFobject {
 
     changeCamera(){
         let originCamera = this.scene.cameraArray[this.scene.selectedCamera];
+        console.log(originCamera);
         this.scene.selectedCamera = (this.scene.selectedCamera+1)%this.scene.cameraArray.length;
         let destination = this.scene.cameraArray[this.scene.selectedCamera];
+        console.log(destination);
         this.animator = new MyCameraAnimator(this.scene, originCamera, destination, 3);
     }
 
@@ -295,7 +297,6 @@ class MyGameOrchestrator extends CGFobject {
         this.scene.clearPickRegistration();
         let numberPickedObjects=1;
 
-        console.log(this.state);
 
         //still need to work out id numbers and picking objects of the scene
         this.theme.render(numberPickedObjects);

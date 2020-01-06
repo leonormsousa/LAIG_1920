@@ -55,21 +55,4 @@ class MyInterface extends CGFinterface {
     addCameras(cameras){
         this.gui.add(this.scene, 'selectedCamera', cameras).name('Selected Camera').onChange(this.scene.updateCamera.bind(this.scene));
     }
-
-    addLook(views) {
-
-        var group = this.gui.addFolder("Look");
-        group.open();
-
-        var names = [];
-
-        for (var key in views) {
-            if (views.hasOwnProperty(key)) {
-                names[key] = views[key].name;
-            }
-        }
-
-        group.add(this.scene, 'Current_View', names).name("Theme");
-    }
-
 }

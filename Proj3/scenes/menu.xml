@@ -2,14 +2,14 @@
     <scene root="root" axis_length="5"/>
 
     <views default="default">
-        <perspective id="default" near="0.1" far="500" angle="45">
-               <from x="0" y="3" z="8" />
-            <to x="0" y="0" z="2" />
+        <perspective id="default" near="0.1" far="500" angle="20">
+            <from x="0" y="5" z="30" />
+            <to x="0" y="5" z="2" />
         </perspective>
-   <ortho id="ortho"  near="0.1" far="500" left="-10" right="10" top="15" bottom="0" >
-            <from x="0" y="0" z="10" />
-            <to x="0" y="0" z="0" />
-        </ortho>
+        <perspective id="second" near="0.1" far="500" angle="45">
+            <from x="0" y="40" z="1" />
+            <to x="0" y="10" z="0" />
+        </perspective>
     </views>
 
     <globals>
@@ -36,55 +36,68 @@
     </lights>
 
     <textures>
-        <texture id="tile" file="scenes/images/grey.png" />
-        <texture id="undo" file="scenes/images/undo.png" />
-        <texture id="movie" file="scenes/images/movie.png" />
-        <texture id="confirm" file="scenes/images/confirm.png" />
-        <texture id="remove" file="scenes/images/remove.png" />
-        <texture id="human" file="scenes/images/human.png" />
-        <texture id="cpu" file="scenes/images/cpu.png" />
-        <texture id="stars" file="scenes/images/stars.png" />
-        <texture id="house" file="scenes/images/house.png" />
-        <texture id="exit" file="scenes/images/exit.png" />
+        <texture id="home" file="scenes/images/home.png" />
+        <texture id="bar" file="scenes/images/bar.png" />
     </textures>
 
     <materials>
-        <material id="button1" shininess="1">
+        <material id="grey" shininess="1">
             <emission r="0" g="0" b="0" a="1.0" />
-            <ambient r="0.1" g="0.5" b="1" a="1.0" />
-            <diffuse r="0.1" g="0.5" b="1" a="1.0" />
-            <specular r="0.05" g="0.25" b="0.5" a="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.4" g="0.4" b="0.4" a="1.0" />
         </material>
-        <material id="button2" shininess="1">
+        <material id="white" shininess="1">
             <emission r="0" g="0" b="0" a="1.0" />
-            <ambient r="0" g="0" b="0.5" a="1.0" />
-            <diffuse r="0" g="0" b="0.5" a="1.0" />
-            <specular r="0" g="0" b="0.25" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
         </material>
     </materials>
 
     <transformations>
-        <transformation id="paintingTransf">
-            <translate x="8" y="26" z="0" />   
-            <scale x="2" y="2" z="1" />
-        </transformation>
     </transformations>
 
     <animations>
     </animations>
 
     <primitives>
-        <primitive id="rectangle">
+        <primitive id="rectangle1">
             <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
         </primitive>
     </primitives>
 
     <!-- selectable and invisible components must have that indication following the id -->
-    <!--                       selectable="y/n" or visible="y/n"                        -->
+    <!-- selectable="y/n" or visible="y/n"                        -->
     <!--    if nothing is said components visibility and selectability are inherited    -->
     <!--                by default, root is non selectable and visible                  -->
 
     <components>
-      
+       <component id="rect">
+            <transformation>
+                <translate x="2.5" y="4" z="0"/>
+                <scale x="30" y="30" z="1" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="rectangle1"/>
+            </children>
+        </component>
+        <component id="root">
+            <transformation>
+                <scale x="1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="grey" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="rect"/>
+            </children>
+        </component>
     </components>
 </lxs>

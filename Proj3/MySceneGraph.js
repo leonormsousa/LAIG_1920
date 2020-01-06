@@ -1458,7 +1458,8 @@ class MySceneGraph {
             {
                 let childIndex = component.childrenComponents[i];
                 let child = this.components[childIndex];
-                this.processNode(child.id, mult, material_c, texture_c, length_s, length_t, selectable_c, visible_c);
+                if(child.id == this.scene.selectedTheme || id != this.idRoot)
+                    this.processNode(child.id, mult, material_c, texture_c, length_s, length_t, selectable_c, visible_c);
             }    
 
             for (let i=0; i<component.childrenPrimitives.length; i++){

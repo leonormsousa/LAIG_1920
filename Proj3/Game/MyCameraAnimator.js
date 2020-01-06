@@ -34,7 +34,6 @@ class MyCameraAnimator extends MyAnimator {
         let camera = new CGFcamera(this.originCamera.fov, near, far, position, target);
         this.scene.interface.setActiveCamera(camera);
         this.scene.camera=camera;
-        console.log(camera);
     }
 
     display(){

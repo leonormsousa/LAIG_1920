@@ -9,14 +9,14 @@ class MyGameOrchestrator extends CGFobject {
 
         // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
 	    // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
-	    var filename=getUrlVars()['file'] || "lxs.xml";
+        var filename=getUrlVars()['file'] || "home.xml";
         // create and load graph, and associate it to scene. 
         // Check console for loading errors
         this.theme = new MySceneGraph(filename, scene);
 
         this.prolog = new MyPrologInterface(scene);
         
-        this.state = "start";
+        this.state = "menu";
         this.scene.setPickEnabled(false);
         this.currentPlayer=1;
         this.level=1;
@@ -39,6 +39,8 @@ class MyGameOrchestrator extends CGFobject {
         this.mediumButton = new MyButton(scene, "white", "medium");
         this.hardButton = new MyButton(scene, "white", "hard");
         this.cameraButton = new MyButton(scene, "white", "camera");
+        this.homeButton = new MyButton(scene, "white", "home");
+        this.barButton = new MyButton(scene, "white", "bar");
     }
 
     update(time) {
@@ -94,6 +96,13 @@ class MyGameOrchestrator extends CGFobject {
             this.number_passes--;
         //activate animation 
         this.animator = new MyUndoAnimator(this.scene, reverseMove);
+        if(this.player[1]){
+            let reverseMove = this.gameSequence.undoGameMove(this.gameboard);
+            if (this.number_passes>0)
+            this.number_passes--;
+        //activate animation 
+        this.animator = new MyUndoAnimator(this.scene, reverseMove);
+        }
         this.state="animation";
     }
 
@@ -305,7 +314,17 @@ class MyGameOrchestrator extends CGFobject {
 
         //buttons
         this.scene.pushMatrix();
-        if(this.state == "start"){
+        
+        if(this.state == "menu"){
+            this.scene.scale(3,3,3);
+            this.scene.translate(-2, 2, 0);
+            this.scene.registerForPick(numberPickedObjects++, this.homeButton);
+            this.homeButton.display();
+            this.scene.translate(0, -4, 0);
+            this.scene.registerForPick(numberPickedObjects++, this.barButton);
+            this.barButton.display();
+        }
+        else if(this.state == "start"){
             this.scene.translate(-3, 0, 0);
             this.scene.rotate(-Math.PI/2, 1,0,0);
             this.scene.translate(0, -1, 2);
@@ -410,7 +429,8 @@ class MyGameOrchestrator extends CGFobject {
             }
         }
         else if (obj == this.exitButton){
-            this.state = "start";
+            this.state = "menu";
+            this.scene.selectedTheme="menu";
         }
         else if (obj == this.undoButton){
             if (this.state == "waiting confirm" || this.state == "pick second tile human"){
@@ -524,6 +544,14 @@ class MyGameOrchestrator extends CGFobject {
             this.previousState=this.state;
             this.state="camera animation";
             this.changeCamera();
+        }
+        else if(obj == this.homeButton){
+            this.scene.selectedTheme = "home";
+            this.state="start";
+        }
+        else if(obj == this.barButton){
+            this.scene.selectedTheme = "bar";            
+            this.state="start";
         }
         else {
             console.log("Error: I can't happen!");

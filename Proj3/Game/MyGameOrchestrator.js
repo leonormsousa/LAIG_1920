@@ -295,7 +295,6 @@ class MyGameOrchestrator extends CGFobject {
         this.scene.clearPickRegistration();
         let numberPickedObjects=1;
 
-        console.log(this.state);
 
         //still need to work out id numbers and picking objects of the scene
         this.theme.render(numberPickedObjects);

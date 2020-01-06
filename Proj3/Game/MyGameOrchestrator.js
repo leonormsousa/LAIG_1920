@@ -114,10 +114,13 @@ class MyGameOrchestrator extends CGFobject {
 
     orchestrate(){
         switch(this.state){
+            case "menu":
+                this.scene.setPickEnabled(true);
+                break;
             case "start":
                 this.scene.setPickEnabled(true);
                 break;
-            case "menu":
+            case "mode":
                 this.scene.setPickEnabled(true);
                 break;
             case "pick difficulty":
@@ -311,7 +314,7 @@ class MyGameOrchestrator extends CGFobject {
             this.scene.registerForPick(numberPickedObjects++, this.startGame);
             this.startGame.display();
         }
-        else if(this.state == "menu"){
+        else if(this.state == "mode"){
             this.scene.translate(-3, 0, 0);
             this.scene.rotate(-Math.PI/2, 1,0,0);
             this.scene.translate(0, 3, 2);
@@ -476,7 +479,7 @@ class MyGameOrchestrator extends CGFobject {
             this.currentPlayer=1;
             this.number_passes=0;
             this.moveToExecute = [];
-            this.state = "menu";
+            this.state = "mode";
         }
         else if(obj == this.playerVsPlayer){
             this.state="pick first tile human";

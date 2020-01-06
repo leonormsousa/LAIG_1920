@@ -44,6 +44,7 @@
         <texture id="confirm" file="scenes/images/confirm.png" />
         <texture id="remove" file="scenes/images/remove.png" />
         <texture id="exit" file="scenes/images/exit.png" />
+        <texture id="camera" file="scenes/images/camera.png" />
         <texture id="playerVSplayer" file="scenes/images/playerVSplayer.png" />
         <texture id="playerVSpc" file="scenes/images/playerVSpc.png" />
         <texture id="pcVSpc" file="scenes/images/pcVSpc.png" />
@@ -66,13 +67,7 @@
     </textures>
 
     <materials>
-        <material id="yellow" shininess="1">
-            <emission r="0" g="0" b="0" a="1.0" />
-            <ambient r="1" g="0.85" b="0" a="1.0" />
-            <diffuse r="1" g="0.85" b="0" a="1.0" />
-            <specular r="0.5" g="0.40" b="0" a="1.0" />
-        </material>
-        <material id="green" shininess="1">
+            <material id="green" shininess="1">
             <emission r="0" g="0" b="0" a="1.0" />
             <ambient r="0" g="1" b="0" a="1.0" />
             <diffuse r="0" g="1" b="0" a="1.0" />
@@ -137,6 +132,60 @@
             <ambient r="0" g="0" b="0.5" a="1.0" />
             <diffuse r="0" g="0" b="0.5" a="1.0" />
             <specular r="0" g="0" b="0.25" a="1.0" />
+        </material>
+           <material id="yellow" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.99" g="0.85" b="0.06" a="1.0" />
+            <diffuse r="0.99" g="0.85" b="0.06" a="1.0" />
+            <specular r="0.7" g="0.6" b="0.05" a="1.0" />
+        </material>
+        <material id="pantsMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.44" g="0.82" b="0.99" a="1.0" />
+            <diffuse r="0.44" g="0.82" b="0.99" a="1.0" />
+            <specular r="0.1" g="0.2" b="0.25" a="1.0" />
+        </material>
+        <material id="shirtMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="0.25" g="0.25" b="0.25" a="1.0" />
+        </material>
+        <material id="blackMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0" g="0" b="0" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="mouthMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.82" g="0.7" b="0.44" a="1.0" />
+            <diffuse r="0.82" g="0.7" b="0.44" a="1.0" />
+            <specular r="0.7" g="0.25" b="0.1" a="1.0" />
+        </material>
+        <material id="bumpMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="1" g="0.4" b="0.4" a="1.0" />
+            <diffuse r="1" g="0.4" b="0.4" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="shoesMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
+            <specular r="0" g="0" b="0.0" a="1.0" />
+        </material>
+        <material id="hullMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.7" g="0.3" b="0.2" a="1.0" />
+            <diffuse r="0.7" g="0.3" b="0.2" a="1.0" />
+            <specular r="0.35" g="0.15" b="0.1" a="1.0" />
+        </material>
+         <material id="donutMaterial" shininess="10">
+            <emission r="0" g="0" b="0" a="1.0" />
+            <ambient r="0.93" g="0.51" b="0.67" a="1.0" />
+            <diffuse r="0.93" g="0.51" b="0.67" a="1.0" />
+            <specular r="0.93" g="0.51" b="0.67" a="1.0" />
         </material>
     </materials>
 

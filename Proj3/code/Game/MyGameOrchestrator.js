@@ -146,7 +146,7 @@ class MyGameOrchestrator extends CGFobject {
                 break;
 
             case "pick tiles pc":
-                this.scene.setPickEnabled(false);
+                this.scene.setPickEnabled(true);
 
                 //wait for eventListener to end work
                 if (this.prolog.response != null){
@@ -327,9 +327,12 @@ class MyGameOrchestrator extends CGFobject {
         else if(this.state == "start"){
             this.scene.translate(-3, 0, 0);
             this.scene.rotate(-Math.PI/2, 1,0,0);
-            this.scene.translate(0, -1, 2);
+            this.scene.translate(0, 0, 2);
             this.scene.registerForPick(numberPickedObjects++, this.startGame);
             this.startGame.display();
+            this.scene.translate(0, -3, 0);
+            this.scene.registerForPick(numberPickedObjects++, this.cameraButton);
+            this.cameraButton.display();
         }
         else if(this.state == "mode"){
             this.scene.translate(-3, 0, 0);

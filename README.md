@@ -7,20 +7,17 @@ It is also an objective to give the students the capacity to develop software, n
 #### Test Grade: 20.0
 
 ### Project 1
-Pretende-se, com este trabalho, constituir uma aplicação dotada de um pequeno motor gráfico 3D. A aplicação deve ser capaz de produzir imagens de qualquer cena, sendo esta especificada através de um ficheiro de texto a ser lido pela aplicação.
-O ficheiro de texto deve respeitar um esquema próprio, a que chamaremos LXS – LAIG XML Scene graph - especificado na secção 3 deste documento, e que obedece a um conceito muito vulgar em computação gráfica: o Grafo de Cena (Scene Graph, secção 2). A sintaxe obedece ao formato de tags do XML (Extensible Markup Language).
-A aplicação deve, através de um parser, efetuar a leitura de um documento LXS (cuja extensão do ficheiro deve ser .xml) que descreve a cena, construindo simultaneamente a estrutura de dados correspondente ao grafo de cena. Só depois deve realizar a geração da imagem respectiva. As fontes de luz devem iniciar-se (on/off) de acordo com a especificação LXS e devem poder ser alteradas por meio de controlos na interface gráfica 2D. A seleção da vista ativa é também feita através de uma lista disponível na interface gráfica 2D.
+It is intended, with this work, to constitute an application equipped with a small 3D graphic engine. The application must be able to produce images of any scene, which is specified through a text file to be read by the application. The text file must respect its own scheme, which we will call LXS - LAIG XML Scene graph - specified in section 3 of this document, and which follows a very common concept in computer graphics: the Scene Graph (Scene Graph, section 2) . The syntax follows the XML (Extensible Markup Language) tag format. The application must, through a parser, read an LXS document (whose file extension must be .xml) that describes the scene, simultaneously building the data structure corresponding to the scene graph. Only then should the respective image be generated. The light sources must start (on/off) in accordance with the LXS specification and must be changeable using controls in the 2D GUI. The selection of the active view is also done through a list available in the 2D graphical interface.
 
 #### Final Grade: 19.1
 
 ### Project 2
-O objetivo deste trabalho é explorar técnicas gráficas como NURBS (Non-uniform Rational B-spline), animação por keyframes e o uso de técnicas de Render-to-texture, com uso de shaders baseados em GLSL ES (OpenGL for Embedded Systems’ Shading Language). Propõe-se assim a implementação de algumas funcionalidades em código, que se devem traduzir em extensões à linguagem LXS e exploradas através da criação de uma cena que as utilize. Este documento descreve as funcionalidades pretendidas, bem como as extensões propostas.
+The objective of this work is to explore graphic techniques such as NURBS (Non-uniform Rational B-spline), keyframe animation and the use of Render-to-texture techniques, using shaders based on GLSL ES (OpenGL for Embedded Systems' Shading Language). Thus, it is proposed the implementation of some functionalities in code, which should be translated into extensions to the LXS language and explored through the creation of a scene that uses them. This document describes the intended features as well as the proposed extensions.
 
 #### Final Grade: 19.8
 
 ### Project 3
-O presente documento enuncia os aspetos gerais a desenvolver nas interfaces gráficas para os jogos propostos na disciplina de Programação em Lógica. A interface gráfica para o jogo escolhido por cada grupo será desenvolvida durante as aulas práticas da unidade curricular Laboratório de Aplicações com Interface Gráfica, utilizando a linguagem JavaScript e com recurso à tecnologia WebGL.
-
+This document sets out the general aspects to be developed in the graphical interfaces for the games proposed in the Logic Programming discipline. The graphical interface for the game chosen by each group will be developed during the practical classes of the curricular unit Laboratory of Applications with Graphical Interface, using the JavaScript language and using WebGL technology.
 #### Final Grade: 19.5
 
 ### Final Course Grade: 20
